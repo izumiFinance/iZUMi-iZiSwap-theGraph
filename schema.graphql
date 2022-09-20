@@ -1,0 +1,557 @@
+type Factory @entity {
+  # factory address
+  id: ID!
+
+  # amount of pools created
+  poolCount: BigInt!
+  # amount of transactions all time
+  txCount: BigInt!
+
+  # total volume all time in derived USD
+  totalVolumeUSD: BigDecimal!
+  # total swap fees all time in USD
+  totalFeesUSD: BigDecimal!
+
+  # totalValueLocked derived in USD
+  tvlUSD: BigDecimal!
+}
+
+type Token @entity {
+  # token address
+  id: ID!
+  # token symbol
+  symbol: String!
+  # token name
+  name: String!
+  # token decimals
+  decimals: BigInt!
+  # token total supply
+  totalSupply: BigInt!
+
+  # transactions across all pools that include this token
+  txCount: BigInt!
+  # number of pools containing this token
+  poolCount: BigInt!
+
+  # usd per token
+  priceUSD: BigDecimal!
+  # rivals token of pool is listed in TRUSTABLE_TOKENS
+  trustablePools: [Pool!]!
+
+  # all time fees amount
+  fees: BigDecimal!
+  # all time fees in USD
+  feesUSD: BigDecimal!
+  # all time token swapped
+  volume: BigDecimal!
+  # all time token swapped derived USD
+  volumeUSD: BigDecimal!
+
+  # liquidity across all pools in token units
+  tvl: BigDecimal!
+  # liquidity across all pools in derived USD
+  tvlUSD: BigDecimal!
+}
+
+type Pool @entity {
+  # pool address
+  id: ID!
+  # creation
+  createdAtTimestamp: BigInt!
+  # block pool was created at
+  createdAtBlockNumber: BigInt!
+  # tokeX
+  tokenX: Token!
+  # tokenY
+  tokenY: Token!
+  # fee amount
+  feeTier: BigInt!
+  
+  # in range liquidity
+  liquidity: BigInt!
+  # current tick
+  tick: BigInt
+  # current price tracker
+  sqrtPrice: BigInt!
+
+  # all time number of transactions
+  txCount: BigInt!
+
+  # tokenX per tokenY
+  tokenXPrice: BigDecimal!
+  # tokenY per tokenX
+  tokenYPrice: BigDecimal!
+
+  # all time USD swapped
+  volumeUSD: BigDecimal!
+  # all time USD fees
+  feesUSD: BigDecimal!
+  # all time tokenX swapped
+  volumeTokenX: BigDecimal!
+  # all time tokenY swapped
+  volumeTokenY: BigDecimal!
+  # all time tokenX fee
+  feesTokenX: BigDecimal!
+  # all time tokenY fee
+  feesTokenY: BigDecimal!
+
+  # total token X across all ticks
+  tvlTokenX: BigDecimal!
+  # total token Y across all ticks
+  tvlTokenY: BigDecimal!
+  # total value all ticks
+  tvlUSD: BigDecimal!
+
+  # all time fees collected tokenX
+  collectedFeesTokenX: BigDecimal!
+  # all time fees collected tokenY
+  collectedFeesTokenY: BigDecimal!
+  # all time fees collected derived USD
+  collectedFeesUSD: BigDecimal!
+}
+
+type Mint @entity {
+  # transaction hash + "#" + index in mints Transaction array
+  id: ID!
+  # which txn the mint was included in
+  transaction: Transaction!
+  # time of txn
+  timestamp: BigInt!
+  # pool position is within
+  pool: Pool!
+  # allow indexing by tokens
+  tokenX: Token!
+  # allow indexing by tokens
+  tokenY: Token!
+  # txn account
+  account: Bytes! # the EOA that initiated the txn
+  # Interacted With (To):
+  withContract: Bytes
+
+  # owner of position where liquidity minted to
+  owner: Bytes!
+  # the address that minted the liquidity
+  sender: Bytes
+  # amount of liquidity minted
+  liquidity: BigInt!
+  # amount of tokenX minted
+  amountX: BigDecimal!
+  # amount of tokenY minted
+  amountY: BigDecimal!
+  # derived amount based on available prices of tokens
+  amountUSD: BigDecimal
+  # lower tick of the position
+  leftPoint: BigInt!
+  # upper tick of the position
+  rightPoint: BigInt!
+
+  # order within the txn
+  logIndex: BigInt
+}
+
+type Burn @entity {
+  # transaction hash + "#" + index in mints Transaction array
+  id: ID!
+  # txn burn was included in
+  transaction: Transaction!
+  # pool position is within
+  pool: Pool!
+  # allow indexing by tokens
+  tokenX: Token!
+  # allow indexing by tokens
+  tokenY: Token!
+  # need this to pull recent txn s for specific token or pool
+  timestamp: BigInt!
+  # sender of the trans (From)
+  account: Bytes!
+  # Interacted With (To):
+  withContract: Bytes
+
+  # owner of position where liquidity was burned
+  owner: Bytes
+  # amount of liquidity burned
+  liquidity: BigInt!
+  # amount of tokenX burned
+  amountX: BigDecimal!
+  # amount of tokenY burned
+  amountY: BigDecimal!
+  # derived amount based on available prices of tokens
+  amountUSD: BigDecimal
+  # lower tick of position
+  leftPoint: BigInt!
+  # upper tick of position
+  rightPoint: BigInt!
+
+  # all time fees collected tokenX
+  collectedFeesTokenX: BigDecimal!
+  # all time fees collected tokenY
+  collectedFeesTokenY: BigDecimal!
+
+  # position within the transactions
+  logIndex: BigInt
+}
+
+
+type Swap @entity {
+  # transaction hash + "#" + index in swaps Transaction array
+  id: ID!
+  # pointer to transaction
+  transaction: Transaction!
+  # timestamp of transaction
+  timestamp: BigInt!
+  # pool swap occurred within
+  pool: Pool!
+  # allow indexing by tokens
+  tokenX: Token!
+  # allow indexing by tokens
+  tokenY: Token!
+  # sender of the trans (From)
+  account: Bytes!
+  # Interacted With (To):
+  withContract: Bytes
+
+  # delta of tokenX swapped
+  amountX: BigDecimal!
+  # delta of tokenY swapped
+  amountY: BigDecimal!
+  # sellXEarnY
+  sellXEarnY: Boolean!
+  # derived info
+  amountUSD: BigDecimal!
+
+  # index within the txn
+  logIndex: BigInt
+}
+
+type Transaction @entity {
+  # txn hash
+  id: ID!
+  # block txn was included in
+  blockNumber: BigInt!
+  # timestamp txn was confirmed
+  timestamp: BigInt!
+  # gas used during txn execution
+  gasLimit: BigInt!
+  gasPrice: BigInt!
+  # derived values
+}
+
+
+type AddLimitOrder @entity {
+  # transaction hash + "#" + index in AddLimitOrder Transaction array
+  id: ID!
+  # pointer to transaction
+  transaction: Transaction!
+  # timestamp of transaction
+  timestamp: BigInt!
+  # pool addLimitOrder occurred within
+  pool: Pool!
+  # allow indexing by tokens
+  tokenX: Token!
+  # allow indexing by tokens
+  tokenY: Token!
+  # sender of the trans (From)
+  account: Bytes!
+  # Interacted With (To):
+  withContract: Bytes
+
+  # amount
+  amount: BigDecimal!
+  # delta of tokenY swapped
+  point: BigInt!
+  # sellXEarnY
+  sellXEarnY: Boolean!
+  
+  # derived info
+  amountUSD: BigDecimal!
+  # order price, tokenY per tokenX
+  price: BigDecimal!
+
+  # delta of tokenX
+  amountX: BigDecimal!
+  # delta of tokenY
+  amountY: BigDecimal!
+
+  # index within the txn
+  logIndex: BigInt
+}
+
+
+type DecLimitOrder @entity {
+  # transaction hash + "#" + index in DecLimitOrder Transaction array
+  id: ID!
+  # pointer to transaction
+  transaction: Transaction!
+  # timestamp of transaction
+  timestamp: BigInt!
+  # pool decLimitOrder occurred within
+  pool: Pool!
+  # allow indexing by tokens
+  tokenX: Token!
+  # allow indexing by tokens
+  tokenY: Token!
+  # sender of the trans (From)
+  account: Bytes!
+  # Interacted With (To):
+  withContract: Bytes
+
+  # amount
+  amount: BigDecimal!
+  # delta of tokenY swapped
+  point: BigInt!
+  # sellXEarnY
+  sellXEarnY: Boolean!
+  
+  # derived info
+  amountUSD: BigDecimal!
+  # order price, tokenY per tokenX
+  price: BigDecimal!
+
+  # delta of tokenX
+  amountX: BigDecimal!
+  # delta of tokenY
+  amountY: BigDecimal!
+
+  # index within the txn
+  logIndex: BigInt
+}
+
+
+type Flash @entity {
+  # transaction hash + "#" + index in Flash Transaction array
+  id: ID!
+  # pointer to transaction
+  transaction: Transaction!
+  # timestamp of transaction
+  timestamp: BigInt!
+  # pool Flash occurred within
+  pool: Pool!
+  # allow indexing by tokens
+  tokenX: Token!
+  # allow indexing by tokens
+  tokenY: Token!
+  # sender of the trans (From)
+  account: Bytes!
+  # Interacted With (To):
+  withContract: Bytes
+
+  sender: Bytes!
+  recipient: Bytes!
+  # amountX
+  amountX: BigDecimal!
+  # amountY
+  amountY: BigDecimal!
+  
+  # paidX
+  paidX: BigDecimal!
+  # paidY
+  paidY: BigDecimal!
+
+  # index within the txn
+  logIndex: BigInt
+}
+
+# Liquidity created through iZiSwapLiquidityManager
+type Liquidity @entity {
+  # NFT token id
+  id: ID!
+  # owner of the NFT
+  owner: Bytes!
+  # pool position is within
+  pool: Pool!
+  # allow indexing by tokens
+  tokenX: Token!
+  # allow indexing by tokens
+  tokenY: Token!
+
+  # lower tick of the position
+  leftPt: BigInt!
+  # upper tick of the position
+  rightPt: BigInt!
+
+  # price range lower
+  priceLeft: BigDecimal!
+  # price range upper
+  priceRight: BigDecimal!
+
+  # total position liquidity
+  liquidity: BigInt!
+  # amount of token X ever deposited to position
+  depositedTokenX: BigDecimal!
+  # amount of token Y ever deposited to position
+  depositedTokenY: BigDecimal!
+  # amount of token X ever withdrawn from position (without fees)
+  withdrawnTokenX: BigDecimal!
+  # amount of token Y ever withdrawn from position (without fees)
+  withdrawnTokenY: BigDecimal!
+  # all time collected fees in tokenX
+  collectedFeesTokenX: BigDecimal!
+  # all time collected fees in tokenY
+  collectedFeesTokenY: BigDecimal!
+
+  # is valid
+  isValid: Boolean!
+
+  # tx in which the position was initialized
+  transaction: Transaction!
+}
+
+# Data accumulated and condensed into day stats for each pool
+type PoolDayData @entity {
+  # format: <pool address>-<dayStartUnix>
+  id: ID!
+  # unix timestamp for start of dayStartUnix
+  dayStartUnix: Int!
+  # pointer to pool
+  pool: Pool!
+  # in range liquidity at end of period
+  liquidity: BigInt!
+  # current tick at end of period
+  tick: BigInt
+  # current price tracker at end of period
+  sqrtPrice: BigInt!
+
+  # price of tokenX - derived from sqrtPrice
+  tokenXPrice: BigDecimal!
+  # price of tokenY - derived from sqrtPrice
+  tokenYPrice: BigDecimal!
+
+  # totalValueLocked derived in USD at end of period
+  tvlUSD: BigDecimal!
+  # volume in tokenX
+  volumeTokenX: BigDecimal!
+  # volume in tokenY
+  volumeTokenY: BigDecimal!
+  # interval tokenX fee
+  feesTokenX: BigDecimal!
+  # interval tokenY fee
+  feesTokenY: BigDecimal!
+  # volume in USD
+  volumeUSD: BigDecimal!
+  # fees in USD
+  feesUSD: BigDecimal!
+
+  # number of transactions during period
+  txCount: BigInt!
+  # opening price of tokenX
+  open: BigDecimal!
+  # high price of tokenX
+  high: BigDecimal!
+  # low price of tokenX
+  low: BigDecimal!
+  # close price of tokenX
+  close: BigDecimal!
+}
+
+# hourly stats tracker for pool
+type PoolHourData @entity {
+  # format: <pool address>-<hourStartUnix>
+  id: ID!
+  # unix timestamp for start of hour
+  hourStartUnix: Int!
+  # pointer to pool
+  pool: Pool!
+  # in range liquidity at end of period
+  liquidity: BigInt!
+  # current tick at end of period
+  tick: BigInt
+  # current price tracker at end of period
+  sqrtPrice: BigInt!
+
+  # price of tokenX - derived from sqrtPrice
+  tokenXPrice: BigDecimal!
+  # price of tokenY - derived from sqrtPrice
+  tokenYPrice: BigDecimal!
+
+  # totalValueLocked derived in USD at end of period
+  tvlUSD: BigDecimal!
+  # volume in tokenX
+  volumeTokenX: BigDecimal!
+  # volume in tokenY
+  volumeTokenY: BigDecimal!
+  # interval tokenX fee
+  feesTokenX: BigDecimal!
+  # interval tokenY fee
+  feesTokenY: BigDecimal!
+  # volume in USD
+  volumeUSD: BigDecimal!
+  # fees in USD
+  feesUSD: BigDecimal!
+  # number of transactions during period
+  txCount: BigInt!
+
+  # opening price of tokenX
+  open: BigDecimal!
+  # high price of tokenX
+  high: BigDecimal!
+  # low price of tokenX
+  low: BigDecimal!
+  # close price of tokenX
+  close: BigDecimal!
+}
+
+
+type TokenDayData @entity {
+  # format: <token address>-<dayStartUnix>
+  id: ID!
+  # timestamp rounded to current day by dividing by 86400
+  date: Int!
+  # pointer to token
+  token: Token!
+
+  # volume in token units
+  volume: BigDecimal!
+  # volume in derived USD
+  volumeUSD: BigDecimal!
+  # liquidity across all pools in token units
+  tvl: BigDecimal!
+  # liquidity across all pools in derived USD
+  tvlUSD: BigDecimal!
+  # fees
+  fees: BigDecimal!
+  # fees in USD
+  feesUSD: BigDecimal!
+
+
+  # opening price USD
+  open: BigDecimal!
+  # high price USD
+  high: BigDecimal!
+  # low price USD
+  low: BigDecimal!
+  # close price USD
+  close: BigDecimal!
+}
+
+
+type TokenHourData @entity {
+  # format: <token address>-<hourStartUnix>
+  id: ID!
+  # timestamp rounded to current day by dividing by 86400
+  date: Int!
+  # pointer to token
+  token: Token!
+
+  # volume in token units
+  volume: BigDecimal!
+  # volume in derived USD
+  volumeUSD: BigDecimal!
+  # liquidity across all pools in token units
+  tvl: BigDecimal!
+  # liquidity across all pools in derived USD
+  tvlUSD: BigDecimal!
+  # fees
+  fees: BigDecimal!
+  # fees in USD
+  feesUSD: BigDecimal!
+
+
+  # opening price USD
+  open: BigDecimal!
+  # high price USD
+  high: BigDecimal!
+  # low price USD
+  low: BigDecimal!
+  # close price USD
+  close: BigDecimal!
+}

@@ -1,0 +1,17 @@
+{
+  "name": "izi-swap",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --product hosted-service izumifinance/iziswapsubgraph",
+    "auth": "graph auth https://thegraph.com/hosted-service/subgraph/izumifinance/iziswapsubgraph XXX_AccessToken",
+    "create-local": "graph create --node http://localhost:8020/ izi-swap",
+    "remove-local": "graph remove --node http://localhost:8020/ izi-swap",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 izi-swap"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.32.0",
+    "@graphprotocol/graph-ts": "0.27.0"
+  }
+}
