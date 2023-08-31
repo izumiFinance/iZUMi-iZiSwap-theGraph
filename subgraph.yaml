@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: iZiSwapFactory
-    network: arbitrum-one
+    network: bsc
     source:
-      address: "0x575Bfc57B0D3eA0d31b132D622643e71735A6957"
+      address: "0x93BB94a0d5269cb437A1F71FF3a77AB753844422"
       abi: iZiSwapFactory
-      startBlock: 8841470
+      startBlock: 30062450
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -30,11 +30,11 @@ dataSources:
 
   - kind: ethereum
     name: iZiSwapLiquidityManager
-    network: arbitrum-one
+    network: bsc
     source:
-      address: "0x483FDE31bcE3DCc168E23a870831b50Ce2cCd1F1"
+      address: "0xBF55ef05412f1528DbD96ED9E7181f87d8C9F453"
       abi: iZiSwapLiquidityManager
-      startBlock: 8841470
+      startBlock: 30062450
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -58,7 +58,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: Pool
-    network: arbitrum-one
+    network: bsc
     source:
       abi: Pool
     mapping:

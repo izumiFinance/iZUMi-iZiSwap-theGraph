@@ -1,6 +1,6 @@
 import { BigDecimal, BigInt } from '@graphprotocol/graph-ts';
 
-export const FACTORY_ADDRESS = '0x575bfc57b0d3ea0d31b132d622643e71735a6957';
+export const FACTORY_ADDRESS = '0x93bb94a0d5269cb437a1f71ff3a77ab753844422';
 
 export const MINIMUM_USD_LOCKED_FOR_PRICING = BigDecimal.fromString('2000');
 
@@ -10,9 +10,9 @@ export class StableCoinConfig {
     static config(): Set<string> {
         if (this.stableCoins == null) {
             this.stableCoins = new Set();
-            this.stableCoins.add('0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'); // USDT
+            this.stableCoins.add('0x55d398326f99059ff775485246999027b3197955'); // USDT
             this.stableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
-            this.stableCoins.add('0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'); // USDC
+            this.stableCoins.add('0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'); // USDC
             this.stableCoins.add('0x55a26773a8ba7fa9a8242b43e14a69488e6d2b05'); // slUSDC
             this.stableCoins.add('0x65cd2e7d7bacdac3aa9dae68fb5d548dfe1fefb5'); // slUSDT
 
@@ -29,12 +29,11 @@ export class TrustableTokenConfig {
     static config(): Set<string> {
         if (this.trustableTokens == null) {
             this.trustableTokens = new Set();
-            this.trustableTokens.add('0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9'); // USDT
-            this.trustableTokens.add('0x912ce59144191c1204e64559fe8253a0e49e6548'); // ARB
+            this.trustableTokens.add('0x55d398326f99059ff775485246999027b3197955'); // USDT
+            this.trustableTokens.add('0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'); // WBNB
             this.trustableTokens.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
-            this.trustableTokens.add('0x82af49447d8a07e3bd95bd0d56f35241523fbab1'); // WETH
             this.trustableTokens.add('0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'); // iZi
-            this.trustableTokens.add('0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'); // USDC
+            this.trustableTokens.add('0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'); // USDC
             this.trustableTokens.add('0x55a26773a8ba7fa9a8242b43e14a69488e6d2b05'); // slUSDC
             this.trustableTokens.add('0x65cd2e7d7bacdac3aa9dae68fb5d548dfe1fefb5'); // slUSDT
         }
