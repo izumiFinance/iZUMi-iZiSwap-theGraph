@@ -1,7 +1,6 @@
 import { BigDecimal, BigInt } from '@graphprotocol/graph-ts';
 
-export const FACTORY_ADDRESS = '0xcfd8a067e1fa03474e79be646c5f6b6a27847399';
-// export const FACTORY_ADDRESS_V2 = '0xcfd8a067e1fa03474e79be646c5f6b6a27847399';
+export const FACTORY_ADDRESS = '0x575bfc57b0d3ea0d31b132d622643e71735a6957';
 
 export const MINIMUM_USD_LOCKED_FOR_PRICING = BigDecimal.fromString('2000');
 
