@@ -23,16 +23,32 @@ export class AddLimitOrder__Params {
     this._event = event;
   }
 
-  get amount(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
+  get owner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get addAmount(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get acquireAmount(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
   }
 
   get point(): i32 {
-    return this._event.parameters[1].value.toI32();
+    return this._event.parameters[3].value.toI32();
+  }
+
+  get claimSold(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get claimEarn(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
   }
 
   get sellXEarnY(): boolean {
-    return this._event.parameters[2].value.toBoolean();
+    return this._event.parameters[6].value.toBoolean();
   }
 }
 
@@ -74,6 +90,82 @@ export class Burn__Params {
   }
 }
 
+export class CollectLimitOrder extends ethereum.Event {
+  get params(): CollectLimitOrder__Params {
+    return new CollectLimitOrder__Params(this);
+  }
+}
+
+export class CollectLimitOrder__Params {
+  _event: CollectLimitOrder;
+
+  constructor(event: CollectLimitOrder) {
+    this._event = event;
+  }
+
+  get owner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get recipient(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get point(): i32 {
+    return this._event.parameters[2].value.toI32();
+  }
+
+  get collectDec(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get collectEarn(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get sellXEarnY(): boolean {
+    return this._event.parameters[5].value.toBoolean();
+  }
+}
+
+export class CollectLiquidity extends ethereum.Event {
+  get params(): CollectLiquidity__Params {
+    return new CollectLiquidity__Params(this);
+  }
+}
+
+export class CollectLiquidity__Params {
+  _event: CollectLiquidity;
+
+  constructor(event: CollectLiquidity) {
+    this._event = event;
+  }
+
+  get owner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get recipient(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get leftPoint(): i32 {
+    return this._event.parameters[2].value.toI32();
+  }
+
+  get rightPoint(): i32 {
+    return this._event.parameters[3].value.toI32();
+  }
+
+  get amountX(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+
+  get amountY(): BigInt {
+    return this._event.parameters[5].value.toBigInt();
+  }
+}
+
 export class DecLimitOrder extends ethereum.Event {
   get params(): DecLimitOrder__Params {
     return new DecLimitOrder__Params(this);
@@ -87,16 +179,28 @@ export class DecLimitOrder__Params {
     this._event = event;
   }
 
-  get amount(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
+  get owner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get decreaseAmount(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
   }
 
   get point(): i32 {
-    return this._event.parameters[1].value.toI32();
+    return this._event.parameters[2].value.toI32();
+  }
+
+  get claimSold(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get claimEarn(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
   }
 
   get sellXEarnY(): boolean {
-    return this._event.parameters[2].value.toBoolean();
+    return this._event.parameters[5].value.toBoolean();
   }
 }
 
@@ -215,6 +319,10 @@ export class Swap__Params {
 
   get amountY(): BigInt {
     return this._event.parameters[5].value.toBigInt();
+  }
+
+  get currentPoint(): i32 {
+    return this._event.parameters[6].value.toI32();
   }
 }
 
@@ -343,6 +451,56 @@ export class Pool__collectLimOrderResult {
   }
 }
 
+export class Pool__decLimOrderWithXResult {
+  value0: BigInt;
+  value1: BigInt;
+
+  constructor(value0: BigInt, value1: BigInt) {
+    this.value0 = value0;
+    this.value1 = value1;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
+    return map;
+  }
+
+  getActualDeltaX(): BigInt {
+    return this.value0;
+  }
+
+  getLegacyAccEarn(): BigInt {
+    return this.value1;
+  }
+}
+
+export class Pool__decLimOrderWithYResult {
+  value0: BigInt;
+  value1: BigInt;
+
+  constructor(value0: BigInt, value1: BigInt) {
+    this.value0 = value0;
+    this.value1 = value1;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
+    return map;
+  }
+
+  getActualDeltaY(): BigInt {
+    return this.value0;
+  }
+
+  getLegacyAccEarn(): BigInt {
+    return this.value1;
+  }
+}
+
 export class Pool__limitOrderDataResult {
   value0: BigInt;
   value1: BigInt;
@@ -350,6 +508,10 @@ export class Pool__limitOrderDataResult {
   value3: BigInt;
   value4: BigInt;
   value5: BigInt;
+  value6: BigInt;
+  value7: BigInt;
+  value8: BigInt;
+  value9: BigInt;
 
   constructor(
     value0: BigInt,
@@ -357,7 +519,11 @@ export class Pool__limitOrderDataResult {
     value2: BigInt,
     value3: BigInt,
     value4: BigInt,
-    value5: BigInt
+    value5: BigInt,
+    value6: BigInt,
+    value7: BigInt,
+    value8: BigInt,
+    value9: BigInt
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -365,6 +531,10 @@ export class Pool__limitOrderDataResult {
     this.value3 = value3;
     this.value4 = value4;
     this.value5 = value5;
+    this.value6 = value6;
+    this.value7 = value7;
+    this.value8 = value8;
+    this.value9 = value9;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
@@ -375,6 +545,10 @@ export class Pool__limitOrderDataResult {
     map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
     map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
     map.set("value5", ethereum.Value.fromUnsignedBigInt(this.value5));
+    map.set("value6", ethereum.Value.fromUnsignedBigInt(this.value6));
+    map.set("value7", ethereum.Value.fromUnsignedBigInt(this.value7));
+    map.set("value8", ethereum.Value.fromUnsignedBigInt(this.value8));
+    map.set("value9", ethereum.Value.fromUnsignedBigInt(this.value9));
     return map;
   }
 
@@ -390,16 +564,32 @@ export class Pool__limitOrderDataResult {
     return this.value2;
   }
 
-  getSellingY(): BigInt {
+  getLegacyAccEarnY(): BigInt {
     return this.value3;
   }
 
-  getEarnX(): BigInt {
+  getLegacyEarnY(): BigInt {
     return this.value4;
   }
 
-  getAccEarnX(): BigInt {
+  getSellingY(): BigInt {
     return this.value5;
+  }
+
+  getEarnX(): BigInt {
+    return this.value6;
+  }
+
+  getLegacyEarnX(): BigInt {
+    return this.value7;
+  }
+
+  getAccEarnX(): BigInt {
+    return this.value8;
+  }
+
+  getLegacyAccEarnX(): BigInt {
+    return this.value9;
   }
 }
 
@@ -509,22 +699,19 @@ export class Pool__mintResult {
 export class Pool__observationsResult {
   value0: BigInt;
   value1: BigInt;
-  value2: BigInt;
-  value3: boolean;
+  value2: boolean;
 
-  constructor(value0: BigInt, value1: BigInt, value2: BigInt, value3: boolean) {
+  constructor(value0: BigInt, value1: BigInt, value2: boolean) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
-    this.value3 = value3;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
     let map = new TypedMap<string, ethereum.Value>();
     map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
     map.set("value1", ethereum.Value.fromSignedBigInt(this.value1));
-    map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
-    map.set("value3", ethereum.Value.fromBoolean(this.value3));
+    map.set("value2", ethereum.Value.fromBoolean(this.value2));
     return map;
   }
 
@@ -532,41 +719,12 @@ export class Pool__observationsResult {
     return this.value0;
   }
 
-  getPointCumulative(): BigInt {
+  getAccPoint(): BigInt {
     return this.value1;
-  }
-
-  getSecondsPerLiquidityCumulative_128(): BigInt {
-    return this.value2;
   }
 
   getInit(): boolean {
-    return this.value3;
-  }
-}
-
-export class Pool__observeResult {
-  value0: Array<BigInt>;
-  value1: Array<BigInt>;
-
-  constructor(value0: Array<BigInt>, value1: Array<BigInt>) {
-    this.value0 = value0;
-    this.value1 = value1;
-  }
-
-  toMap(): TypedMap<string, ethereum.Value> {
-    let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromSignedBigIntArray(this.value0));
-    map.set("value1", ethereum.Value.fromUnsignedBigIntArray(this.value1));
-    return map;
-  }
-
-  getPointCumulatives(): Array<BigInt> {
-    return this.value0;
-  }
-
-  getSecondsPerLiquidityCumulative_128s(): Array<BigInt> {
-    return this.value1;
+    return this.value2;
   }
 }
 
@@ -813,19 +971,22 @@ export class Pool__userEarnXResult {
   value2: BigInt;
   value3: BigInt;
   value4: BigInt;
+  value5: BigInt;
 
   constructor(
     value0: BigInt,
     value1: BigInt,
     value2: BigInt,
     value3: BigInt,
-    value4: BigInt
+    value4: BigInt,
+    value5: BigInt
   ) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
     this.value3 = value3;
     this.value4 = value4;
+    this.value5 = value5;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
@@ -835,6 +996,7 @@ export class Pool__userEarnXResult {
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
     map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
     map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
+    map.set("value5", ethereum.Value.fromUnsignedBigInt(this.value5));
     return map;
   }
 
@@ -854,8 +1016,12 @@ export class Pool__userEarnXResult {
     return this.value3;
   }
 
-  getEarnAssign(): BigInt {
+  getLegacyEarn(): BigInt {
     return this.value4;
+  }
+
+  getEarnAssign(): BigInt {
+    return this.value5;
   }
 }
 
@@ -865,19 +1031,22 @@ export class Pool__userEarnYResult {
   value2: BigInt;
   value3: BigInt;
   value4: BigInt;
+  value5: BigInt;
 
   constructor(
     value0: BigInt,
     value1: BigInt,
     value2: BigInt,
     value3: BigInt,
-    value4: BigInt
+    value4: BigInt,
+    value5: BigInt
   ) {
     this.value0 = value0;
     this.value1 = value1;
     this.value2 = value2;
     this.value3 = value3;
     this.value4 = value4;
+    this.value5 = value5;
   }
 
   toMap(): TypedMap<string, ethereum.Value> {
@@ -887,6 +1056,7 @@ export class Pool__userEarnYResult {
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
     map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
     map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
+    map.set("value5", ethereum.Value.fromUnsignedBigInt(this.value5));
     return map;
   }
 
@@ -906,8 +1076,12 @@ export class Pool__userEarnYResult {
     return this.value3;
   }
 
-  getEarnAssign(): BigInt {
+  getLegacyEarn(): BigInt {
     return this.value4;
+  }
+
+  getEarnAssign(): BigInt {
+    return this.value5;
   }
 }
 
@@ -1012,13 +1186,18 @@ export class Pool extends ethereum.SmartContract {
     );
   }
 
-  assignLimOrderEarnX(point: i32, assignX: BigInt): BigInt {
+  assignLimOrderEarnX(
+    point: i32,
+    assignX: BigInt,
+    fromLegacy: boolean
+  ): BigInt {
     let result = super.call(
       "assignLimOrderEarnX",
-      "assignLimOrderEarnX(int24,uint128):(uint128)",
+      "assignLimOrderEarnX(int24,uint128,bool):(uint128)",
       [
         ethereum.Value.fromI32(point),
-        ethereum.Value.fromUnsignedBigInt(assignX)
+        ethereum.Value.fromUnsignedBigInt(assignX),
+        ethereum.Value.fromBoolean(fromLegacy)
       ]
     );
 
@@ -1027,14 +1206,16 @@ export class Pool extends ethereum.SmartContract {
 
   try_assignLimOrderEarnX(
     point: i32,
-    assignX: BigInt
+    assignX: BigInt,
+    fromLegacy: boolean
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "assignLimOrderEarnX",
-      "assignLimOrderEarnX(int24,uint128):(uint128)",
+      "assignLimOrderEarnX(int24,uint128,bool):(uint128)",
       [
         ethereum.Value.fromI32(point),
-        ethereum.Value.fromUnsignedBigInt(assignX)
+        ethereum.Value.fromUnsignedBigInt(assignX),
+        ethereum.Value.fromBoolean(fromLegacy)
       ]
     );
     if (result.reverted) {
@@ -1044,13 +1225,18 @@ export class Pool extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  assignLimOrderEarnY(point: i32, assignY: BigInt): BigInt {
+  assignLimOrderEarnY(
+    point: i32,
+    assignY: BigInt,
+    fromLegacy: boolean
+  ): BigInt {
     let result = super.call(
       "assignLimOrderEarnY",
-      "assignLimOrderEarnY(int24,uint128):(uint128)",
+      "assignLimOrderEarnY(int24,uint128,bool):(uint128)",
       [
         ethereum.Value.fromI32(point),
-        ethereum.Value.fromUnsignedBigInt(assignY)
+        ethereum.Value.fromUnsignedBigInt(assignY),
+        ethereum.Value.fromBoolean(fromLegacy)
       ]
     );
 
@@ -1059,14 +1245,16 @@ export class Pool extends ethereum.SmartContract {
 
   try_assignLimOrderEarnY(
     point: i32,
-    assignY: BigInt
+    assignY: BigInt,
+    fromLegacy: boolean
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "assignLimOrderEarnY",
-      "assignLimOrderEarnY(int24,uint128):(uint128)",
+      "assignLimOrderEarnY(int24,uint128,bool):(uint128)",
       [
         ethereum.Value.fromI32(point),
-        ethereum.Value.fromUnsignedBigInt(assignY)
+        ethereum.Value.fromUnsignedBigInt(assignY),
+        ethereum.Value.fromBoolean(fromLegacy)
       ]
     );
     if (result.reverted) {
@@ -1214,56 +1402,66 @@ export class Pool extends ethereum.SmartContract {
     );
   }
 
-  decLimOrderWithX(point: i32, deltaX: BigInt): BigInt {
+  decLimOrderWithX(point: i32, deltaX: BigInt): Pool__decLimOrderWithXResult {
     let result = super.call(
       "decLimOrderWithX",
-      "decLimOrderWithX(int24,uint128):(uint128)",
+      "decLimOrderWithX(int24,uint128):(uint128,uint256)",
       [ethereum.Value.fromI32(point), ethereum.Value.fromUnsignedBigInt(deltaX)]
     );
 
-    return result[0].toBigInt();
+    return new Pool__decLimOrderWithXResult(
+      result[0].toBigInt(),
+      result[1].toBigInt()
+    );
   }
 
   try_decLimOrderWithX(
     point: i32,
     deltaX: BigInt
-  ): ethereum.CallResult<BigInt> {
+  ): ethereum.CallResult<Pool__decLimOrderWithXResult> {
     let result = super.tryCall(
       "decLimOrderWithX",
-      "decLimOrderWithX(int24,uint128):(uint128)",
+      "decLimOrderWithX(int24,uint128):(uint128,uint256)",
       [ethereum.Value.fromI32(point), ethereum.Value.fromUnsignedBigInt(deltaX)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(
+      new Pool__decLimOrderWithXResult(value[0].toBigInt(), value[1].toBigInt())
+    );
   }
 
-  decLimOrderWithY(point: i32, deltaY: BigInt): BigInt {
+  decLimOrderWithY(point: i32, deltaY: BigInt): Pool__decLimOrderWithYResult {
     let result = super.call(
       "decLimOrderWithY",
-      "decLimOrderWithY(int24,uint128):(uint128)",
+      "decLimOrderWithY(int24,uint128):(uint128,uint256)",
       [ethereum.Value.fromI32(point), ethereum.Value.fromUnsignedBigInt(deltaY)]
     );
 
-    return result[0].toBigInt();
+    return new Pool__decLimOrderWithYResult(
+      result[0].toBigInt(),
+      result[1].toBigInt()
+    );
   }
 
   try_decLimOrderWithY(
     point: i32,
     deltaY: BigInt
-  ): ethereum.CallResult<BigInt> {
+  ): ethereum.CallResult<Pool__decLimOrderWithYResult> {
     let result = super.tryCall(
       "decLimOrderWithY",
-      "decLimOrderWithY(int24,uint128):(uint128)",
+      "decLimOrderWithY(int24,uint128):(uint128,uint256)",
       [ethereum.Value.fromI32(point), ethereum.Value.fromUnsignedBigInt(deltaY)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(
+      new Pool__decLimOrderWithYResult(value[0].toBigInt(), value[1].toBigInt())
+    );
   }
 
   factory(): Address {
@@ -1375,7 +1573,7 @@ export class Pool extends ethereum.SmartContract {
   limitOrderData(param0: i32): Pool__limitOrderDataResult {
     let result = super.call(
       "limitOrderData",
-      "limitOrderData(int24):(uint128,uint128,uint256,uint128,uint128,uint256)",
+      "limitOrderData(int24):(uint128,uint128,uint256,uint256,uint128,uint128,uint128,uint128,uint256,uint256)",
       [ethereum.Value.fromI32(param0)]
     );
 
@@ -1385,7 +1583,11 @@ export class Pool extends ethereum.SmartContract {
       result[2].toBigInt(),
       result[3].toBigInt(),
       result[4].toBigInt(),
-      result[5].toBigInt()
+      result[5].toBigInt(),
+      result[6].toBigInt(),
+      result[7].toBigInt(),
+      result[8].toBigInt(),
+      result[9].toBigInt()
     );
   }
 
@@ -1394,7 +1596,7 @@ export class Pool extends ethereum.SmartContract {
   ): ethereum.CallResult<Pool__limitOrderDataResult> {
     let result = super.tryCall(
       "limitOrderData",
-      "limitOrderData(int24):(uint128,uint128,uint256,uint128,uint128,uint256)",
+      "limitOrderData(int24):(uint128,uint128,uint256,uint256,uint128,uint128,uint128,uint128,uint256,uint256)",
       [ethereum.Value.fromI32(param0)]
     );
     if (result.reverted) {
@@ -1408,7 +1610,11 @@ export class Pool extends ethereum.SmartContract {
         value[2].toBigInt(),
         value[3].toBigInt(),
         value[4].toBigInt(),
-        value[5].toBigInt()
+        value[5].toBigInt(),
+        value[6].toBigInt(),
+        value[7].toBigInt(),
+        value[8].toBigInt(),
+        value[9].toBigInt()
       )
     );
   }
@@ -1578,15 +1784,14 @@ export class Pool extends ethereum.SmartContract {
   observations(param0: BigInt): Pool__observationsResult {
     let result = super.call(
       "observations",
-      "observations(uint256):(uint32,int56,uint160,bool)",
+      "observations(uint256):(uint32,int56,bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
     return new Pool__observationsResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
-      result[2].toBigInt(),
-      result[3].toBoolean()
+      result[2].toBoolean()
     );
   }
 
@@ -1595,7 +1800,7 @@ export class Pool extends ethereum.SmartContract {
   ): ethereum.CallResult<Pool__observationsResult> {
     let result = super.tryCall(
       "observations",
-      "observations(uint256):(uint32,int56,uint160,bool)",
+      "observations(uint256):(uint32,int56,bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
     if (result.reverted) {
@@ -1606,43 +1811,28 @@ export class Pool extends ethereum.SmartContract {
       new Pool__observationsResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
-        value[2].toBigInt(),
-        value[3].toBoolean()
+        value[2].toBoolean()
       )
     );
   }
 
-  observe(secondsAgos: Array<BigInt>): Pool__observeResult {
-    let result = super.call(
-      "observe",
-      "observe(uint32[]):(int56[],uint160[])",
-      [ethereum.Value.fromUnsignedBigIntArray(secondsAgos)]
-    );
+  observe(secondsAgos: Array<BigInt>): Array<BigInt> {
+    let result = super.call("observe", "observe(uint32[]):(int56[])", [
+      ethereum.Value.fromUnsignedBigIntArray(secondsAgos)
+    ]);
 
-    return new Pool__observeResult(
-      result[0].toBigIntArray(),
-      result[1].toBigIntArray()
-    );
+    return result[0].toBigIntArray();
   }
 
-  try_observe(
-    secondsAgos: Array<BigInt>
-  ): ethereum.CallResult<Pool__observeResult> {
-    let result = super.tryCall(
-      "observe",
-      "observe(uint32[]):(int56[],uint160[])",
-      [ethereum.Value.fromUnsignedBigIntArray(secondsAgos)]
-    );
+  try_observe(secondsAgos: Array<BigInt>): ethereum.CallResult<Array<BigInt>> {
+    let result = super.tryCall("observe", "observe(uint32[]):(int56[])", [
+      ethereum.Value.fromUnsignedBigIntArray(secondsAgos)
+    ]);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(
-      new Pool__observeResult(
-        value[0].toBigIntArray(),
-        value[1].toBigIntArray()
-      )
-    );
+    return ethereum.CallResult.fromValue(value[0].toBigIntArray());
   }
 
   orderOrEndpoint(param0: i32): i32 {
@@ -2077,7 +2267,7 @@ export class Pool extends ethereum.SmartContract {
   userEarnX(param0: Bytes): Pool__userEarnXResult {
     let result = super.call(
       "userEarnX",
-      "userEarnX(bytes32):(uint256,uint128,uint128,uint128,uint128)",
+      "userEarnX(bytes32):(uint256,uint128,uint128,uint128,uint128,uint128)",
       [ethereum.Value.fromFixedBytes(param0)]
     );
 
@@ -2086,14 +2276,15 @@ export class Pool extends ethereum.SmartContract {
       result[1].toBigInt(),
       result[2].toBigInt(),
       result[3].toBigInt(),
-      result[4].toBigInt()
+      result[4].toBigInt(),
+      result[5].toBigInt()
     );
   }
 
   try_userEarnX(param0: Bytes): ethereum.CallResult<Pool__userEarnXResult> {
     let result = super.tryCall(
       "userEarnX",
-      "userEarnX(bytes32):(uint256,uint128,uint128,uint128,uint128)",
+      "userEarnX(bytes32):(uint256,uint128,uint128,uint128,uint128,uint128)",
       [ethereum.Value.fromFixedBytes(param0)]
     );
     if (result.reverted) {
@@ -2106,7 +2297,8 @@ export class Pool extends ethereum.SmartContract {
         value[1].toBigInt(),
         value[2].toBigInt(),
         value[3].toBigInt(),
-        value[4].toBigInt()
+        value[4].toBigInt(),
+        value[5].toBigInt()
       )
     );
   }
@@ -2114,7 +2306,7 @@ export class Pool extends ethereum.SmartContract {
   userEarnY(param0: Bytes): Pool__userEarnYResult {
     let result = super.call(
       "userEarnY",
-      "userEarnY(bytes32):(uint256,uint128,uint128,uint128,uint128)",
+      "userEarnY(bytes32):(uint256,uint128,uint128,uint128,uint128,uint128)",
       [ethereum.Value.fromFixedBytes(param0)]
     );
 
@@ -2123,14 +2315,15 @@ export class Pool extends ethereum.SmartContract {
       result[1].toBigInt(),
       result[2].toBigInt(),
       result[3].toBigInt(),
-      result[4].toBigInt()
+      result[4].toBigInt(),
+      result[5].toBigInt()
     );
   }
 
   try_userEarnY(param0: Bytes): ethereum.CallResult<Pool__userEarnYResult> {
     let result = super.tryCall(
       "userEarnY",
-      "userEarnY(bytes32):(uint256,uint128,uint128,uint128,uint128)",
+      "userEarnY(bytes32):(uint256,uint128,uint128,uint128,uint128,uint128)",
       [ethereum.Value.fromFixedBytes(param0)]
     );
     if (result.reverted) {
@@ -2143,7 +2336,8 @@ export class Pool extends ethereum.SmartContract {
         value[1].toBigInt(),
         value[2].toBigInt(),
         value[3].toBigInt(),
-        value[4].toBigInt()
+        value[4].toBigInt(),
+        value[5].toBigInt()
       )
     );
   }
@@ -2164,30 +2358,6 @@ export class ConstructorCall__Inputs {
 
   constructor(call: ConstructorCall) {
     this._call = call;
-  }
-
-  get _factory(): Address {
-    return this._call.inputValues[0].value.toAddress();
-  }
-
-  get _tokenX(): Address {
-    return this._call.inputValues[1].value.toAddress();
-  }
-
-  get _tokenY(): Address {
-    return this._call.inputValues[2].value.toAddress();
-  }
-
-  get _fee(): i32 {
-    return this._call.inputValues[3].value.toI32();
-  }
-
-  get currentPoint(): i32 {
-    return this._call.inputValues[4].value.toI32();
-  }
-
-  get _pointDelta(): i32 {
-    return this._call.inputValues[5].value.toI32();
   }
 }
 
@@ -2323,6 +2493,10 @@ export class AssignLimOrderEarnXCall__Inputs {
   get assignX(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
   }
+
+  get fromLegacy(): boolean {
+    return this._call.inputValues[2].value.toBoolean();
+  }
 }
 
 export class AssignLimOrderEarnXCall__Outputs {
@@ -2360,6 +2534,10 @@ export class AssignLimOrderEarnYCall__Inputs {
 
   get assignY(): BigInt {
     return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get fromLegacy(): boolean {
+    return this._call.inputValues[2].value.toBoolean();
   }
 }
 
@@ -2591,6 +2769,10 @@ export class DecLimOrderWithXCall__Outputs {
   get actualDeltaX(): BigInt {
     return this._call.outputValues[0].value.toBigInt();
   }
+
+  get legacyAccEarn(): BigInt {
+    return this._call.outputValues[1].value.toBigInt();
+  }
 }
 
 export class DecLimOrderWithYCall extends ethereum.Call {
@@ -2628,6 +2810,10 @@ export class DecLimOrderWithYCall__Outputs {
 
   get actualDeltaY(): BigInt {
     return this._call.outputValues[0].value.toBigInt();
+  }
+
+  get legacyAccEarn(): BigInt {
+    return this._call.outputValues[1].value.toBigInt();
   }
 }
 
@@ -2754,6 +2940,36 @@ export class MintCall__Outputs {
 
   get amountY(): BigInt {
     return this._call.outputValues[1].value.toBigInt();
+  }
+}
+
+export class ModifyFeeChargePercentCall extends ethereum.Call {
+  get inputs(): ModifyFeeChargePercentCall__Inputs {
+    return new ModifyFeeChargePercentCall__Inputs(this);
+  }
+
+  get outputs(): ModifyFeeChargePercentCall__Outputs {
+    return new ModifyFeeChargePercentCall__Outputs(this);
+  }
+}
+
+export class ModifyFeeChargePercentCall__Inputs {
+  _call: ModifyFeeChargePercentCall;
+
+  constructor(call: ModifyFeeChargePercentCall) {
+    this._call = call;
+  }
+
+  get newFeeChargePercent(): i32 {
+    return this._call.inputValues[0].value.toI32();
+  }
+}
+
+export class ModifyFeeChargePercentCall__Outputs {
+  _call: ModifyFeeChargePercentCall;
+
+  constructor(call: ModifyFeeChargePercentCall) {
+    this._call = call;
   }
 }
 

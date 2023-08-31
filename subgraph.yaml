@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: iZiSwapFactory
-    network: bsc
+    network: arbitrum-one
     source:
-      address: "0xd7de110Bd452AAB96608ac3750c3730A17993DE0"
+      address: "0xCFD8A067e1fa03474e79Be646c5f6b6A27847399"
       abi: iZiSwapFactory
-      startBlock: 17681022
+      startBlock: 112372000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -27,13 +27,14 @@ dataSources:
       eventHandlers:
         - event: NewPool(indexed address,indexed address,indexed uint24,uint24,address)
           handler: handleNewPool
+
   - kind: ethereum
     name: iZiSwapLiquidityManager
-    network: bsc
+    network: arbitrum-one
     source:
-      address: "0x93C22Fbeff4448F2fb6e432579b0638838Ff9581"
+      address: "0xAD1F11FBB288Cd13819cCB9397E59FAAB4Cdc16F"
       abi: iZiSwapLiquidityManager
-      startBlock: 17681022
+      startBlock: 112372000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -53,10 +54,11 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleNftTransfer
+
 templates:
   - kind: ethereum/contract
     name: Pool
-    network: bsc
+    network: arbitrum-one
     source:
       abi: Pool
     mapping:
@@ -75,17 +77,17 @@ templates:
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
-        - event: Swap(indexed address,indexed address,indexed uint24,bool,uint256,uint256)
+        - event: Swap(indexed address,indexed address,indexed uint24,bool,uint256,uint256,int24)
           handler: handleSwap
         - event: Mint(address,indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
           handler: handleMint
         - event: Burn(indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
           handler: handleBurn
           receipt: true
-        - event: AddLimitOrder(uint256,int24,bool)
+        - event: AddLimitOrder(indexed address,uint128,uint128,indexed int24,uint128,uint128,bool)
           handler: handleAddLimitOrder
           receipt: true
-        - event: DecLimitOrder(uint256,int24,bool)
+        - event: DecLimitOrder(indexed address,uint128,indexed int24,uint128,uint128,bool)
           handler: handleDecLimitOrder
           receipt: true
         - event: Flash(indexed address,indexed address,uint256,uint256,uint256,uint256)

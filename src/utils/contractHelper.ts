@@ -6,7 +6,11 @@ import { Pool } from "../../generated/templates/Pool/Pool";
 export function getPoolState(poolAddress: Address) : i32 {
     const pool = Pool.bind(poolAddress);
     const poolState = pool.try_state();
-    return poolState.value.getCurrentPoint();
+    if (!poolState.reverted){
+        return poolState.value.getCurrentPoint();
+    } else {
+        return 0
+    }
 }
 
 export function getOrCreateTransaction(event: ethereum.Event): Transaction {

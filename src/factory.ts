@@ -1,10 +1,10 @@
 import { log, Address, BigInt } from '@graphprotocol/graph-ts';
 import { NewPool } from '../generated/iZiSwapFactory/iZiSwapFactory';
 import { Factory, Pool, Token } from '../generated/schema';
-import { ONE_BD, ONE_BI, ZERO_BD, ZERO_BI } from './constants';
+import { ADDRESS_ZERO, ONE_BD, ONE_BI, ZERO_BD, ZERO_BI } from './constants';
 import { fetchTokenDecimals, fetchTokenName, fetchTokenSymbol, fetchTokenTotalSupply } from './utils/tokenHelper';
 import { Pool as PoolTemplate } from '../generated/templates';
-import { FACTORY_ADDRESS, StableCoinConfig } from './config';
+import { FACTORY_ADDRESS, StableCoinConfig, TrustableTokenConfig } from './config';
 import { findUsdPerToken } from './utils/pricing';
 
 export function handleNewPool(event: NewPool): void {
@@ -19,13 +19,13 @@ export function handleNewPool(event: NewPool): void {
     const tokenY = getOrCreateTokenEntity(event.params.tokenY);
     if (tokenY === null) return;
 
-    if (StableCoinConfig.config().has(tokenX.id)) {
+    if (TrustableTokenConfig.config().has(tokenX.id)) {
         // push direct not change effect
         let newPools = tokenY.trustablePools;
         newPools.push(pool.id);
         tokenY.trustablePools = newPools;
     }
-    if (StableCoinConfig.config().has(tokenY.id)) {
+    if (TrustableTokenConfig.config().has(tokenY.id)) {
         let newPools = tokenX.trustablePools;
         newPools.push(pool.id);
         tokenX.trustablePools = newPools;
@@ -83,7 +83,7 @@ function getOrCreateFactoryEntity(factoryAddress: string): Factory {
         factory.totalVolumeUSD = ZERO_BD;
         factory.totalFeesUSD = ZERO_BD;
         factory.tvlUSD = ZERO_BD;
-
+        factory.save()
         // TODO handle all initial
     }
 
@@ -94,8 +94,15 @@ function getOrCreateTokenEntity(tokenAddress: Address): Token | null {
     let token = Token.load(tokenAddress.toHexString());
     if (token === null) {
         token = new Token(tokenAddress.toHexString());
-        token.symbol = fetchTokenSymbol(tokenAddress);
-        token.name = fetchTokenName(tokenAddress);
+
+        const tokenSymbol = fetchTokenSymbol(tokenAddress);
+        if (tokenSymbol == ADDRESS_ZERO) return null
+        token.symbol = tokenSymbol
+
+        const tokenName = fetchTokenName(tokenAddress);
+        if (tokenName == '') return null 
+        token.name = tokenName;
+
         token.totalSupply = fetchTokenTotalSupply(tokenAddress);
         const decimals = fetchTokenDecimals(tokenAddress);
 
@@ -122,5 +129,7 @@ function getOrCreateTokenEntity(tokenAddress: Address): Token | null {
         token.tvlUSD = ZERO_BD;
     }
     token.poolCount = token.poolCount.plus(ONE_BI);
+    token.save()
+
     return token;
 }

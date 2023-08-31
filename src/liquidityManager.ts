@@ -44,6 +44,7 @@ function getOrCreateLiquidity(event: ethereum.Event, nftId: BigInt): Liquidity |
             liquidity.collectedFeesTokenY = ZERO_BD;
             liquidity.isValid = true;
             liquidity.transaction = getOrCreateTransaction(event).id;
+            liquidity.save()
         }
     }
 

@@ -18,7 +18,7 @@ import {
     AddLimitOrder as AddLimitOrderEvent,
     DecLimitOrder as DecLimitOrderEvent,
 } from '../generated/templates/Pool/Pool';
-import { FACTORY_ADDRESS } from './config';
+import { FACTORY_ADDRESS, StableCoinConfig } from './config';
 import { ONE_BI, ZERO_BD } from './constants';
 import { updatePoolDayData, updatePoolHourData, updateTokenDayData, updateTokenHourData } from './intervalUpdater';
 import { bigEndianBytesToBigInt, convertFeeNumber, convertTokenToDecimal, tick2PriceDecimal, topicToAddress } from './utils/funcs';
@@ -40,20 +40,25 @@ function updateTVL(
         // read from contract too low
         // const tvlX = fetchTokenBalanceAmount(pool.tokenX, pool.id, tokenX.decimals);
         pool.tvlTokenX = pool.tvlTokenX.plus(amountXDelta);
-        tokenX.tvl.plus(amountXDelta);
-        tokenX.tvlUSD.times(tokenX.priceUSD);
+        tokenX.tvl = tokenX.tvl.plus(amountXDelta);
+        tokenX.tvlUSD = tokenX.tvlUSD.times(tokenX.priceUSD);
+        tokenX.save()
     }
 
     if (amountYDelta.notEqual(ZERO_BD)) {
         // const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenY.decimals);
         pool.tvlTokenY = pool.tvlTokenY.plus(amountYDelta);
-        tokenY.tvl.plus(amountYDelta);
-        tokenY.tvlUSD.times(tokenY.priceUSD);
+        tokenY.tvl = tokenY.tvl.plus(amountYDelta);
+        tokenY.tvlUSD = tokenY.tvlUSD.times(tokenY.priceUSD);
+        tokenY.save()
     }
 
     pool.tvlUSD = pool.tvlTokenX.times(tokenX.priceUSD).plus(pool.tvlTokenY.times(tokenY.priceUSD));
 
     factory.tvlUSD = factory.tvlUSD.plus(pool.tvlUSD);
+
+    pool.save()
+    factory.save()
 }
 
 export function handleMint(event: MintEvent): void {
@@ -304,6 +309,16 @@ export function handleSwap(event: SwapEvent): void {
         pool.feesTokenY = pool.feesTokenY.plus(feesTokenY);
         pool.volumeTokenY = pool.volumeTokenY.plus(amountY);
     }
+
+    if (amountUSD==ZERO_BD){
+        if (StableCoinConfig.config().has(tokenX.id)) {
+            amountUSD = amountX;
+        }
+        if (StableCoinConfig.config().has(tokenY.id)){
+            amountUSD = amountY
+        }
+    }
+
     factory.totalVolumeUSD = factory.totalVolumeUSD.plus(amountUSD);
     factory.totalFeesUSD = factory.totalFeesUSD.plus(feesUSD);
     pool.volumeUSD = pool.volumeUSD.plus(amountUSD);
