@@ -320,10 +320,6 @@ export class Swap__Params {
   get amountY(): BigInt {
     return this._event.parameters[5].value.toBigInt();
   }
-
-  get currentPoint(): i32 {
-    return this._event.parameters[6].value.toI32();
-  }
 }
 
 export class Pool__addLimOrderWithXResult {

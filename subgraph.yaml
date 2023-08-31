@@ -4,7 +4,7 @@ schema:
 dataSources:
   - kind: ethereum
     name: iZiSwapFactory
-    network: arbitrum-one
+    network: zksync-era
     source:
       address: "0x575Bfc57B0D3eA0d31b132D622643e71735A6957"
       abi: iZiSwapFactory
@@ -30,7 +30,7 @@ dataSources:
 
   - kind: ethereum
     name: iZiSwapLiquidityManager
-    network: arbitrum-one
+    network: zksync-era
     source:
       address: "0x483FDE31bcE3DCc168E23a870831b50Ce2cCd1F1"
       abi: iZiSwapLiquidityManager
@@ -58,7 +58,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: Pool
-    network: arbitrum-one
+    network: zksync-era
     source:
       abi: Pool
     mapping:
@@ -77,7 +77,7 @@ templates:
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
-        - event: Swap(indexed address,indexed address,indexed uint24,bool,uint256,uint256,int24)
+        - event: Swap(indexed address,indexed address,indexed uint24,bool,uint256,uint256)
           handler: handleSwap
         - event: Mint(address,indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
           handler: handleMint
