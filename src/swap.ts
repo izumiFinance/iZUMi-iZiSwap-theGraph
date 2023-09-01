@@ -273,8 +273,8 @@ export function handleSwap(event: SwapEvent): void {
     tokenY.txCount = tokenY.txCount.plus(ONE_BI);
 
     // updated pool rates
-    pool.tokenXPrice = tick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals);
-    pool.tokenYPrice = ONE_BD.div(tick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals));
+    pool.tokenXPrice = ONE_BD.div(tick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals));
+    pool.tokenYPrice = tick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals);
 
     // volume and fee
     let amountUSD = ZERO_BD;
