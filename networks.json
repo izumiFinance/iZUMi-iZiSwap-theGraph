@@ -1,12 +1,12 @@
 {
-  "arbitrum-one": {
+  "base": {
     "iZiSwapFactory": {
-      "address": "0x93BB94a0d5269cb437A1F71FF3a77AB753844422",
-      "startBlock": 30062450
+      "address": "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08",
+      "startBlock": 1995940
     },
     "iZiSwapLiquidityManager": {
-      "address": "0xBF55ef05412f1528DbD96ED9E7181f87d8C9F453",
-      "startBlock": 30062450
+      "address": "0x110dE362cc436D7f54210f96b8C7652C2617887D",
+      "startBlock": 1995940
     }
   }
 }
