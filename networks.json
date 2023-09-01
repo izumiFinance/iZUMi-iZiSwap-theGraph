@@ -1,5 +1,5 @@
 {
-  "arbitrum-one": {
+  "bsc": {
     "iZiSwapFactory": {
       "address": "0x93BB94a0d5269cb437A1F71FF3a77AB753844422",
       "startBlock": 30062450
