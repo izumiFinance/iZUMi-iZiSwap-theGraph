@@ -1,6 +1,6 @@
 import { BigDecimal, BigInt } from '@graphprotocol/graph-ts';
 
-export const FACTORY_ADDRESS = '0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08';
+export const FACTORY_ADDRESS = '0x45e5f26451cdb01b0fa1f8582e0aad9a6f27c218';
 
 export const MINIMUM_USD_LOCKED_FOR_PRICING = BigDecimal.fromString('2000');
 
@@ -10,8 +10,9 @@ export class StableCoinConfig {
     static config(): Set<string> {
         if (this.stableCoins == null) {
             this.stableCoins = new Set();
+            this.stableCoins.add('0x201eba5cc46d216ce6dc03f6a759e8e766e956ae'); // USDT
             this.stableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
-            this.stableCoins.add('0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca'); // USDbC
+            this.stableCoins.add('0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9'); // USDC
 
         }
 
@@ -26,10 +27,12 @@ export class TrustableTokenConfig {
     static config(): Set<string> {
         if (this.trustableTokens == null) {
             this.trustableTokens = new Set();
+            this.trustableTokens.add('0x201eba5cc46d216ce6dc03f6a759e8e766e956ae'); // USDT
             this.trustableTokens.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
             this.trustableTokens.add('0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'); // iZi
-            this.trustableTokens.add('0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca'); // USDbC
-            this.trustableTokens.add('0x4200000000000000000000000000000000000006'); // WETH
+            this.trustableTokens.add('0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9'); // USDC
+            this.trustableTokens.add('0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111'); // WETH
+            this.trustableTokens.add('0x78c1b0c915c4faa5fffa6cabf0219da63d7f4cb8'); // WMNT
         }
 
         return this.trustableTokens;
