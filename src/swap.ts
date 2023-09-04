@@ -19,7 +19,7 @@ import {
     DecLimitOrder as DecLimitOrderEvent,
 } from '../generated/templates/Pool/Pool';
 import { FACTORY_ADDRESS, StableCoinConfig } from './config';
-import { ONE_BI, ZERO_BD } from './constants';
+import { E6_BI, ONE_BD, ONE_BI, ZERO_BD } from './constants';
 import { updatePoolDayData, updatePoolHourData, updateTokenDayData, updateTokenHourData } from './intervalUpdater';
 import { bigEndianBytesToBigInt, convertFeeNumber, convertTokenToDecimal, tick2PriceDecimal, topicToAddress } from './utils/funcs';
 import { findUsdPerToken } from './utils/pricing';
@@ -266,6 +266,9 @@ export function handleSwap(event: SwapEvent): void {
     const amountXDelta = sellXEarnY ? amountX : amountX.neg();
     const amountYDelta = sellXEarnY ? amountY.neg() : amountY;
 
+    const amountXtracker = sellXEarnY ? amountX.times(ONE_BD.minus(BigDecimal.fromString(pool.feeTier.div(E6_BI).toString()))) : amountX
+    const amountYtracker = sellXEarnY ? amountY : amountY.times(ONE_BD.minus(BigDecimal.fromString(pool.feeTier.div(E6_BI).toString())))
+
     // tx count
     factory.txCount = factory.txCount.plus(ONE_BI);
     pool.txCount = pool.txCount.plus(ONE_BI);
@@ -273,8 +276,8 @@ export function handleSwap(event: SwapEvent): void {
     tokenY.txCount = tokenY.txCount.plus(ONE_BI);
 
     // updated pool rates
-    pool.tokenXPrice = amountX.div(amountY);
-    pool.tokenYPrice = amountY.div(amountX);
+    pool.tokenXPrice = amountXtracker.div(amountYtracker);
+    pool.tokenYPrice = amountYtracker.div(amountXtracker);
 
     // volume and fee
     let amountUSD = ZERO_BD;
