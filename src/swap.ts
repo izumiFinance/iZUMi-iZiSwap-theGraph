@@ -19,7 +19,7 @@ import {
     DecLimitOrder as DecLimitOrderEvent,
 } from '../generated/templates/Pool/Pool';
 import { FACTORY_ADDRESS, StableCoinConfig } from './config';
-import { ONE_BI, ZERO_BD } from './constants';
+import { ONE_BD, ONE_BI, ZERO_BD } from './constants';
 import { updatePoolDayData, updatePoolHourData, updateTokenDayData, updateTokenHourData } from './intervalUpdater';
 import { bigEndianBytesToBigInt, convertFeeNumber, convertTokenToDecimal, tick2PriceDecimal, topicToAddress } from './utils/funcs';
 import { findUsdPerToken } from './utils/pricing';
@@ -273,8 +273,8 @@ export function handleSwap(event: SwapEvent): void {
     tokenY.txCount = tokenY.txCount.plus(ONE_BI);
 
     // updated pool rates
-    pool.tokenXPrice = amountX.div(amountY);
-    pool.tokenYPrice = amountY.div(amountX);
+    pool.tokenXPrice = ONE_BD.div(tick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals));
+    pool.tokenYPrice = tick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals);
 
     // volume and fee
     let amountUSD = ZERO_BD;
@@ -495,7 +495,7 @@ export function handleAddLimitOrder(event: AddLimitOrderEvent): void {
 
     // TODO, contract bug, force to update tvl
     const tvlX = fetchTokenBalanceAmount(pool.tokenX, pool.id, tokenX.decimals);
-    const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenX.decimals);
+    const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenY.decimals);
     pool.tvlTokenX = tvlX;
     pool.tvlTokenY = tvlY;
     pool.tvlUSD = pool.tvlTokenX.times(tokenX.priceUSD).plus(pool.tvlTokenY.times(tokenY.priceUSD));
@@ -574,7 +574,7 @@ export function handleDecLimitOrder(event: DecLimitOrderEvent): void {
 
     // TODO, contract bug, force to update tvl
     const tvlX = fetchTokenBalanceAmount(pool.tokenX, pool.id, tokenX.decimals);
-    const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenX.decimals);
+    const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenY.decimals);
     pool.tvlTokenX = tvlX;
     pool.tvlTokenY = tvlY;
     pool.tvlUSD = pool.tvlTokenX.times(tokenX.priceUSD).plus(pool.tvlTokenY.times(tokenY.priceUSD));
