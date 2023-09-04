@@ -495,7 +495,7 @@ export function handleAddLimitOrder(event: AddLimitOrderEvent): void {
 
     // TODO, contract bug, force to update tvl
     const tvlX = fetchTokenBalanceAmount(pool.tokenX, pool.id, tokenX.decimals);
-    const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenX.decimals);
+    const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenY.decimals);
     pool.tvlTokenX = tvlX;
     pool.tvlTokenY = tvlY;
     pool.tvlUSD = pool.tvlTokenX.times(tokenX.priceUSD).plus(pool.tvlTokenY.times(tokenY.priceUSD));
@@ -574,7 +574,7 @@ export function handleDecLimitOrder(event: DecLimitOrderEvent): void {
 
     // TODO, contract bug, force to update tvl
     const tvlX = fetchTokenBalanceAmount(pool.tokenX, pool.id, tokenX.decimals);
-    const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenX.decimals);
+    const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenY.decimals);
     pool.tvlTokenX = tvlX;
     pool.tvlTokenY = tvlY;
     pool.tvlUSD = pool.tvlTokenX.times(tokenX.priceUSD).plus(pool.tvlTokenY.times(tokenY.priceUSD));
