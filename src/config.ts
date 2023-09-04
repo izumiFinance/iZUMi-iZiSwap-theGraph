@@ -14,6 +14,7 @@ export class StableCoinConfig {
             this.stableCoins.add('0x3355df6d4c9c3035724fd0e3914de96a5a83aaf4'); // USDC 
             this.stableCoins.add('0x2039bb4116b4efc145ec4f0e2ea75012d6c0f181'); // BUSD
             this.stableCoins.add('0x496d88d1efc3e145b7c12d53b78ce5e7eda7a42c'); // slUSDT
+            this.stableCoins.add('0xfc7e56298657b002b3e656400e746b7212912757'); // zkUSD
 
         }
 
@@ -34,6 +35,7 @@ export class TrustableTokenConfig {
             this.trustableTokens.add('0x3355df6d4c9c3035724fd0e3914de96a5a83aaf4'); // USDC
             this.trustableTokens.add('0x2039bb4116b4efc145ec4f0e2ea75012d6c0f181'); // BUSD
             this.trustableTokens.add('0x496d88d1efc3e145b7c12d53b78ce5e7eda7a42c'); // slUSDT
+            this.trustableTokens.add('0xfc7e56298657b002b3e656400e746b7212912757'); // zkUSD
         }
 
         return this.trustableTokens;
