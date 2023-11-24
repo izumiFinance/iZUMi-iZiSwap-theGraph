@@ -1,6 +1,6 @@
 import { BigDecimal, BigInt } from '@graphprotocol/graph-ts';
 
-export const FACTORY_ADDRESS = '0x45e5f26451cdb01b0fa1f8582e0aad9a6f27c218';
+export const FACTORY_ADDRESS = '0x8c7d3063579bdb0b90997e18a770eae32e1ebb08';
 
 export const MINIMUM_USD_LOCKED_FOR_PRICING = BigDecimal.fromString('2000');
 
@@ -10,10 +10,9 @@ export class StableCoinConfig {
     static config(): Set<string> {
         if (this.stableCoins == null) {
             this.stableCoins = new Set();
-            this.stableCoins.add('0x201eba5cc46d216ce6dc03f6a759e8e766e956ae'); // USDT
-            this.stableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
-            this.stableCoins.add('0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9'); // USDC
-
+            this.stableCoins.add('0xf417f5a458ec102b90352f697d6e2ac3a3d2851f'); // USDT
+            this.stableCoins.add('0x078f712f038a95beea94f036cadb49188a90604b'); // iUSD
+            this.stableCoins.add('0xb73603c5d87fa094b7314c74ace2e64d165016fb'); // USDC
         }
 
         return this.stableCoins;
@@ -27,12 +26,11 @@ export class TrustableTokenConfig {
     static config(): Set<string> {
         if (this.trustableTokens == null) {
             this.trustableTokens = new Set();
-            this.trustableTokens.add('0x201eba5cc46d216ce6dc03f6a759e8e766e956ae'); // USDT
-            this.trustableTokens.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
-            this.trustableTokens.add('0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'); // iZi
-            this.trustableTokens.add('0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9'); // USDC
-            this.trustableTokens.add('0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111'); // WETH
-            this.trustableTokens.add('0x78c1b0c915c4faa5fffa6cabf0219da63d7f4cb8'); // WMNT
+            this.trustableTokens.add('0xf417f5a458ec102b90352f697d6e2ac3a3d2851f'); // USDT
+            this.trustableTokens.add('0x078f712f038a95beea94f036cadb49188a90604b'); // iUSD
+            // this.trustableTokens.add('0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'); // iZi
+            this.trustableTokens.add('0xb73603c5d87fa094b7314c74ace2e64d165016fb'); // USDC
+            this.trustableTokens.add('0x0dc808adce2099a9f62aa87d9670745aba741746'); // WETH
         }
 
         return this.trustableTokens;

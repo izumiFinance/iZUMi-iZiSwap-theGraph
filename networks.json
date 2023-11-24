@@ -1,12 +1,12 @@
 {
-  "mainnet": {
+  "manta-pacific-mainnet": {
     "iZiSwapFactory": {
-      "address": "0x45e5F26451CDB01B0fA1f8582E0aAD9A6F27C218",
-      "startBlock": 6800
+      "address": "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08",
+      "startBlock": 18800
     },
     "iZiSwapLiquidityManager": {
-      "address": "0x611575eE1fbd4F7915D0eABCC518eD396fF78F0c",
-      "startBlock": 6800
+      "address": "0x19b683A2F45012318d9B2aE1280d68d3eC54D663",
+      "startBlock": 18800
     }
   }
 }
