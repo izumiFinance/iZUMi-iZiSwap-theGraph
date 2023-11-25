@@ -1,42 +1,76 @@
-import { BigDecimal, BigInt } from '@graphprotocol/graph-ts';
+import { BigDecimal, BigInt, TypedMap, dataSource } from '@graphprotocol/graph-ts';
 
-export const FACTORY_ADDRESS = '0x1F98431c8aD98523631AE4a59f267346ea31F984';
+// TODO dynamic
+export const FACTORY_ADDRESS = '0x8c7d3063579bdb0b90997e18a770eae32e1ebb08';
 
-export const MINIMUM_USD_LOCKED_FOR_PRICING = BigDecimal.fromString('5000');
+export const MINIMUM_USD_LOCKED_FOR_PRICING = BigDecimal.fromString('2000');
 
 export class StableCoinConfig {
-    static stableCoins: Set<string>;
-
+    static networkToStableCoins: TypedMap<string, Set<string>>;
+    static emptyStableCoins: Set<string>;
     static config(): Set<string> {
-        if (this.stableCoins == null) {
-            this.stableCoins = new Set();
-            this.stableCoins.add('0x55d398326f99059ff775485246999027b3197955'); // USDT
-            this.stableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
-            this.stableCoins.add('0xe9e7cea3dedca5984780bafc599bd69add087d56'); // BUSD
-            this.stableCoins.add('0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'); // USDC
+        if (this.networkToStableCoins == null) {
+            this.networkToStableCoins = new TypedMap<string, Set<string>>();
+            this.emptyStableCoins = new Set<string>();
+            // BSC
+            let bscStableCoins = new Set<string>();
+            bscStableCoins.add('0x55d398326f99059ff775485246999027b3197955'); // USDT
+            bscStableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            bscStableCoins.add('0xe9e7cea3dedca5984780bafc599bd69add087d56'); // BUSD
+            bscStableCoins.add('0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'); // USDC
+            this.networkToStableCoins.set("bsc", bscStableCoins);
+
+            // manta
+            let mantaStableCoins = new Set<string>();
+            mantaStableCoins.add('0xb73603C5d87fA094B7314C74ACE2e64D165016fb'); // USDC
+            this.networkToStableCoins.set("manta", mantaStableCoins);
         }
 
-        return this.stableCoins;
+        const stableCoins = this.networkToStableCoins.get(dataSource.network());
+        if (stableCoins !== null) {
+            return stableCoins;
+        } else {
+            return this.emptyStableCoins;
+        }
     }
 }
 
 
 export class TrustableTokenConfig {
-    static trustableTokens: Set<string>;
-
+    static networkToTrustableCoins: TypedMap<string, Set<string>>;
+    static emptyTrustableCoins: Set<string>;
     static config(): Set<string> {
-        if (this.trustableTokens == null) {
-            this.trustableTokens = new Set();
-            this.trustableTokens.add('0x55d398326f99059ff775485246999027b3197955'); // USDT
-            this.trustableTokens.add('0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'); // WBNB
-            this.trustableTokens.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
-            this.trustableTokens.add('0x2170ed0880ac9a755fd29b2688956bd959f933f8'); // WETH
-            this.trustableTokens.add('0xe9e7cea3dedca5984780bafc599bd69add087d56'); // BUSD
-            this.trustableTokens.add('0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'); // iZi
-            this.trustableTokens.add('0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'); // USDC
+        if (this.networkToTrustableCoins == null) {
+            this.networkToTrustableCoins = new TypedMap<string, Set<string>>();
+            this.emptyTrustableCoins = new Set<string>();
+
+            // BSC
+            let bscTrustableCoins = new Set<string>();
+            bscTrustableCoins.add('0x55d398326f99059ff775485246999027b3197955'); // USDT
+            bscTrustableCoins.add('0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'); // WBNB
+            bscTrustableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            bscTrustableCoins.add('0x2170ed0880ac9a755fd29b2688956bd959f933f8'); // WETH
+            bscTrustableCoins.add('0xe9e7cea3dedca5984780bafc599bd69add087d56'); // BUSD
+            bscTrustableCoins.add('0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'); // iZi
+            bscTrustableCoins.add('0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'); // USDC
+            this.networkToTrustableCoins.set("bsc", bscTrustableCoins);
+
+            // manta
+            let mantaTrustableCoins = new Set<string>();
+            mantaTrustableCoins.add('0xb73603c5d87fa094b7314c74ace2e64d165016fb'); // USDC
+            mantaTrustableCoins.add('0x0dc808adce2099a9f62aa87d9670745aba741746'); // WETH
+            mantaTrustableCoins.add('0xf417f5a458ec102b90352f697d6e2ac3a3d2851f'); // USDT
+            mantaTrustableCoins.add('0x078f712f038a95beea94f036cadb49188a90604b'); // iUSD
+            
+            this.networkToTrustableCoins.set("manta", mantaTrustableCoins);
         }
 
-        return this.trustableTokens;
+        const trustableTokens = this.networkToTrustableCoins.get(dataSource.network());
+        if (trustableTokens !== null) {
+            return trustableTokens;
+        } else {
+            return this.emptyTrustableCoins;
+        }
     }
 }
 

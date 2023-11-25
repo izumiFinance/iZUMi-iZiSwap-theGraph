@@ -2,6 +2,7 @@ import { Address, BigDecimal, BigInt, ByteArray } from '@graphprotocol/graph-ts'
 import { ERC20 } from '../../generated/iZiSwapFactory/ERC20';
 import { ERC20BytesMethod } from '../../generated/iZiSwapFactory/ERC20BytesMethod';
 import { PresetTokenInfoHolder } from '../config';
+import { ADDRESS_ZERO } from '../constants';
 import { convertTokenToDecimal, isNullEthValue } from './funcs';
 
 export function fetchTokenSymbol(tokenAddress: Address): string {
@@ -23,6 +24,8 @@ export function fetchTokenSymbol(tokenAddress: Address): string {
                   symbolValue = tokenInfo.symbol;
                 }
             }
+        } else {
+            return ADDRESS_ZERO
         }
     } else {
         symbolValue = symbolResult.value;
@@ -31,7 +34,7 @@ export function fetchTokenSymbol(tokenAddress: Address): string {
     return symbolValue;
 }
 
-export function fetchTokenName(tokenAddress: Address): string {
+export function fetchTokenName(tokenAddress: Address): string{
     const contract = ERC20.bind(tokenAddress);
 
     // try types string and bytes32 for name
@@ -50,6 +53,8 @@ export function fetchTokenName(tokenAddress: Address): string {
                   nameValue = tokenInfo.name;
                 }
             }
+        } else {
+            return ''
         }
     } else {
         nameValue = nameResult.value;

@@ -1,37 +1,6 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_factory",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_tokenX",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_tokenY",
-        "type": "address"
-      },
-      {
-        "internalType": "uint24",
-        "name": "_fee",
-        "type": "uint24"
-      },
-      {
-        "internalType": "int24",
-        "name": "currentPoint",
-        "type": "int24"
-      },
-      {
-        "internalType": "int24",
-        "name": "_pointDelta",
-        "type": "int24"
-      }
-    ],
+    "inputs": [],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -39,16 +8,40 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
       },
       {
         "indexed": false,
+        "internalType": "uint128",
+        "name": "addAmount",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "acquireAmount",
+        "type": "uint128"
+      },
+      {
+        "indexed": true,
         "internalType": "int24",
         "name": "point",
         "type": "int24"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "claimSold",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "claimEarn",
+        "type": "uint128"
       },
       {
         "indexed": false,
@@ -107,16 +100,120 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "int24",
+        "name": "point",
+        "type": "int24"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "collectDec",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "collectEarn",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "sellXEarnY",
+        "type": "bool"
+      }
+    ],
+    "name": "CollectLimitOrder",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "int24",
+        "name": "leftPoint",
+        "type": "int24"
+      },
+      {
+        "indexed": true,
+        "internalType": "int24",
+        "name": "rightPoint",
+        "type": "int24"
+      },
+      {
         "indexed": false,
         "internalType": "uint256",
-        "name": "amount",
+        "name": "amountX",
         "type": "uint256"
       },
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "amountY",
+        "type": "uint256"
+      }
+    ],
+    "name": "CollectLiquidity",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "decreaseAmount",
+        "type": "uint128"
+      },
+      {
+        "indexed": true,
         "internalType": "int24",
         "name": "point",
         "type": "int24"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "claimSold",
+        "type": "uint128"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint128",
+        "name": "claimEarn",
+        "type": "uint128"
       },
       {
         "indexed": false,
@@ -258,6 +355,12 @@
         "internalType": "uint256",
         "name": "amountY",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "int24",
+        "name": "currentPoint",
+        "type": "int24"
       }
     ],
     "name": "Swap",
@@ -352,6 +455,11 @@
         "internalType": "uint128",
         "name": "assignX",
         "type": "uint128"
+      },
+      {
+        "internalType": "bool",
+        "name": "fromLegacy",
+        "type": "bool"
       }
     ],
     "name": "assignLimOrderEarnX",
@@ -376,6 +484,11 @@
         "internalType": "uint128",
         "name": "assignY",
         "type": "uint128"
+      },
+      {
+        "internalType": "bool",
+        "name": "fromLegacy",
+        "type": "bool"
       }
     ],
     "name": "assignLimOrderEarnY",
@@ -537,6 +650,11 @@
         "internalType": "uint128",
         "name": "actualDeltaX",
         "type": "uint128"
+      },
+      {
+        "internalType": "uint256",
+        "name": "legacyAccEarn",
+        "type": "uint256"
       }
     ],
     "stateMutability": "nonpayable",
@@ -561,6 +679,11 @@
         "internalType": "uint128",
         "name": "actualDeltaY",
         "type": "uint128"
+      },
+      {
+        "internalType": "uint256",
+        "name": "legacyAccEarn",
+        "type": "uint256"
       }
     ],
     "stateMutability": "nonpayable",
@@ -711,6 +834,16 @@
         "type": "uint256"
       },
       {
+        "internalType": "uint256",
+        "name": "legacyAccEarnY",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint128",
+        "name": "legacyEarnY",
+        "type": "uint128"
+      },
+      {
         "internalType": "uint128",
         "name": "sellingY",
         "type": "uint128"
@@ -721,8 +854,18 @@
         "type": "uint128"
       },
       {
+        "internalType": "uint128",
+        "name": "legacyEarnX",
+        "type": "uint128"
+      },
+      {
         "internalType": "uint256",
         "name": "accEarnX",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "legacyAccEarnX",
         "type": "uint256"
       }
     ],
@@ -908,6 +1051,19 @@
   {
     "inputs": [
       {
+        "internalType": "uint24",
+        "name": "newFeeChargePercent",
+        "type": "uint24"
+      }
+    ],
+    "name": "modifyFeeChargePercent",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
@@ -922,13 +1078,8 @@
       },
       {
         "internalType": "int56",
-        "name": "pointCumulative",
+        "name": "accPoint",
         "type": "int56"
-      },
-      {
-        "internalType": "uint160",
-        "name": "secondsPerLiquidityCumulative_128",
-        "type": "uint160"
       },
       {
         "internalType": "bool",
@@ -951,13 +1102,8 @@
     "outputs": [
       {
         "internalType": "int56[]",
-        "name": "pointCumulatives",
+        "name": "accPoints",
         "type": "int56[]"
-      },
-      {
-        "internalType": "uint160[]",
-        "name": "secondsPerLiquidityCumulative_128s",
-        "type": "uint160[]"
       }
     ],
     "stateMutability": "view",
@@ -1367,6 +1513,11 @@
       },
       {
         "internalType": "uint128",
+        "name": "legacyEarn",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
         "name": "earnAssign",
         "type": "uint128"
       }
@@ -1402,6 +1553,11 @@
       {
         "internalType": "uint128",
         "name": "earn",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
+        "name": "legacyEarn",
         "type": "uint128"
       },
       {

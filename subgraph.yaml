@@ -6,7 +6,7 @@ dataSources:
     name: iZiSwapFactory
     network: bsc
     source:
-      address: "0xd7de110Bd452AAB96608ac3750c3730A17993DE0"
+      address: "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08"
       abi: iZiSwapFactory
       startBlock: 17681022
     mapping:
@@ -75,17 +75,17 @@ templates:
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
-        - event: Swap(indexed address,indexed address,indexed uint24,bool,uint256,uint256)
+        - event: Swap(indexed address,indexed address,indexed uint24,bool,uint256,uint256,int24)
           handler: handleSwap
         - event: Mint(address,indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
           handler: handleMint
         - event: Burn(indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
           handler: handleBurn
           receipt: true
-        - event: AddLimitOrder(uint256,int24,bool)
+        - event: AddLimitOrder(indexed address,uint128,uint128,indexed int24,uint128,uint128,bool)
           handler: handleAddLimitOrder
           receipt: true
-        - event: DecLimitOrder(uint256,int24,bool)
+        - event: DecLimitOrder(indexed address,uint128,indexed int24,uint128,uint128,bool)
           handler: handleDecLimitOrder
           receipt: true
         - event: Flash(indexed address,indexed address,uint256,uint256,uint256,uint256)
