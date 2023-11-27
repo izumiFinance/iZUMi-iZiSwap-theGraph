@@ -24,6 +24,13 @@ export class StableCoinConfig {
             let mantaStableCoins = new Set<string>();
             mantaStableCoins.add('0xb73603C5d87fA094B7314C74ACE2e64D165016fb'); // USDC
             this.networkToStableCoins.set("manta", mantaStableCoins);
+
+            // mantle
+            let mantleStableCoins = new Set<string>();
+            mantleStableCoins.add('0x201eba5cc46d216ce6dc03f6a759e8e766e956ae'); // USDT
+            mantleStableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            mantleStableCoins.add('0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9'); // USDC
+            this.networkToStableCoins.set("mantle", mantleStableCoins);
         }
 
         const stableCoins = this.networkToStableCoins.get(dataSource.network());
@@ -62,6 +69,15 @@ export class TrustableTokenConfig {
             mantaTrustableCoins.add('0xf417f5a458ec102b90352f697d6e2ac3a3d2851f'); // USDT
             mantaTrustableCoins.add('0x078f712f038a95beea94f036cadb49188a90604b'); // iUSD
             
+            // mantle
+            let mantleTrustableCoins = new Set<string>();
+            mantleTrustableCoins.add('0x201eba5cc46d216ce6dc03f6a759e8e766e956ae'); // USDT
+            mantleTrustableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            mantleTrustableCoins.add('0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'); // iZi
+            mantleTrustableCoins.add('0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9'); // USDC
+            mantleTrustableCoins.add('0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111'); // WETH
+            mantleTrustableCoins.add('0x78c1b0c915c4faa5fffa6cabf0219da63d7f4cb8'); // WMNT
+
             this.networkToTrustableCoins.set("manta", mantaTrustableCoins);
         }
 

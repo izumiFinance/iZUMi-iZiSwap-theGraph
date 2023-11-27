@@ -11,12 +11,12 @@
     "remove-local-bsc": "graph remove --node http://localhost:8020/ --network bsc izi-swap-bsc",
     "deploy-local-bsc": "graph deploy --node http://localhost:8020/ --network bsc--ipfs http://localhost:5001 izi-swap-bsc",
 
-    "create-local-manta": "graph create --node http://localhost:8020/ --network manta izi-swap-manta",
-    "remove-local-manta": "graph remove --node http://localhost:8020/ --network manta izi-swap-manta",
+    "create-local-manta": "graph create --node http://localhost:8020/ izi-swap-manta",
+    "remove-local-manta": "graph remove --node http://localhost:8020/ izi-swap-manta",
     "deploy-local-manta": "graph deploy --node http://localhost:8020/ --network manta --ipfs http://localhost:5001 izi-swap-manta",
 
-    "create-local-mantle": "graph create --node http://localhost:8020/ --network mantle izi-swap-mantle",
-    "remove-local-mantle": "graph remove --node http://localhost:8020/ --network mantle izi-swap-mantle",
+    "create-local-mantle": "graph create --node http://localhost:8020/ izi-swap-mantle",
+    "remove-local-mantle": "graph remove --node http://localhost:8020/ izi-swap-mantle",
     "deploy-local-mantle": "graph deploy --node http://localhost:8020/ --network mantle --ipfs http://localhost:5001 izi-swap-mantle"
   },
   "dependencies": {

@@ -24,6 +24,15 @@ $ yarn run deploy
 
 open [iziswapsubgraph](https://thegraph.com/hosted-service/subgraph/izumifinance/iziswapsubgraph).
 
+## Using
+
+### Add chain
+
+1. modify `network.json` file, add contract address and startBlock of new chain
+2. modify `config.ts` file, append `StableCoinConfig` and `TrustableTokenConfig` config
+3. modify `package.json`, add create, remove, deploy shortcut command
+4. keep chian name same at `network.json` `config.ts` `package.json`
+
 ## Bug
 
 - optional chain not support
