@@ -31,6 +31,13 @@ export class StableCoinConfig {
             mantleStableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
             mantleStableCoins.add('0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9'); // USDC
             this.networkToStableCoins.set("mantle", mantleStableCoins);
+
+            // linea
+            let lineaStableCoins = new Set<string>();
+            lineaStableCoins.add('0xa219439258ca9da29e9cc4ce5596924745e12b93'); // USDT
+            lineaStableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            lineaStableCoins.add('0x176211869ca2b568f2a7d4ee941e073a821ee1ff'); // USDC
+            this.networkToStableCoins.set("linea", lineaStableCoins);
         }
 
         const stableCoins = this.networkToStableCoins.get(dataSource.network());
@@ -68,7 +75,8 @@ export class TrustableTokenConfig {
             mantaTrustableCoins.add('0x0dc808adce2099a9f62aa87d9670745aba741746'); // WETH
             mantaTrustableCoins.add('0xf417f5a458ec102b90352f697d6e2ac3a3d2851f'); // USDT
             mantaTrustableCoins.add('0x078f712f038a95beea94f036cadb49188a90604b'); // iUSD
-            
+            this.networkToTrustableCoins.set("manta", mantaTrustableCoins);
+
             // mantle
             let mantleTrustableCoins = new Set<string>();
             mantleTrustableCoins.add('0x201eba5cc46d216ce6dc03f6a759e8e766e956ae'); // USDT
@@ -77,8 +85,17 @@ export class TrustableTokenConfig {
             mantleTrustableCoins.add('0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9'); // USDC
             mantleTrustableCoins.add('0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111'); // WETH
             mantleTrustableCoins.add('0x78c1b0c915c4faa5fffa6cabf0219da63d7f4cb8'); // WMNT
+            this.networkToTrustableCoins.set("mantle", mantaTrustableCoins);
 
-            this.networkToTrustableCoins.set("manta", mantaTrustableCoins);
+            // linea
+            let lineaTrustableCoins = new Set<string>();
+            lineaTrustableCoins.add('0xa219439258ca9da29e9cc4ce5596924745e12b93'); // USDT
+            lineaTrustableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            lineaTrustableCoins.add('0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'); // iZi
+            lineaTrustableCoins.add('0x176211869ca2b568f2a7d4ee941e073a821ee1ff'); // USDC
+            lineaTrustableCoins.add('0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f'); // WETH
+            lineaTrustableCoins.add('0xb5bedd42000b71fdde22d3ee8a79bd49a568fc8f'); // wstETH
+            this.networkToTrustableCoins.set("linea", mantaTrustableCoins);
         }
 
         const trustableTokens = this.networkToTrustableCoins.get(dataSource.network());

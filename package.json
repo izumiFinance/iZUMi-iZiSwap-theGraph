@@ -17,7 +17,11 @@
 
     "create-local-mantle": "graph create --node http://localhost:8020/ izi-swap-mantle",
     "remove-local-mantle": "graph remove --node http://localhost:8020/ izi-swap-mantle",
-    "deploy-local-mantle": "graph deploy --node http://localhost:8020/ --network mantle --ipfs http://localhost:5001 izi-swap-mantle"
+    "deploy-local-mantle": "graph deploy --node http://localhost:8020/ --network mantle --ipfs http://localhost:5001 izi-swap-mantle",
+
+    "create-local-linea": "graph create --node http://localhost:8020/ izi-swap-linea",
+    "remove-local-linea": "graph remove --node http://localhost:8020/ izi-swap-linea",
+    "deploy-local-linea": "graph deploy --node http://localhost:8020/ --network linea --ipfs http://localhost:5001 izi-swap-linea"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.32.0",

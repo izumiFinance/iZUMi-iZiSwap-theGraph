@@ -13,21 +13,31 @@
   "manta": {
     "iZiSwapFactory": {
       "address": "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08",
-      "startBlock": 18839
+      "startBlock": 18800
     },
     "iZiSwapLiquidityManager": {
       "address": "0x19b683A2F45012318d9B2aE1280d68d3eC54D663",
-      "startBlock": 18839
+      "startBlock": 18800
     }
   },
   "mantle": {
     "iZiSwapFactory": {
       "address": "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08",
-      "startBlock": 2720
+      "startBlock": 2700
     },
     "iZiSwapLiquidityManager": {
       "address": "0x1502d025BfA624469892289D45C0352997251728",
-      "startBlock": 2720
+      "startBlock": 2700
+    }
+  },
+  "linea": {
+    "iZiSwapFactory": {
+      "address": "0x45e5F26451CDB01B0fA1f8582E0aAD9A6F27C218",
+      "startBlock": 1800
+    },
+    "iZiSwapLiquidityManager": {
+      "address": "0x1CB60033F61e4fc171c963f0d2d3F63Ece24319c",
+      "startBlock": 1800
     }
   }
 }
