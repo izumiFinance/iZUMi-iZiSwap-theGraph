@@ -22,11 +22,11 @@
   },
   "mantle": {
     "iZiSwapFactory": {
-      "address": "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08",
+      "address": "0x45e5F26451CDB01B0fA1f8582E0aAD9A6F27C218",
       "startBlock": 2700
     },
     "iZiSwapLiquidityManager": {
-      "address": "0x1502d025BfA624469892289D45C0352997251728",
+      "address": "0x611575eE1fbd4F7915D0eABCC518eD396fF78F0c",
       "startBlock": 2700
     }
   },
