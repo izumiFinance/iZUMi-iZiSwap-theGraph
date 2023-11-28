@@ -22,7 +22,9 @@ export class StableCoinConfig {
 
             // manta
             let mantaStableCoins = new Set<string>();
-            mantaStableCoins.add('0xb73603C5d87fA094B7314C74ACE2e64D165016fb'); // USDC
+            mantaStableCoins.add('0xb73603c5d87fa094b7314c74ace2e64d165016fb'); // USDC
+            mantaStableCoins.add('0xf417f5a458ec102b90352f697d6e2ac3a3d2851f'); // USDT
+            mantaStableCoins.add('0x078f712f038a95beea94f036cadb49188a90604b'); // iUSD
             this.networkToStableCoins.set("manta", mantaStableCoins);
 
             // mantle
@@ -37,6 +39,7 @@ export class StableCoinConfig {
             lineaStableCoins.add('0xa219439258ca9da29e9cc4ce5596924745e12b93'); // USDT
             lineaStableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
             lineaStableCoins.add('0x176211869ca2b568f2a7d4ee941e073a821ee1ff'); // USDC
+            lineaStableCoins.add('0x7d43aabc515c356145049227cee54b608342c0ad'); // BUSD
             this.networkToStableCoins.set("linea", lineaStableCoins);
         }
 
@@ -85,7 +88,7 @@ export class TrustableTokenConfig {
             mantleTrustableCoins.add('0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9'); // USDC
             mantleTrustableCoins.add('0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111'); // WETH
             mantleTrustableCoins.add('0x78c1b0c915c4faa5fffa6cabf0219da63d7f4cb8'); // WMNT
-            this.networkToTrustableCoins.set("mantle", mantaTrustableCoins);
+            this.networkToTrustableCoins.set("mantle", mantleTrustableCoins);
 
             // linea
             let lineaTrustableCoins = new Set<string>();
@@ -95,7 +98,8 @@ export class TrustableTokenConfig {
             lineaTrustableCoins.add('0x176211869ca2b568f2a7d4ee941e073a821ee1ff'); // USDC
             lineaTrustableCoins.add('0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f'); // WETH
             lineaTrustableCoins.add('0xb5bedd42000b71fdde22d3ee8a79bd49a568fc8f'); // wstETH
-            this.networkToTrustableCoins.set("linea", mantaTrustableCoins);
+            lineaTrustableCoins.add('0x7d43aabc515c356145049227cee54b608342c0ad'); // BUSD
+            this.networkToTrustableCoins.set("linea", lineaTrustableCoins);
         }
 
         const trustableTokens = this.networkToTrustableCoins.get(dataSource.network());
