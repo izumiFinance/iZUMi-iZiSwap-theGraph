@@ -1,5 +1,5 @@
 {
-  "mainnet": {
+  "mantle": {
     "iZiSwapFactory": {
       "address": "0x45e5F26451CDB01B0fA1f8582E0aAD9A6F27C218",
       "startBlock": 6800
