@@ -1,7 +1,19 @@
 import { BigDecimal, BigInt, TypedMap, dataSource } from '@graphprotocol/graph-ts';
+import networks from '../networks.json';
 
 // TODO dynamic
-export const FACTORY_ADDRESS = '0x8c7d3063579bdb0b90997e18a770eae32e1ebb08';
+// export const FACTORY_ADDRESS = '0x8c7d3063579bdb0b90997e18a770eae32e1ebb08';
+
+let factoryAddress: string;
+const networksMap = networks as any
+const currentNetwork = dataSource.network();
+if (networksMap[currentNetwork] && networksMap[currentNetwork].iZiSwapFactory) {
+    factoryAddress = networksMap[currentNetwork].iZiSwapFactory.address.toLowerCase();
+} else {
+    factoryAddress = '0x8c7d3063579bdb0b90997e18a770eae32e1ebb08';
+}
+
+export { factoryAddress as FACTORY_ADDRESS };
 
 export const MINIMUM_USD_LOCKED_FOR_PRICING = BigDecimal.fromString('2000');
 

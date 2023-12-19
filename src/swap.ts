@@ -42,7 +42,7 @@ function updateTVL(
         pool.tvlTokenX = pool.tvlTokenX.plus(amountXDelta);
         tokenX.tvl = tokenX.tvl.plus(amountXDelta);
         tokenX.tvlUSD = tokenX.tvlUSD.times(tokenX.priceUSD);
-        tokenX.save()
+        // tokenX.save()
     }
 
     if (amountYDelta.notEqual(ZERO_BD)) {
@@ -50,15 +50,15 @@ function updateTVL(
         pool.tvlTokenY = pool.tvlTokenY.plus(amountYDelta);
         tokenY.tvl = tokenY.tvl.plus(amountYDelta);
         tokenY.tvlUSD = tokenY.tvlUSD.times(tokenY.priceUSD);
-        tokenY.save()
+        // tokenY.save()
     }
 
     pool.tvlUSD = pool.tvlTokenX.times(tokenX.priceUSD).plus(pool.tvlTokenY.times(tokenY.priceUSD));
 
     factory.tvlUSD = factory.tvlUSD.plus(pool.tvlUSD);
 
-    pool.save()
-    factory.save()
+    // pool.save()
+    // factory.save()
 }
 
 export function handleMint(event: MintEvent): void {
@@ -108,12 +108,12 @@ export function handleMint(event: MintEvent): void {
     mint.rightPoint = BigInt.fromI32(event.params.rightPoint);
     mint.logIndex = event.logIndex;
 
-    updatePoolDayData(event);
-    updatePoolHourData(event);
-    updateTokenDayData(tokenX, event);
-    updateTokenDayData(tokenY, event);
-    updateTokenHourData(tokenX, event);
-    updateTokenHourData(tokenY, event);
+    const poolDayData = updatePoolDayData(event);
+    // updatePoolHourData(event);
+    const tokenXDayData = updateTokenDayData(tokenX, event);
+    const tokenYDayData = updateTokenDayData(tokenY, event);
+    // updateTokenHourData(tokenX, event);
+    // updateTokenHourData(tokenY, event);
 
     // save
     factory.save();
@@ -121,6 +121,9 @@ export function handleMint(event: MintEvent): void {
     tokenX.save();
     tokenY.save();
     mint.save();
+    poolDayData.save();
+    tokenXDayData.save();
+    tokenYDayData.save();
 }
 
 function getBurnId(event: BurnEvent, poolId: string): string {
@@ -233,12 +236,12 @@ export function handleBurn(event: BurnEvent): void {
     burn.collectedFeesTokenY = collectedFeesTokenY;
     burn.logIndex = event.logIndex;
 
-    updatePoolDayData(event);
-    updatePoolHourData(event);
-    updateTokenDayData(tokenX, event);
-    updateTokenDayData(tokenY, event);
-    updateTokenHourData(tokenX, event);
-    updateTokenHourData(tokenY, event);
+    const poolDayData = updatePoolDayData(event);
+    // updatePoolHourData(event);
+    const tokenXDayData = updateTokenDayData(tokenX, event);
+    const tokenYDayData = updateTokenDayData(tokenY, event);
+    // updateTokenHourData(tokenX, event);
+    // updateTokenHourData(tokenY, event);
 
     // save
     factory.save();
@@ -246,6 +249,9 @@ export function handleBurn(event: BurnEvent): void {
     tokenX.save();
     tokenY.save();
     burn.save();
+    poolDayData.save();
+    tokenXDayData.save();
+    tokenYDayData.save();
 }
 
 export function handleSwap(event: SwapEvent): void {
@@ -346,11 +352,11 @@ export function handleSwap(event: SwapEvent): void {
 
     // interval process
     const poolDayData = updatePoolDayData(event);
-    const poolHourData = updatePoolHourData(event);
+    // const poolHourData = updatePoolHourData(event);
     const tokenXDayData = updateTokenDayData(tokenX, event);
     const tokenYDayData = updateTokenDayData(tokenY, event);
-    const tokenXHourData = updateTokenHourData(tokenX, event);
-    const tokenYHourData = updateTokenHourData(tokenY, event);
+    // const tokenXHourData = updateTokenHourData(tokenX, event);
+    // const tokenYHourData = updateTokenHourData(tokenY, event);
 
     poolDayData.volumeTokenX = poolDayData.volumeTokenX.plus(volumeTokenX);
     poolDayData.volumeTokenY = poolDayData.volumeTokenY.plus(volumeTokenY);
@@ -359,12 +365,12 @@ export function handleSwap(event: SwapEvent): void {
     poolDayData.feesUSD = poolDayData.feesUSD.plus(feesUSD);
     poolDayData.volumeUSD = poolDayData.volumeUSD.plus(amountUSD);
 
-    poolHourData.volumeTokenX = poolHourData.volumeTokenX.plus(volumeTokenX);
-    poolHourData.volumeTokenY = poolHourData.volumeTokenY.plus(volumeTokenY);
-    poolHourData.feesTokenX = poolHourData.feesTokenX.plus(feesTokenX);
-    poolHourData.feesTokenY = poolHourData.feesTokenY.plus(feesTokenY);
-    poolHourData.feesUSD = poolHourData.feesUSD.plus(feesUSD);
-    poolHourData.volumeUSD = poolHourData.volumeUSD.plus(amountUSD);
+    // poolHourData.volumeTokenX = poolHourData.volumeTokenX.plus(volumeTokenX);
+    // poolHourData.volumeTokenY = poolHourData.volumeTokenY.plus(volumeTokenY);
+    // poolHourData.feesTokenX = poolHourData.feesTokenX.plus(feesTokenX);
+    // poolHourData.feesTokenY = poolHourData.feesTokenY.plus(feesTokenY);
+    // poolHourData.feesUSD = poolHourData.feesUSD.plus(feesUSD);
+    // poolHourData.volumeUSD = poolHourData.volumeUSD.plus(amountUSD);
 
     tokenXDayData.volume = tokenXDayData.volume.plus(volumeTokenX);
     tokenXDayData.fees = tokenXDayData.fees.plus(feesTokenX);
@@ -376,15 +382,15 @@ export function handleSwap(event: SwapEvent): void {
     tokenYDayData.feesUSD = tokenYDayData.feesUSD.plus(sellXEarnY ? ZERO_BD : feesUSD);
     tokenYDayData.volumeUSD = tokenYDayData.volumeUSD.plus(sellXEarnY ? ZERO_BD : amountUSD);
 
-    tokenXHourData.volume = tokenXHourData.volume.plus(volumeTokenX);
-    tokenXHourData.fees = tokenXHourData.fees.plus(feesTokenX);
-    tokenXHourData.feesUSD = tokenXHourData.feesUSD.plus(sellXEarnY ? feesUSD : ZERO_BD);
-    tokenXHourData.volumeUSD = tokenXHourData.volumeUSD.plus(sellXEarnY ? amountUSD : ZERO_BD);
+    // tokenXHourData.volume = tokenXHourData.volume.plus(volumeTokenX);
+    // tokenXHourData.fees = tokenXHourData.fees.plus(feesTokenX);
+    // tokenXHourData.feesUSD = tokenXHourData.feesUSD.plus(sellXEarnY ? feesUSD : ZERO_BD);
+    // tokenXHourData.volumeUSD = tokenXHourData.volumeUSD.plus(sellXEarnY ? amountUSD : ZERO_BD);
 
-    tokenYHourData.volume = tokenYHourData.volume.plus(volumeTokenY);
-    tokenYHourData.fees = tokenYHourData.fees.plus(feesTokenY);
-    tokenYHourData.feesUSD = tokenYHourData.feesUSD.plus(sellXEarnY ? ZERO_BD : feesUSD);
-    tokenYHourData.volumeUSD = tokenYHourData.volumeUSD.plus(sellXEarnY ? ZERO_BD : amountUSD);
+    // tokenYHourData.volume = tokenYHourData.volume.plus(volumeTokenY);
+    // tokenYHourData.fees = tokenYHourData.fees.plus(feesTokenY);
+    // tokenYHourData.feesUSD = tokenYHourData.feesUSD.plus(sellXEarnY ? ZERO_BD : feesUSD);
+    // tokenYHourData.volumeUSD = tokenYHourData.volumeUSD.plus(sellXEarnY ? ZERO_BD : amountUSD);
 
     // save
     factory.save();
@@ -398,11 +404,11 @@ export function handleSwap(event: SwapEvent): void {
     swap.save();
 
     poolDayData.save();
-    poolHourData.save();
+    // poolHourData.save();
     tokenXDayData.save();
     tokenYDayData.save();
-    tokenXHourData.save();
-    tokenYHourData.save();
+    // tokenXHourData.save();
+    // tokenYHourData.save();
 }
 
 function getAddLimitOrderId(event: AddLimitOrderEvent, poolId: string): string {
@@ -449,209 +455,209 @@ function summaryTxTokenTransferAmount(eventLogs: Array<ethereum.Log>, account: s
     return amount;
 }
 
-export function handleAddLimitOrder(event: AddLimitOrderEvent): void {
-    const pool = Pool.load(event.address.toHexString()) as Pool;
-    if (pool === null) {
-        return;
-    }
+// export function handleAddLimitOrder(event: AddLimitOrderEvent): void {
+//     const pool = Pool.load(event.address.toHexString()) as Pool;
+//     if (pool === null) {
+//         return;
+//     }
 
-    // TODO, contract bug, emit AddLimitOrder thrice, tmp filter
-    const addLimitOrderId = getAddLimitOrderId(event, pool.id);
-    const preAddLimitOrder = AddLimitOrder.load(addLimitOrderId);
-    if (preAddLimitOrder != null) {
-        return;
-    }
+//     // TODO, contract bug, emit AddLimitOrder thrice, tmp filter
+//     const addLimitOrderId = getAddLimitOrderId(event, pool.id);
+//     const preAddLimitOrder = AddLimitOrder.load(addLimitOrderId);
+//     if (preAddLimitOrder != null) {
+//         return;
+//     }
 
-    const factory = Factory.load(FACTORY_ADDRESS) as Factory;
+//     const factory = Factory.load(FACTORY_ADDRESS) as Factory;
 
-    const tokenX = Token.load(pool.tokenX) as Token;
-    const tokenY = Token.load(pool.tokenY) as Token;
+//     const tokenX = Token.load(pool.tokenX) as Token;
+//     const tokenY = Token.load(pool.tokenY) as Token;
 
-    // TODO, contract bug, amount may be zero, event.params.sellXEarnY may be wrong
-    let token = event.params.sellXEarnY ? tokenX : tokenY;
-    // let amount = convertTokenToDecimal(event.params.amount, token.decimals);
-    let amount = ZERO_BD;
-    let amountX = ZERO_BD;
-    let amountY = ZERO_BD;
+//     // TODO, contract bug, amount may be zero, event.params.sellXEarnY may be wrong
+//     let token = event.params.sellXEarnY ? tokenX : tokenY;
+//     // let amount = convertTokenToDecimal(event.params.amount, token.decimals);
+//     let amount = ZERO_BD;
+//     let amountX = ZERO_BD;
+//     let amountY = ZERO_BD;
 
-    // TODO, tx count ?
-    pool.txCount = pool.txCount.plus(ONE_BI);
-    factory.txCount = factory.txCount.plus(ONE_BI);
+//     // TODO, tx count ?
+//     pool.txCount = pool.txCount.plus(ONE_BI);
+//     factory.txCount = factory.txCount.plus(ONE_BI);
 
-    // get actual token with erc20 transfer event
-    if (event.receipt != null) {
-        const eventLogs = event.receipt!.logs;
-        amountX = summaryTxTokenTransferAmount(eventLogs, pool.id, tokenX);
-        amountY = summaryTxTokenTransferAmount(eventLogs, pool.id, tokenY);
+//     // get actual token with erc20 transfer event
+//     if (event.receipt != null) {
+//         const eventLogs = event.receipt!.logs;
+//         amountX = summaryTxTokenTransferAmount(eventLogs, pool.id, tokenX);
+//         amountY = summaryTxTokenTransferAmount(eventLogs, pool.id, tokenY);
 
-        amount = amountX == ZERO_BD ? amountY : amountX;
-        token = amountX == ZERO_BD ? tokenY : tokenX;
-    }
+//         amount = amountX == ZERO_BD ? amountY : amountX;
+//         token = amountX == ZERO_BD ? tokenY : tokenX;
+//     }
 
-    const amountUSD = amount.times(token.priceUSD);
-    const orderPrice = tick2PriceDecimal(event.params.point, tokenX.decimals, tokenY.decimals);
+//     const amountUSD = amount.times(token.priceUSD);
+//     const orderPrice = tick2PriceDecimal(event.params.point, tokenX.decimals, tokenY.decimals);
 
-    updateTVL(pool, tokenX, amountX, tokenY, amountY, factory);
+//     updateTVL(pool, tokenX, amountX, tokenY, amountY, factory);
 
-    // TODO, contract bug, force to update tvl
-    const tvlX = fetchTokenBalanceAmount(pool.tokenX, pool.id, tokenX.decimals);
-    const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenY.decimals);
-    pool.tvlTokenX = tvlX;
-    pool.tvlTokenY = tvlY;
-    pool.tvlUSD = pool.tvlTokenX.times(tokenX.priceUSD).plus(pool.tvlTokenY.times(tokenY.priceUSD));
+//     // TODO, contract bug, force to update tvl
+//     const tvlX = fetchTokenBalanceAmount(pool.tokenX, pool.id, tokenX.decimals);
+//     const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenY.decimals);
+//     pool.tvlTokenX = tvlX;
+//     pool.tvlTokenY = tvlY;
+//     pool.tvlUSD = pool.tvlTokenX.times(tokenX.priceUSD).plus(pool.tvlTokenY.times(tokenY.priceUSD));
 
-    // TODO, tx count ?
-    pool.txCount = pool.txCount.plus(ONE_BI);
-    factory.txCount = factory.txCount.plus(ONE_BI);
+//     // TODO, tx count ?
+//     pool.txCount = pool.txCount.plus(ONE_BI);
+//     factory.txCount = factory.txCount.plus(ONE_BI);
 
-    const transaction = getOrCreateTransaction(event);
-    const addLimitOrder = new AddLimitOrder(addLimitOrderId);
-    addLimitOrder.transaction = transaction.id;
-    addLimitOrder.timestamp = transaction.timestamp;
-    addLimitOrder.pool = pool.id;
-    addLimitOrder.tokenX = pool.tokenX;
-    addLimitOrder.tokenY = pool.tokenY;
-    addLimitOrder.account = event.transaction.from;
-    addLimitOrder.withContract = event.transaction.to;
+//     const transaction = getOrCreateTransaction(event);
+//     const addLimitOrder = new AddLimitOrder(addLimitOrderId);
+//     addLimitOrder.transaction = transaction.id;
+//     addLimitOrder.timestamp = transaction.timestamp;
+//     addLimitOrder.pool = pool.id;
+//     addLimitOrder.tokenX = pool.tokenX;
+//     addLimitOrder.tokenY = pool.tokenY;
+//     addLimitOrder.account = event.transaction.from;
+//     addLimitOrder.withContract = event.transaction.to;
 
-    addLimitOrder.amount = amount;
-    addLimitOrder.point = BigInt.fromI32(event.params.point);
-    addLimitOrder.sellXEarnY = event.params.sellXEarnY;
+//     addLimitOrder.amount = amount;
+//     addLimitOrder.point = BigInt.fromI32(event.params.point);
+//     addLimitOrder.sellXEarnY = event.params.sellXEarnY;
 
-    addLimitOrder.amountUSD = amountUSD;
-    addLimitOrder.price = orderPrice;
+//     addLimitOrder.amountUSD = amountUSD;
+//     addLimitOrder.price = orderPrice;
 
-    addLimitOrder.logIndex = event.logIndex;
+//     addLimitOrder.logIndex = event.logIndex;
 
-    addLimitOrder.amountX = amountX;
-    addLimitOrder.amountY = amountY;
+//     addLimitOrder.amountX = amountX;
+//     addLimitOrder.amountY = amountY;
 
-    factory.save();
-    pool.save();
-    token.save();
-    addLimitOrder.save();
-}
+//     factory.save();
+//     pool.save();
+//     token.save();
+//     addLimitOrder.save();
+// }
 
-export function handleDecLimitOrder(event: DecLimitOrderEvent): void {
-    const pool = Pool.load(event.address.toHexString()) as Pool;
-    if (pool === null) {
-        return;
-    }
+// export function handleDecLimitOrder(event: DecLimitOrderEvent): void {
+//     const pool = Pool.load(event.address.toHexString()) as Pool;
+//     if (pool === null) {
+//         return;
+//     }
 
-    // emit DecLimitOrder thrice, tmp filter
-    const decLimitOrderId = getDecLimitOrderId(event, pool.id);
-    const preDecLimitOrder = DecLimitOrder.load(decLimitOrderId);
-    if (preDecLimitOrder != null) {
-        return;
-    }
+//     // emit DecLimitOrder thrice, tmp filter
+//     const decLimitOrderId = getDecLimitOrderId(event, pool.id);
+//     const preDecLimitOrder = DecLimitOrder.load(decLimitOrderId);
+//     if (preDecLimitOrder != null) {
+//         return;
+//     }
 
-    const factory = Factory.load(FACTORY_ADDRESS) as Factory;
+//     const factory = Factory.load(FACTORY_ADDRESS) as Factory;
 
-    const tokenX = Token.load(pool.tokenX) as Token;
-    const tokenY = Token.load(pool.tokenY) as Token;
+//     const tokenX = Token.load(pool.tokenX) as Token;
+//     const tokenY = Token.load(pool.tokenY) as Token;
 
-    // TODO, contract bug, amount may be zero, event.params.sellXEarnY may be wrong
-    let token = event.params.sellXEarnY ? tokenX : tokenY;
-    // let amount = convertTokenToDecimal(event.params.amount, token.decimals);
-    let amount = ZERO_BD;
-    let amountX = ZERO_BD;
-    let amountY = ZERO_BD;
+//     // TODO, contract bug, amount may be zero, event.params.sellXEarnY may be wrong
+//     let token = event.params.sellXEarnY ? tokenX : tokenY;
+//     // let amount = convertTokenToDecimal(event.params.amount, token.decimals);
+//     let amount = ZERO_BD;
+//     let amountX = ZERO_BD;
+//     let amountY = ZERO_BD;
 
-    // get actual token with erc20 transfer event
-    if (event.receipt != null) {
-        const eventLogs = event.receipt!.logs;
-        amountX = summaryTxTokenTransferAmount(eventLogs, pool.id, tokenX);
-        amountY = summaryTxTokenTransferAmount(eventLogs, pool.id, tokenY);
+//     // get actual token with erc20 transfer event
+//     if (event.receipt != null) {
+//         const eventLogs = event.receipt!.logs;
+//         amountX = summaryTxTokenTransferAmount(eventLogs, pool.id, tokenX);
+//         amountY = summaryTxTokenTransferAmount(eventLogs, pool.id, tokenY);
 
-        amount = amountX == ZERO_BD ? amountY : amountX;
-        token = amountX == ZERO_BD ? tokenY : tokenX;
-    }
+//         amount = amountX == ZERO_BD ? amountY : amountX;
+//         token = amountX == ZERO_BD ? tokenY : tokenX;
+//     }
 
-    const amountUSD = amount.times(token.priceUSD);
-    const orderPrice = tick2PriceDecimal(event.params.point, tokenX.decimals, tokenY.decimals);
+//     const amountUSD = amount.times(token.priceUSD);
+//     const orderPrice = tick2PriceDecimal(event.params.point, tokenX.decimals, tokenY.decimals);
 
-    updateTVL(pool, tokenX, amountX, tokenY, amountY, factory);
+//     updateTVL(pool, tokenX, amountX, tokenY, amountY, factory);
 
-    // TODO, contract bug, force to update tvl
-    const tvlX = fetchTokenBalanceAmount(pool.tokenX, pool.id, tokenX.decimals);
-    const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenY.decimals);
-    pool.tvlTokenX = tvlX;
-    pool.tvlTokenY = tvlY;
-    pool.tvlUSD = pool.tvlTokenX.times(tokenX.priceUSD).plus(pool.tvlTokenY.times(tokenY.priceUSD));
+//     // TODO, contract bug, force to update tvl
+//     const tvlX = fetchTokenBalanceAmount(pool.tokenX, pool.id, tokenX.decimals);
+//     const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenY.decimals);
+//     pool.tvlTokenX = tvlX;
+//     pool.tvlTokenY = tvlY;
+//     pool.tvlUSD = pool.tvlTokenX.times(tokenX.priceUSD).plus(pool.tvlTokenY.times(tokenY.priceUSD));
 
-    // TODO, tx count ?
-    pool.txCount = pool.txCount.plus(ONE_BI);
-    factory.txCount = factory.txCount.plus(ONE_BI);
+//     // TODO, tx count ?
+//     pool.txCount = pool.txCount.plus(ONE_BI);
+//     factory.txCount = factory.txCount.plus(ONE_BI);
 
-    const transaction = getOrCreateTransaction(event);
-    const decLimitOrder = new DecLimitOrder(decLimitOrderId);
-    decLimitOrder.transaction = transaction.id;
-    decLimitOrder.timestamp = transaction.timestamp;
-    decLimitOrder.pool = pool.id;
-    decLimitOrder.tokenX = pool.tokenX;
-    decLimitOrder.tokenY = pool.tokenY;
-    decLimitOrder.account = event.transaction.from;
-    decLimitOrder.withContract = event.transaction.to;
+//     const transaction = getOrCreateTransaction(event);
+//     const decLimitOrder = new DecLimitOrder(decLimitOrderId);
+//     decLimitOrder.transaction = transaction.id;
+//     decLimitOrder.timestamp = transaction.timestamp;
+//     decLimitOrder.pool = pool.id;
+//     decLimitOrder.tokenX = pool.tokenX;
+//     decLimitOrder.tokenY = pool.tokenY;
+//     decLimitOrder.account = event.transaction.from;
+//     decLimitOrder.withContract = event.transaction.to;
 
-    decLimitOrder.amount = amount;
-    decLimitOrder.point = BigInt.fromI32(event.params.point);
-    decLimitOrder.sellXEarnY = event.params.sellXEarnY;
+//     decLimitOrder.amount = amount;
+//     decLimitOrder.point = BigInt.fromI32(event.params.point);
+//     decLimitOrder.sellXEarnY = event.params.sellXEarnY;
 
-    decLimitOrder.amountUSD = amountUSD;
-    decLimitOrder.price = orderPrice;
+//     decLimitOrder.amountUSD = amountUSD;
+//     decLimitOrder.price = orderPrice;
 
-    decLimitOrder.logIndex = event.logIndex;
+//     decLimitOrder.logIndex = event.logIndex;
 
-    decLimitOrder.amountX = amountX;
-    decLimitOrder.amountY = amountY;
+//     decLimitOrder.amountX = amountX;
+//     decLimitOrder.amountY = amountY;
 
-    factory.save();
-    pool.save();
-    token.save();
-    decLimitOrder.save();
-}
+//     factory.save();
+//     pool.save();
+//     token.save();
+//     decLimitOrder.save();
+// }
 
-export function handleFlash(event: FlashEvent): void {
-    const pool = Pool.load(event.address.toHexString()) as Pool;
-    if (pool === null) {
-        return;
-    }
+// export function handleFlash(event: FlashEvent): void {
+//     const pool = Pool.load(event.address.toHexString()) as Pool;
+//     if (pool === null) {
+//         return;
+//     }
 
-    const factory = Factory.load(FACTORY_ADDRESS) as Factory;
+//     const factory = Factory.load(FACTORY_ADDRESS) as Factory;
 
-    const tokenX = Token.load(pool.tokenX) as Token;
-    const tokenY = Token.load(pool.tokenY) as Token;
+//     const tokenX = Token.load(pool.tokenX) as Token;
+//     const tokenY = Token.load(pool.tokenY) as Token;
 
-    const amountX = convertTokenToDecimal(event.params.amountX, tokenX.decimals);
-    const amountY = convertTokenToDecimal(event.params.amountY, tokenY.decimals);
+//     const amountX = convertTokenToDecimal(event.params.amountX, tokenX.decimals);
+//     const amountY = convertTokenToDecimal(event.params.amountY, tokenY.decimals);
 
-    const paidAmountX = convertTokenToDecimal(event.params.paidX, tokenX.decimals);
-    const paidAmountY = convertTokenToDecimal(event.params.paidY, tokenY.decimals);
+//     const paidAmountX = convertTokenToDecimal(event.params.paidX, tokenX.decimals);
+//     const paidAmountY = convertTokenToDecimal(event.params.paidY, tokenY.decimals);
 
-    updateTVL(pool, tokenX, paidAmountX, tokenY, paidAmountY, factory);
+//     updateTVL(pool, tokenX, paidAmountX, tokenY, paidAmountY, factory);
 
-    const transaction = getOrCreateTransaction(event);
-    const flash = new Flash(transaction.id + '#' + pool.txCount.toString());
-    flash.transaction = transaction.id;
-    flash.timestamp = transaction.timestamp;
-    flash.pool = pool.id;
-    flash.tokenX = pool.tokenX;
-    flash.tokenY = pool.tokenY;
-    flash.account = event.transaction.from;
-    flash.withContract = event.transaction.to;
+//     const transaction = getOrCreateTransaction(event);
+//     const flash = new Flash(transaction.id + '#' + pool.txCount.toString());
+//     flash.transaction = transaction.id;
+//     flash.timestamp = transaction.timestamp;
+//     flash.pool = pool.id;
+//     flash.tokenX = pool.tokenX;
+//     flash.tokenY = pool.tokenY;
+//     flash.account = event.transaction.from;
+//     flash.withContract = event.transaction.to;
 
-    flash.sender = event.params.sender;
-    flash.recipient = event.params.recipient;
-    flash.amountX = amountX;
-    flash.amountY = amountY;
+//     flash.sender = event.params.sender;
+//     flash.recipient = event.params.recipient;
+//     flash.amountX = amountX;
+//     flash.amountY = amountY;
 
-    flash.paidX = paidAmountX;
-    flash.paidY = paidAmountY;
+//     flash.paidX = paidAmountX;
+//     flash.paidY = paidAmountY;
 
-    flash.logIndex = event.logIndex;
+//     flash.logIndex = event.logIndex;
 
-    pool.save();
-    flash.save();
-    tokenX.save();
-    tokenY.save();
-}
+//     pool.save();
+//     flash.save();
+//     tokenX.save();
+//     tokenY.save();
+// }

@@ -82,11 +82,3 @@ templates:
         - event: Burn(indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
           handler: handleBurn
           receipt: true
-        - event: AddLimitOrder(indexed address,uint128,uint128,indexed int24,uint128,uint128,bool)
-          handler: handleAddLimitOrder
-          receipt: true
-        - event: DecLimitOrder(indexed address,uint128,indexed int24,uint128,uint128,bool)
-          handler: handleDecLimitOrder
-          receipt: true
-        - event: Flash(indexed address,indexed address,uint256,uint256,uint256,uint256)
-          handler: handleFlash

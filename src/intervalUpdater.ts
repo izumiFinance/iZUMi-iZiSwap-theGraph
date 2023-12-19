@@ -47,7 +47,7 @@ export function updatePoolDayData(event: ethereum.Event): PoolDayData {
     poolDayData.tick = pool.tick;
     poolDayData.tvlUSD = pool.tvlUSD;
     poolDayData.txCount = poolDayData.txCount.plus(ONE_BI);
-    poolDayData.save();
+    // poolDayData.save();
 
     return poolDayData as PoolDayData;
 }
@@ -140,7 +140,7 @@ export function updateTokenDayData(token: Token, event: ethereum.Event): TokenDa
     tokenDayData.close = tokenPrice;
     tokenDayData.tvl = token.tvl;
     tokenDayData.tvlUSD = token.tvlUSD;
-    tokenDayData.save();
+    // tokenDayData.save();
 
     return tokenDayData as TokenDayData;
 }

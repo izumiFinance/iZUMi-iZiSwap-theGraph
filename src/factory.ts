@@ -129,7 +129,7 @@ function getOrCreateTokenEntity(tokenAddress: Address): Token | null {
         token.tvlUSD = ZERO_BD;
     }
     token.poolCount = token.poolCount.plus(ONE_BI);
-    token.save()
+    // token.save()
 
     return token;
 }
