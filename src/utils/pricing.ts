@@ -1,6 +1,6 @@
 import { BigDecimal, log } from "@graphprotocol/graph-ts";
 import { Pool, Token } from "../../generated/schema";
-import { MINIMUM_USD_LOCKED_FOR_PRICING, StableCoinConfig } from "../config";
+import { MINIMUM_USD_LOCKED_FOR_PRICING, StableCoinConfig, WrapGasTokenConfig } from "../config";
 import { ONE_BD, ZERO_BD, ZERO_BI } from "../constants";
 
 
@@ -8,6 +8,17 @@ export function findUsdPerToken(token: Token): BigDecimal {
     if (StableCoinConfig.config().has(token.id)) {
         return ONE_BD;
     }
+
+    if (token.id === WrapGasTokenConfig.config().wrapGasToken) {
+        const pool = Pool.load(WrapGasTokenConfig.config().whitePool) as Pool;
+        if (pool !== null){
+            if (pool.tokenXPrice.lt(ZERO_BD)) return ONE_BD.div(pool.tokenXPrice)
+            return pool.tokenXPrice
+        } else {
+            return ZERO_BD
+        }
+    }
+
     let largestLiquidityUSD = ZERO_BD;
     let tokenPrice = ZERO_BD;
 
