@@ -41,7 +41,7 @@ function updateTVL(
         // const tvlX = fetchTokenBalanceAmount(pool.tokenX, pool.id, tokenX.decimals);
         pool.tvlTokenX = pool.tvlTokenX.plus(amountXDelta);
         tokenX.tvl = tokenX.tvl.plus(amountXDelta);
-        tokenX.tvlUSD = tokenX.tvlUSD.times(tokenX.priceUSD);
+        tokenX.tvlUSD = tokenX.tvl.times(tokenX.priceUSD);
         // tokenX.save()
     }
 
@@ -49,7 +49,7 @@ function updateTVL(
         // const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenY.decimals);
         pool.tvlTokenY = pool.tvlTokenY.plus(amountYDelta);
         tokenY.tvl = tokenY.tvl.plus(amountYDelta);
-        tokenY.tvlUSD = tokenY.tvlUSD.times(tokenY.priceUSD);
+        tokenY.tvlUSD = tokenY.tvl.times(tokenY.priceUSD);
         // tokenY.save()
     }
 
