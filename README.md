@@ -47,6 +47,14 @@ $ yarn create-local-XXX
 $ yarn deploy-local-XXX
 ```
 
+### Manage node
+
+[graphman doc](https://github.com/graphprotocol/graph-node/blob/master/docs/graphman.md)
+
+```sh
+$ graphman --config ./node.toml info --all
+```
+
 ## Bug
 
 - optional chain not support
