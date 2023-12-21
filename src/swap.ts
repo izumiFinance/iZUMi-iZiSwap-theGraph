@@ -21,7 +21,7 @@ import {
 import { FACTORY_ADDRESS, StableCoinConfig } from './config';
 import { ONE_BD, ONE_BI, ZERO_BD } from './constants';
 import { updatePoolDayData, updatePoolHourData, updateTokenDayData, updateTokenHourData } from './intervalUpdater';
-import { bigEndianBytesToBigInt, convertFeeNumber, convertTokenToDecimal, tick2PriceDecimal, topicToAddress } from './utils/funcs';
+import { bigEndianBytesToBigInt, calculatetTick2PriceDecimal, convertFeeNumber, convertTokenToDecimal, tick2PriceDecimal, topicToAddress } from './utils/funcs';
 import { findUsdPerToken } from './utils/pricing';
 import { ERC20TransferTopic, fetchTokenBalanceAmount } from './utils/tokenHelper';
 import { getOrCreateTransaction } from './utils/contractHelper'
@@ -109,11 +109,11 @@ export function handleMint(event: MintEvent): void {
     mint.logIndex = event.logIndex;
 
     const poolDayData = updatePoolDayData(event);
-    // updatePoolHourData(event);
+    updatePoolHourData(event);
     const tokenXDayData = updateTokenDayData(tokenX, event);
     const tokenYDayData = updateTokenDayData(tokenY, event);
-    // updateTokenHourData(tokenX, event);
-    // updateTokenHourData(tokenY, event);
+    updateTokenHourData(tokenX, event);
+    updateTokenHourData(tokenY, event);
 
     // save
     factory.save();
@@ -237,11 +237,11 @@ export function handleBurn(event: BurnEvent): void {
     burn.logIndex = event.logIndex;
 
     const poolDayData = updatePoolDayData(event);
-    // updatePoolHourData(event);
+    updatePoolHourData(event);
     const tokenXDayData = updateTokenDayData(tokenX, event);
     const tokenYDayData = updateTokenDayData(tokenY, event);
-    // updateTokenHourData(tokenX, event);
-    // updateTokenHourData(tokenY, event);
+    updateTokenHourData(tokenX, event);
+    updateTokenHourData(tokenY, event);
 
     // save
     factory.save();
@@ -279,8 +279,8 @@ export function handleSwap(event: SwapEvent): void {
     tokenY.txCount = tokenY.txCount.plus(ONE_BI);
 
     // updated pool rates
-    pool.tokenXPrice = ONE_BD.div(tick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals));
-    pool.tokenYPrice = tick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals);
+    pool.tokenXPrice = ONE_BD.div(calculatetTick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals));
+    pool.tokenYPrice = calculatetTick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals);
 
     // volume and fee
     let amountUSD = ZERO_BD;
@@ -352,11 +352,11 @@ export function handleSwap(event: SwapEvent): void {
 
     // interval process
     const poolDayData = updatePoolDayData(event);
-    // const poolHourData = updatePoolHourData(event);
+    const poolHourData = updatePoolHourData(event);
     const tokenXDayData = updateTokenDayData(tokenX, event);
     const tokenYDayData = updateTokenDayData(tokenY, event);
-    // const tokenXHourData = updateTokenHourData(tokenX, event);
-    // const tokenYHourData = updateTokenHourData(tokenY, event);
+    const tokenXHourData = updateTokenHourData(tokenX, event);
+    const tokenYHourData = updateTokenHourData(tokenY, event);
 
     poolDayData.volumeTokenX = poolDayData.volumeTokenX.plus(volumeTokenX);
     poolDayData.volumeTokenY = poolDayData.volumeTokenY.plus(volumeTokenY);
@@ -365,12 +365,12 @@ export function handleSwap(event: SwapEvent): void {
     poolDayData.feesUSD = poolDayData.feesUSD.plus(feesUSD);
     poolDayData.volumeUSD = poolDayData.volumeUSD.plus(amountUSD);
 
-    // poolHourData.volumeTokenX = poolHourData.volumeTokenX.plus(volumeTokenX);
-    // poolHourData.volumeTokenY = poolHourData.volumeTokenY.plus(volumeTokenY);
-    // poolHourData.feesTokenX = poolHourData.feesTokenX.plus(feesTokenX);
-    // poolHourData.feesTokenY = poolHourData.feesTokenY.plus(feesTokenY);
-    // poolHourData.feesUSD = poolHourData.feesUSD.plus(feesUSD);
-    // poolHourData.volumeUSD = poolHourData.volumeUSD.plus(amountUSD);
+    poolHourData.volumeTokenX = poolHourData.volumeTokenX.plus(volumeTokenX);
+    poolHourData.volumeTokenY = poolHourData.volumeTokenY.plus(volumeTokenY);
+    poolHourData.feesTokenX = poolHourData.feesTokenX.plus(feesTokenX);
+    poolHourData.feesTokenY = poolHourData.feesTokenY.plus(feesTokenY);
+    poolHourData.feesUSD = poolHourData.feesUSD.plus(feesUSD);
+    poolHourData.volumeUSD = poolHourData.volumeUSD.plus(amountUSD);
 
     tokenXDayData.volume = tokenXDayData.volume.plus(volumeTokenX);
     tokenXDayData.fees = tokenXDayData.fees.plus(feesTokenX);
@@ -382,15 +382,15 @@ export function handleSwap(event: SwapEvent): void {
     tokenYDayData.feesUSD = tokenYDayData.feesUSD.plus(sellXEarnY ? ZERO_BD : feesUSD);
     tokenYDayData.volumeUSD = tokenYDayData.volumeUSD.plus(sellXEarnY ? ZERO_BD : amountUSD);
 
-    // tokenXHourData.volume = tokenXHourData.volume.plus(volumeTokenX);
-    // tokenXHourData.fees = tokenXHourData.fees.plus(feesTokenX);
-    // tokenXHourData.feesUSD = tokenXHourData.feesUSD.plus(sellXEarnY ? feesUSD : ZERO_BD);
-    // tokenXHourData.volumeUSD = tokenXHourData.volumeUSD.plus(sellXEarnY ? amountUSD : ZERO_BD);
+    tokenXHourData.volume = tokenXHourData.volume.plus(volumeTokenX);
+    tokenXHourData.fees = tokenXHourData.fees.plus(feesTokenX);
+    tokenXHourData.feesUSD = tokenXHourData.feesUSD.plus(sellXEarnY ? feesUSD : ZERO_BD);
+    tokenXHourData.volumeUSD = tokenXHourData.volumeUSD.plus(sellXEarnY ? amountUSD : ZERO_BD);
 
-    // tokenYHourData.volume = tokenYHourData.volume.plus(volumeTokenY);
-    // tokenYHourData.fees = tokenYHourData.fees.plus(feesTokenY);
-    // tokenYHourData.feesUSD = tokenYHourData.feesUSD.plus(sellXEarnY ? ZERO_BD : feesUSD);
-    // tokenYHourData.volumeUSD = tokenYHourData.volumeUSD.plus(sellXEarnY ? ZERO_BD : amountUSD);
+    tokenYHourData.volume = tokenYHourData.volume.plus(volumeTokenY);
+    tokenYHourData.fees = tokenYHourData.fees.plus(feesTokenY);
+    tokenYHourData.feesUSD = tokenYHourData.feesUSD.plus(sellXEarnY ? ZERO_BD : feesUSD);
+    tokenYHourData.volumeUSD = tokenYHourData.volumeUSD.plus(sellXEarnY ? ZERO_BD : amountUSD);
 
     // save
     factory.save();
@@ -404,11 +404,11 @@ export function handleSwap(event: SwapEvent): void {
     swap.save();
 
     poolDayData.save();
-    // poolHourData.save();
+    poolHourData.save();
     tokenXDayData.save();
     tokenYDayData.save();
-    // tokenXHourData.save();
-    // tokenYHourData.save();
+    tokenXHourData.save();
+    tokenYHourData.save();
 }
 
 function getAddLimitOrderId(event: AddLimitOrderEvent, poolId: string): string {

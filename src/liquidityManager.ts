@@ -3,7 +3,7 @@ import { iZiSwapLiquidityManager, Transfer as ERC721Transfer } from '../generate
 import { Liquidity, Token } from '../generated/schema';
 import { ADDRESS_ZERO, ZERO_BD, ZERO_BI } from './constants';
 import { getOrCreateTransaction } from './utils/contractHelper'
-import { tick2PriceDecimal } from './utils/funcs';
+import { calculatetTick2PriceDecimal, tick2PriceDecimal } from './utils/funcs';
 
 function getOrCreateLiquidity(event: ethereum.Event, nftId: BigInt): Liquidity | null {
     let liquidity = Liquidity.load(nftId.toString());
@@ -29,8 +29,8 @@ function getOrCreateLiquidity(event: ethereum.Event, nftId: BigInt): Liquidity |
             const tokenX = Token.load(liquidity.tokenX);
             const tokenY = Token.load(liquidity.tokenY);
             if (tokenX != null && tokenY != null) {
-                liquidity.priceLeft = tick2PriceDecimal(liquidity.leftPt.toI32(), tokenX.decimals, tokenY.decimals)
-                liquidity.priceRight = tick2PriceDecimal(liquidity.rightPt.toI32(), tokenX.decimals, tokenY.decimals)
+                liquidity.priceLeft = calculatetTick2PriceDecimal(liquidity.leftPt.toI32(), tokenX.decimals, tokenY.decimals)
+                liquidity.priceRight = calculatetTick2PriceDecimal(liquidity.rightPt.toI32(), tokenX.decimals, tokenY.decimals)
             } else {
                 liquidity.priceLeft = ZERO_BD;
                 liquidity.priceRight = ZERO_BD;

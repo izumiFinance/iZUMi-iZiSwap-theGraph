@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: iZiSwapFactory
-    network: bsc
+    network: mantle
     source:
-      address: "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08"
       abi: iZiSwapFactory
-      startBlock: 17681022
+      address: "0x45e5F26451CDB01B0fA1f8582E0aAD9A6F27C218"
+      startBlock: 2700
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -29,11 +29,11 @@ dataSources:
           handler: handleNewPool
   - kind: ethereum
     name: iZiSwapLiquidityManager
-    network: bsc
+    network: mantle
     source:
-      address: "0x93C22Fbeff4448F2fb6e432579b0638838Ff9581"
       abi: iZiSwapLiquidityManager
-      startBlock: 17681022
+      address: "0x611575eE1fbd4F7915D0eABCC518eD396fF78F0c"
+      startBlock: 2700
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -56,7 +56,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: Pool
-    network: bsc
+    network: mantle
     source:
       abi: Pool
     mapping:
@@ -75,9 +75,11 @@ templates:
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
-        - event: Swap(indexed address,indexed address,indexed uint24,bool,uint256,uint256,int24)
+        - event: Swap(indexed address,indexed address,indexed
+            uint24,bool,uint256,uint256,int24)
           handler: handleSwap
-        - event: Mint(address,indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
+        - event: Mint(address,indexed address,indexed int24,indexed
+            int24,uint128,uint256,uint256)
           handler: handleMint
         - event: Burn(indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
           handler: handleBurn
