@@ -1,0 +1,19 @@
+{
+    "apps": [
+        {
+            "name": "graph-node",
+            "cwd": "config",
+            "exec_interpreter": "none",
+            "exec_mode": "fork",
+            "script": "graph-node",
+            "args": "--config graph-node.toml",
+            "watch": false,
+            "env": {
+                "ETHEREUM_BLOCK_BATCH_SIZE": "20"
+            },
+            "log_file": "../volumes/log/node.log",
+            "out_file": "/dev/null",
+            "error_file": "/dev/null"
+        }
+    ]
+}

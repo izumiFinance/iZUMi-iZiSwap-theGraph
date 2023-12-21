@@ -26,12 +26,26 @@ open [iziswapsubgraph](https://thegraph.com/hosted-service/subgraph/izumifinance
 
 ## Using
 
-### Add chain
+### Add local chain
 
 1. modify `network.json` file, add contract address and startBlock of new chain
-2. modify `config.ts` file, append `StableCoinConfig` and `TrustableTokenConfig` config
+2. modify `config.ts` file, append `StableCoinConfig` and `TrustableTokenConfig` config. **Address must be lowercase**.
 3. modify `package.json`, add create, remove, deploy shortcut command
 4. keep chian name same at `network.json` `config.ts` `package.json`
+
+### Deploy local graph-node
+
+After complied [graph-node](https://github.com/graphprotocol/graph-node), you should add or link release binary file to `PATH`.
+
+```sh
+# start local graph-node
+$ cd iZUMi-iZiSwap-theGraph
+$ pm2 start config/graph-node.pm2.json
+
+# deploy XXX chain to local graph-node
+$ yarn create-local-XXX
+$ yarn deploy-local-XXX
+```
 
 ## Bug
 
