@@ -1,21 +1,34 @@
 import { BigDecimal, BigInt, TypedMap, dataSource } from '@graphprotocol/graph-ts';
-// import networks from '../networks.json';
+import { ADDRESS_ZERO } from './constants';
 
 // TODO dynamic
-export const FACTORY_ADDRESS = '0x8c7d3063579bdb0b90997e18a770eae32e1ebb08';
-
-// let factoryAddress: string;
-// const networksMap = networks as any
-// const currentNetwork = dataSource.network();
-// if (networksMap[currentNetwork] && networksMap[currentNetwork].iZiSwapFactory) {
-//     factoryAddress = networksMap[currentNetwork].iZiSwapFactory.address.toLowerCase();
-// } else {
-//     factoryAddress = '0x8c7d3063579bdb0b90997e18a770eae32e1ebb08';
-// }
-
-// export { factoryAddress as FACTORY_ADDRESS };
+// export const FACTORY_ADDRESS = '0x8c7d3063579bdb0b90997e18a770eae32e1ebb08';
 
 export const MINIMUM_USD_LOCKED_FOR_PRICING = BigDecimal.fromString('2000');
+
+export class FactoryConfig {
+    static factoryAddress: TypedMap<string, string>;
+    static emptyAddress: string;
+    static getAddress(): string {
+        if (this.factoryAddress == null) {
+            this.factoryAddress = new TypedMap<string, string>();
+            this.emptyAddress = ADDRESS_ZERO
+            this.factoryAddress.set("bsc", "0x93bb94a0d5269cb437a1f71ff3a77ab753844422");
+            this.factoryAddress.set("manta", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
+            this.factoryAddress.set("mantle", "0x45e5f26451cdb01b0fa1f8582e0aad9a6f27c218");
+            this.factoryAddress.set("linea", "0x45e5f26451cdb01b0fa1f8582e0aad9a6f27c218");
+            this.factoryAddress.set("scroll", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
+        }
+        const address = this.factoryAddress.get(dataSource.network());
+        if (address !== null) {
+            return address;
+        } else {
+            return this.emptyAddress;
+        }
+    }
+}
+
+export const FACTORY_ADDRESS = FactoryConfig.getAddress()
 
 export class StableCoinConfig {
     static networkToStableCoins: TypedMap<string, Set<string>>;
@@ -53,6 +66,13 @@ export class StableCoinConfig {
             lineaStableCoins.add('0x176211869ca2b568f2a7d4ee941e073a821ee1ff'); // USDC
             lineaStableCoins.add('0x7d43aabc515c356145049227cee54b608342c0ad'); // BUSD
             this.networkToStableCoins.set("linea", lineaStableCoins);
+
+            // scroll
+            let scrollStableCoins = new Set<string>();
+            scrollStableCoins.add('0xf55bec9cafdbe8730f096aa55dad6d22d44099df'); // USDT
+            scrollStableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            scrollStableCoins.add('0x06efdbff2a14a7c8e15944d1f4a48f9f95f663a4'); // USDC
+            this.networkToStableCoins.set("scroll", scrollStableCoins);
         }
 
         const stableCoins = this.networkToStableCoins.get(dataSource.network());
@@ -112,6 +132,16 @@ export class TrustableTokenConfig {
             lineaTrustableCoins.add('0xb5bedd42000b71fdde22d3ee8a79bd49a568fc8f'); // wstETH
             lineaTrustableCoins.add('0x7d43aabc515c356145049227cee54b608342c0ad'); // BUSD
             this.networkToTrustableCoins.set("linea", lineaTrustableCoins);
+
+            // scroll
+            let scrollTrustableCoins = new Set<string>();
+            scrollTrustableCoins.add('0xf55bec9cafdbe8730f096aa55dad6d22d44099df'); // USDT
+            scrollTrustableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            scrollTrustableCoins.add('0x06efdbff2a14a7c8e15944d1f4a48f9f95f663a4'); // USDC
+            scrollTrustableCoins.add('0x5300000000000000000000000000000000000004'); // WETH
+            scrollTrustableCoins.add('0xf610a9dfb7c89644979b4a0f27063e9e7d7cda32'); // wstETH
+            scrollTrustableCoins.add('0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'); // iZi
+            this.networkToTrustableCoins.set("scroll", scrollTrustableCoins);
         }
 
         const trustableTokens = this.networkToTrustableCoins.get(dataSource.network());
@@ -124,8 +154,8 @@ export class TrustableTokenConfig {
 }
 
 class WrapGasTokenReturn {
-    wrapGasToken: string = "";
-    whitePool: string = "";
+    wrapGasToken: string = ADDRESS_ZERO;
+    whitePool: string = ADDRESS_ZERO;
 }
 
 export class WrapGasTokenConfig {
@@ -138,8 +168,8 @@ export class WrapGasTokenConfig {
         if (this.networkToWrapGasTokens == null) {
             this.networkToWrapGasTokens = new TypedMap<string, string>();
             this.networkToWhitePools = new TypedMap<string, string>();
-            this.emptyWrapGasToken = '';
-            this.emptyWhitePool = '';
+            this.emptyWrapGasToken = ADDRESS_ZERO;
+            this.emptyWhitePool = ADDRESS_ZERO;
 
             // BSC
             let bscWrapGasToken = '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c';
@@ -164,6 +194,12 @@ export class WrapGasTokenConfig {
             let lineaWhitePool = '0x564e52bbdf3adf10272f3f33b00d65b2ee48afff';
             this.networkToWrapGasTokens.set("linea", lineaWrapGasToken);
             this.networkToWhitePools.set("linea", lineaWhitePool);
+
+            // Scroll
+            let scrollWrapGasToken = '0x5300000000000000000000000000000000000004';
+            let scrollWhitePool = '0x8f8ed95b3b3ed2979d1ee528f38ca3e481a94dd9';
+            this.networkToWrapGasTokens.set("scroll", scrollWrapGasToken);
+            this.networkToWhitePools.set("scroll", scrollWhitePool);
         }
 
         let wrapGasToken = this.networkToWrapGasTokens.get(dataSource.network());

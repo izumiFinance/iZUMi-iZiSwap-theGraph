@@ -9,7 +9,7 @@
 
     "create-local-bsc": "graph create --node http://localhost:8020/ --network bsc izi-swap-bsc",
     "remove-local-bsc": "graph remove --node http://localhost:8020/ --network bsc izi-swap-bsc",
-    "deploy-local-bsc": "graph deploy --node http://localhost:8020/ --network bsc--ipfs http://localhost:5001 izi-swap-bsc",
+    "deploy-local-bsc": "graph deploy --node http://localhost:8020/ --network bsc --ipfs http://localhost:5001 izi-swap-bsc",
 
     "create-local-manta": "graph create --node http://localhost:8020/ izi-swap-manta",
     "remove-local-manta": "graph remove --node http://localhost:8020/ izi-swap-manta",
@@ -21,7 +21,11 @@
 
     "create-local-linea": "graph create --node http://localhost:8020/ izi-swap-linea",
     "remove-local-linea": "graph remove --node http://localhost:8020/ izi-swap-linea",
-    "deploy-local-linea": "graph deploy --node http://localhost:8020/ --network linea --ipfs http://localhost:5001 izi-swap-linea"
+    "deploy-local-linea": "graph deploy --node http://localhost:8020/ --network linea --ipfs http://localhost:5001 izi-swap-linea",
+
+    "create-local-scroll": "graph create --node http://localhost:8020/ izi-swap-scroll",
+    "remove-local-scroll": "graph remove --node http://localhost:8020/ izi-swap-scroll",
+    "deploy-local-scroll": "graph deploy --node http://localhost:8020/ --network scroll --ipfs http://localhost:5001 izi-swap-scroll"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.32.0",
