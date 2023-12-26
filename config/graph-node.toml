@@ -1,0 +1,30 @@
+[store]
+[store.primary]
+connection = "postgresql://ubuntu:postgres@localhost:5432/graph-node"
+pool_size = 10
+
+[deployment]
+[[deployment.rule]]
+store = "primary"
+indexers = [ "default" ]
+
+[chains]
+ingestor = "default"
+
+[chains.manta]
+shard = "primary"
+provider = [
+  { label = "manta", url="https://manta-pacific.calderachain.xyz/http", features = [] }
+]
+
+[chains.mantle]
+shard = "primary"
+provider = [
+  { label = "mantle", url="https://rpc.particle.network/evm-chain?chainId=5000&projectUuid=3f15549b-38b0-4deb-91af-32df29c52e55&projectKey=cuO5kHMPqT0emHDnnlEIMHXgXFxZ1jY8jKXrW68Z", features = [] }
+]
+
+[chains.linea]
+shard = "primary"
+provider = [
+  { label = "linea", url="https://rpc.linea.build", features = [] }
+]
