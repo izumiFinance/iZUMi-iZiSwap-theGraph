@@ -49,5 +49,15 @@
       "address": "0x1502d025BfA624469892289D45C0352997251728",
       "startBlock": 34820
     }
+  },
+  "kroma": {
+    "iZiSwapFactory": {
+      "address": "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08",
+      "startBlock": 50140
+    },
+    "iZiSwapLiquidityManager": {
+      "address": "0x110dE362cc436D7f54210f96b8C7652C2617887D",
+      "startBlock": 50140
+    }
   }
 }

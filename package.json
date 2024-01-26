@@ -25,7 +25,12 @@
 
     "create-local-scroll": "graph create --node http://localhost:8020/ izi-swap-scroll",
     "remove-local-scroll": "graph remove --node http://localhost:8020/ izi-swap-scroll",
-    "deploy-local-scroll": "graph deploy --node http://localhost:8020/ --network scroll --ipfs http://localhost:5001 izi-swap-scroll"
+    "deploy-local-scroll": "graph deploy --node http://localhost:8020/ --network scroll --ipfs http://localhost:5001 izi-swap-scroll",
+
+    "create-local-kroma": "graph create --node http://localhost:8020/ izi-swap-kroma",
+    "remove-local-kroma": "graph remove --node http://localhost:8020/ izi-swap-kroma",
+    "deploy-local-kroma": "graph deploy --node http://localhost:8020/ --network kroma --ipfs http://localhost:5001 izi-swap-kroma"
+
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.32.0",
