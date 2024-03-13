@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class AddLimitOrder extends ethereum.Event {
@@ -523,7 +523,7 @@ export class Pool__limitOrderDataResult {
     value6: BigInt,
     value7: BigInt,
     value8: BigInt,
-    value9: BigInt
+    value9: BigInt,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -631,7 +631,7 @@ export class Pool__liquidityResult {
     value1: BigInt,
     value2: BigInt,
     value3: BigInt,
-    value4: BigInt
+    value4: BigInt,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -740,7 +740,7 @@ export class Pool__pointsResult {
     value1: BigInt,
     value2: BigInt,
     value3: BigInt,
-    value4: boolean
+    value4: boolean,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -798,7 +798,7 @@ export class Pool__stateResult {
     value4: i32,
     value5: boolean,
     value6: BigInt,
-    value7: BigInt
+    value7: BigInt,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -816,15 +816,15 @@ export class Pool__stateResult {
     map.set("value1", ethereum.Value.fromI32(this.value1));
     map.set(
       "value2",
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value2))
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value2)),
     );
     map.set(
       "value3",
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value3))
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value3)),
     );
     map.set(
       "value4",
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value4))
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value4)),
     );
     map.set("value5", ethereum.Value.fromBoolean(this.value5));
     map.set("value6", ethereum.Value.fromUnsignedBigInt(this.value6));
@@ -979,7 +979,7 @@ export class Pool__userEarnXResult {
     value2: BigInt,
     value3: BigInt,
     value4: BigInt,
-    value5: BigInt
+    value5: BigInt,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -1039,7 +1039,7 @@ export class Pool__userEarnYResult {
     value2: BigInt,
     value3: BigInt,
     value4: BigInt,
-    value5: BigInt
+    value5: BigInt,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -1094,7 +1094,7 @@ export class Pool extends ethereum.SmartContract {
     recipient: Address,
     point: i32,
     amountX: BigInt,
-    data: Bytes
+    data: Bytes,
   ): Pool__addLimOrderWithXResult {
     let result = super.call(
       "addLimOrderWithX",
@@ -1103,13 +1103,13 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromAddress(recipient),
         ethereum.Value.fromI32(point),
         ethereum.Value.fromUnsignedBigInt(amountX),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
 
     return new Pool__addLimOrderWithXResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
@@ -1117,7 +1117,7 @@ export class Pool extends ethereum.SmartContract {
     recipient: Address,
     point: i32,
     amountX: BigInt,
-    data: Bytes
+    data: Bytes,
   ): ethereum.CallResult<Pool__addLimOrderWithXResult> {
     let result = super.tryCall(
       "addLimOrderWithX",
@@ -1126,15 +1126,18 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromAddress(recipient),
         ethereum.Value.fromI32(point),
         ethereum.Value.fromUnsignedBigInt(amountX),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Pool__addLimOrderWithXResult(value[0].toBigInt(), value[1].toBigInt())
+      new Pool__addLimOrderWithXResult(
+        value[0].toBigInt(),
+        value[1].toBigInt(),
+      ),
     );
   }
 
@@ -1142,7 +1145,7 @@ export class Pool extends ethereum.SmartContract {
     recipient: Address,
     point: i32,
     amountY: BigInt,
-    data: Bytes
+    data: Bytes,
   ): Pool__addLimOrderWithYResult {
     let result = super.call(
       "addLimOrderWithY",
@@ -1151,13 +1154,13 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromAddress(recipient),
         ethereum.Value.fromI32(point),
         ethereum.Value.fromUnsignedBigInt(amountY),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
 
     return new Pool__addLimOrderWithYResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
@@ -1165,7 +1168,7 @@ export class Pool extends ethereum.SmartContract {
     recipient: Address,
     point: i32,
     amountY: BigInt,
-    data: Bytes
+    data: Bytes,
   ): ethereum.CallResult<Pool__addLimOrderWithYResult> {
     let result = super.tryCall(
       "addLimOrderWithY",
@@ -1174,22 +1177,25 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromAddress(recipient),
         ethereum.Value.fromI32(point),
         ethereum.Value.fromUnsignedBigInt(amountY),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Pool__addLimOrderWithYResult(value[0].toBigInt(), value[1].toBigInt())
+      new Pool__addLimOrderWithYResult(
+        value[0].toBigInt(),
+        value[1].toBigInt(),
+      ),
     );
   }
 
   assignLimOrderEarnX(
     point: i32,
     assignX: BigInt,
-    fromLegacy: boolean
+    fromLegacy: boolean,
   ): BigInt {
     let result = super.call(
       "assignLimOrderEarnX",
@@ -1197,8 +1203,8 @@ export class Pool extends ethereum.SmartContract {
       [
         ethereum.Value.fromI32(point),
         ethereum.Value.fromUnsignedBigInt(assignX),
-        ethereum.Value.fromBoolean(fromLegacy)
-      ]
+        ethereum.Value.fromBoolean(fromLegacy),
+      ],
     );
 
     return result[0].toBigInt();
@@ -1207,7 +1213,7 @@ export class Pool extends ethereum.SmartContract {
   try_assignLimOrderEarnX(
     point: i32,
     assignX: BigInt,
-    fromLegacy: boolean
+    fromLegacy: boolean,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "assignLimOrderEarnX",
@@ -1215,8 +1221,8 @@ export class Pool extends ethereum.SmartContract {
       [
         ethereum.Value.fromI32(point),
         ethereum.Value.fromUnsignedBigInt(assignX),
-        ethereum.Value.fromBoolean(fromLegacy)
-      ]
+        ethereum.Value.fromBoolean(fromLegacy),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1228,7 +1234,7 @@ export class Pool extends ethereum.SmartContract {
   assignLimOrderEarnY(
     point: i32,
     assignY: BigInt,
-    fromLegacy: boolean
+    fromLegacy: boolean,
   ): BigInt {
     let result = super.call(
       "assignLimOrderEarnY",
@@ -1236,8 +1242,8 @@ export class Pool extends ethereum.SmartContract {
       [
         ethereum.Value.fromI32(point),
         ethereum.Value.fromUnsignedBigInt(assignY),
-        ethereum.Value.fromBoolean(fromLegacy)
-      ]
+        ethereum.Value.fromBoolean(fromLegacy),
+      ],
     );
 
     return result[0].toBigInt();
@@ -1246,7 +1252,7 @@ export class Pool extends ethereum.SmartContract {
   try_assignLimOrderEarnY(
     point: i32,
     assignY: BigInt,
-    fromLegacy: boolean
+    fromLegacy: boolean,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "assignLimOrderEarnY",
@@ -1254,8 +1260,8 @@ export class Pool extends ethereum.SmartContract {
       [
         ethereum.Value.fromI32(point),
         ethereum.Value.fromUnsignedBigInt(assignY),
-        ethereum.Value.fromBoolean(fromLegacy)
-      ]
+        ethereum.Value.fromBoolean(fromLegacy),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1271,8 +1277,8 @@ export class Pool extends ethereum.SmartContract {
       [
         ethereum.Value.fromI32(leftPt),
         ethereum.Value.fromI32(rightPt),
-        ethereum.Value.fromUnsignedBigInt(liquidDelta)
-      ]
+        ethereum.Value.fromUnsignedBigInt(liquidDelta),
+      ],
     );
 
     return new Pool__burnResult(result[0].toBigInt(), result[1].toBigInt());
@@ -1281,7 +1287,7 @@ export class Pool extends ethereum.SmartContract {
   try_burn(
     leftPt: i32,
     rightPt: i32,
-    liquidDelta: BigInt
+    liquidDelta: BigInt,
   ): ethereum.CallResult<Pool__burnResult> {
     let result = super.tryCall(
       "burn",
@@ -1289,15 +1295,15 @@ export class Pool extends ethereum.SmartContract {
       [
         ethereum.Value.fromI32(leftPt),
         ethereum.Value.fromI32(rightPt),
-        ethereum.Value.fromUnsignedBigInt(liquidDelta)
-      ]
+        ethereum.Value.fromUnsignedBigInt(liquidDelta),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Pool__burnResult(value[0].toBigInt(), value[1].toBigInt())
+      new Pool__burnResult(value[0].toBigInt(), value[1].toBigInt()),
     );
   }
 
@@ -1306,7 +1312,7 @@ export class Pool extends ethereum.SmartContract {
     leftPt: i32,
     rightPt: i32,
     amountXLim: BigInt,
-    amountYLim: BigInt
+    amountYLim: BigInt,
   ): Pool__collectResult {
     let result = super.call(
       "collect",
@@ -1316,8 +1322,8 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromI32(leftPt),
         ethereum.Value.fromI32(rightPt),
         ethereum.Value.fromUnsignedBigInt(amountXLim),
-        ethereum.Value.fromUnsignedBigInt(amountYLim)
-      ]
+        ethereum.Value.fromUnsignedBigInt(amountYLim),
+      ],
     );
 
     return new Pool__collectResult(result[0].toBigInt(), result[1].toBigInt());
@@ -1328,7 +1334,7 @@ export class Pool extends ethereum.SmartContract {
     leftPt: i32,
     rightPt: i32,
     amountXLim: BigInt,
-    amountYLim: BigInt
+    amountYLim: BigInt,
   ): ethereum.CallResult<Pool__collectResult> {
     let result = super.tryCall(
       "collect",
@@ -1338,15 +1344,15 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromI32(leftPt),
         ethereum.Value.fromI32(rightPt),
         ethereum.Value.fromUnsignedBigInt(amountXLim),
-        ethereum.Value.fromUnsignedBigInt(amountYLim)
-      ]
+        ethereum.Value.fromUnsignedBigInt(amountYLim),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Pool__collectResult(value[0].toBigInt(), value[1].toBigInt())
+      new Pool__collectResult(value[0].toBigInt(), value[1].toBigInt()),
     );
   }
 
@@ -1355,7 +1361,7 @@ export class Pool extends ethereum.SmartContract {
     point: i32,
     collectDec: BigInt,
     collectEarn: BigInt,
-    isEarnY: boolean
+    isEarnY: boolean,
   ): Pool__collectLimOrderResult {
     let result = super.call(
       "collectLimOrder",
@@ -1365,13 +1371,13 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromI32(point),
         ethereum.Value.fromUnsignedBigInt(collectDec),
         ethereum.Value.fromUnsignedBigInt(collectEarn),
-        ethereum.Value.fromBoolean(isEarnY)
-      ]
+        ethereum.Value.fromBoolean(isEarnY),
+      ],
     );
 
     return new Pool__collectLimOrderResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
@@ -1380,7 +1386,7 @@ export class Pool extends ethereum.SmartContract {
     point: i32,
     collectDec: BigInt,
     collectEarn: BigInt,
-    isEarnY: boolean
+    isEarnY: boolean,
   ): ethereum.CallResult<Pool__collectLimOrderResult> {
     let result = super.tryCall(
       "collectLimOrder",
@@ -1390,15 +1396,15 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromI32(point),
         ethereum.Value.fromUnsignedBigInt(collectDec),
         ethereum.Value.fromUnsignedBigInt(collectEarn),
-        ethereum.Value.fromBoolean(isEarnY)
-      ]
+        ethereum.Value.fromBoolean(isEarnY),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Pool__collectLimOrderResult(value[0].toBigInt(), value[1].toBigInt())
+      new Pool__collectLimOrderResult(value[0].toBigInt(), value[1].toBigInt()),
     );
   }
 
@@ -1406,30 +1412,39 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "decLimOrderWithX",
       "decLimOrderWithX(int24,uint128):(uint128,uint256)",
-      [ethereum.Value.fromI32(point), ethereum.Value.fromUnsignedBigInt(deltaX)]
+      [
+        ethereum.Value.fromI32(point),
+        ethereum.Value.fromUnsignedBigInt(deltaX),
+      ],
     );
 
     return new Pool__decLimOrderWithXResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
   try_decLimOrderWithX(
     point: i32,
-    deltaX: BigInt
+    deltaX: BigInt,
   ): ethereum.CallResult<Pool__decLimOrderWithXResult> {
     let result = super.tryCall(
       "decLimOrderWithX",
       "decLimOrderWithX(int24,uint128):(uint128,uint256)",
-      [ethereum.Value.fromI32(point), ethereum.Value.fromUnsignedBigInt(deltaX)]
+      [
+        ethereum.Value.fromI32(point),
+        ethereum.Value.fromUnsignedBigInt(deltaX),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Pool__decLimOrderWithXResult(value[0].toBigInt(), value[1].toBigInt())
+      new Pool__decLimOrderWithXResult(
+        value[0].toBigInt(),
+        value[1].toBigInt(),
+      ),
     );
   }
 
@@ -1437,30 +1452,39 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "decLimOrderWithY",
       "decLimOrderWithY(int24,uint128):(uint128,uint256)",
-      [ethereum.Value.fromI32(point), ethereum.Value.fromUnsignedBigInt(deltaY)]
+      [
+        ethereum.Value.fromI32(point),
+        ethereum.Value.fromUnsignedBigInt(deltaY),
+      ],
     );
 
     return new Pool__decLimOrderWithYResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
   try_decLimOrderWithY(
     point: i32,
-    deltaY: BigInt
+    deltaY: BigInt,
   ): ethereum.CallResult<Pool__decLimOrderWithYResult> {
     let result = super.tryCall(
       "decLimOrderWithY",
       "decLimOrderWithY(int24,uint128):(uint128,uint256)",
-      [ethereum.Value.fromI32(point), ethereum.Value.fromUnsignedBigInt(deltaY)]
+      [
+        ethereum.Value.fromI32(point),
+        ethereum.Value.fromUnsignedBigInt(deltaY),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Pool__decLimOrderWithYResult(value[0].toBigInt(), value[1].toBigInt())
+      new Pool__decLimOrderWithYResult(
+        value[0].toBigInt(),
+        value[1].toBigInt(),
+      ),
     );
   }
 
@@ -1498,7 +1522,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "feeChargePercent",
       "feeChargePercent():(uint24)",
-      []
+      [],
     );
 
     return result[0].toI32();
@@ -1508,7 +1532,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.tryCall(
       "feeChargePercent",
       "feeChargePercent():(uint24)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1527,7 +1551,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.tryCall(
       "feeScaleX_128",
       "feeScaleX_128():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1546,7 +1570,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.tryCall(
       "feeScaleY_128",
       "feeScaleY_128():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1574,7 +1598,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "limitOrderData",
       "limitOrderData(int24):(uint128,uint128,uint256,uint256,uint128,uint128,uint128,uint128,uint256,uint256)",
-      [ethereum.Value.fromI32(param0)]
+      [ethereum.Value.fromI32(param0)],
     );
 
     return new Pool__limitOrderDataResult(
@@ -1587,17 +1611,17 @@ export class Pool extends ethereum.SmartContract {
       result[6].toBigInt(),
       result[7].toBigInt(),
       result[8].toBigInt(),
-      result[9].toBigInt()
+      result[9].toBigInt(),
     );
   }
 
   try_limitOrderData(
-    param0: i32
+    param0: i32,
   ): ethereum.CallResult<Pool__limitOrderDataResult> {
     let result = super.tryCall(
       "limitOrderData",
       "limitOrderData(int24):(uint128,uint128,uint256,uint256,uint128,uint128,uint128,uint128,uint256,uint256)",
-      [ethereum.Value.fromI32(param0)]
+      [ethereum.Value.fromI32(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1614,43 +1638,41 @@ export class Pool extends ethereum.SmartContract {
         value[6].toBigInt(),
         value[7].toBigInt(),
         value[8].toBigInt(),
-        value[9].toBigInt()
-      )
+        value[9].toBigInt(),
+      ),
     );
   }
 
   limitOrderSnapshot(
     leftPoint: i32,
-    rightPoint: i32
+    rightPoint: i32,
   ): Array<Pool__limitOrderSnapshotResultLimitOrdersStruct> {
     let result = super.call(
       "limitOrderSnapshot",
       "limitOrderSnapshot(int24,int24):((uint128,uint128,uint256,uint128,uint128,uint256)[])",
-      [ethereum.Value.fromI32(leftPoint), ethereum.Value.fromI32(rightPoint)]
+      [ethereum.Value.fromI32(leftPoint), ethereum.Value.fromI32(rightPoint)],
     );
 
-    return result[0].toTupleArray<
-      Pool__limitOrderSnapshotResultLimitOrdersStruct
-    >();
+    return result[0].toTupleArray<Pool__limitOrderSnapshotResultLimitOrdersStruct>();
   }
 
   try_limitOrderSnapshot(
     leftPoint: i32,
-    rightPoint: i32
+    rightPoint: i32,
   ): ethereum.CallResult<
     Array<Pool__limitOrderSnapshotResultLimitOrdersStruct>
   > {
     let result = super.tryCall(
       "limitOrderSnapshot",
       "limitOrderSnapshot(int24,int24):((uint128,uint128,uint256,uint128,uint128,uint256)[])",
-      [ethereum.Value.fromI32(leftPoint), ethereum.Value.fromI32(rightPoint)]
+      [ethereum.Value.fromI32(leftPoint), ethereum.Value.fromI32(rightPoint)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      value[0].toTupleArray<Pool__limitOrderSnapshotResultLimitOrdersStruct>()
+      value[0].toTupleArray<Pool__limitOrderSnapshotResultLimitOrdersStruct>(),
     );
   }
 
@@ -1658,7 +1680,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "liquidity",
       "liquidity(bytes32):(uint128,uint256,uint256,uint256,uint256)",
-      [ethereum.Value.fromFixedBytes(param0)]
+      [ethereum.Value.fromFixedBytes(param0)],
     );
 
     return new Pool__liquidityResult(
@@ -1666,7 +1688,7 @@ export class Pool extends ethereum.SmartContract {
       result[1].toBigInt(),
       result[2].toBigInt(),
       result[3].toBigInt(),
-      result[4].toBigInt()
+      result[4].toBigInt(),
     );
   }
 
@@ -1674,7 +1696,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.tryCall(
       "liquidity",
       "liquidity(bytes32):(uint128,uint256,uint256,uint256,uint256)",
-      [ethereum.Value.fromFixedBytes(param0)]
+      [ethereum.Value.fromFixedBytes(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1686,8 +1708,8 @@ export class Pool extends ethereum.SmartContract {
         value[1].toBigInt(),
         value[2].toBigInt(),
         value[3].toBigInt(),
-        value[4].toBigInt()
-      )
+        value[4].toBigInt(),
+      ),
     );
   }
 
@@ -1695,7 +1717,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "liquiditySnapshot",
       "liquiditySnapshot(int24,int24):(int128[])",
-      [ethereum.Value.fromI32(leftPoint), ethereum.Value.fromI32(rightPoint)]
+      [ethereum.Value.fromI32(leftPoint), ethereum.Value.fromI32(rightPoint)],
     );
 
     return result[0].toBigIntArray();
@@ -1703,12 +1725,12 @@ export class Pool extends ethereum.SmartContract {
 
   try_liquiditySnapshot(
     leftPoint: i32,
-    rightPoint: i32
+    rightPoint: i32,
   ): ethereum.CallResult<Array<BigInt>> {
     let result = super.tryCall(
       "liquiditySnapshot",
       "liquiditySnapshot(int24,int24):(int128[])",
-      [ethereum.Value.fromI32(leftPoint), ethereum.Value.fromI32(rightPoint)]
+      [ethereum.Value.fromI32(leftPoint), ethereum.Value.fromI32(rightPoint)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1737,7 +1759,7 @@ export class Pool extends ethereum.SmartContract {
     leftPt: i32,
     rightPt: i32,
     liquidDelta: BigInt,
-    data: Bytes
+    data: Bytes,
   ): Pool__mintResult {
     let result = super.call(
       "mint",
@@ -1747,8 +1769,8 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromI32(leftPt),
         ethereum.Value.fromI32(rightPt),
         ethereum.Value.fromUnsignedBigInt(liquidDelta),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
 
     return new Pool__mintResult(result[0].toBigInt(), result[1].toBigInt());
@@ -1759,7 +1781,7 @@ export class Pool extends ethereum.SmartContract {
     leftPt: i32,
     rightPt: i32,
     liquidDelta: BigInt,
-    data: Bytes
+    data: Bytes,
   ): ethereum.CallResult<Pool__mintResult> {
     let result = super.tryCall(
       "mint",
@@ -1769,15 +1791,15 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromI32(leftPt),
         ethereum.Value.fromI32(rightPt),
         ethereum.Value.fromUnsignedBigInt(liquidDelta),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Pool__mintResult(value[0].toBigInt(), value[1].toBigInt())
+      new Pool__mintResult(value[0].toBigInt(), value[1].toBigInt()),
     );
   }
 
@@ -1785,23 +1807,23 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "observations",
       "observations(uint256):(uint32,int56,bool)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return new Pool__observationsResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
-      result[2].toBoolean()
+      result[2].toBoolean(),
     );
   }
 
   try_observations(
-    param0: BigInt
+    param0: BigInt,
   ): ethereum.CallResult<Pool__observationsResult> {
     let result = super.tryCall(
       "observations",
       "observations(uint256):(uint32,int56,bool)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1811,14 +1833,14 @@ export class Pool extends ethereum.SmartContract {
       new Pool__observationsResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
-        value[2].toBoolean()
-      )
+        value[2].toBoolean(),
+      ),
     );
   }
 
   observe(secondsAgos: Array<BigInt>): Array<BigInt> {
     let result = super.call("observe", "observe(uint32[]):(int56[])", [
-      ethereum.Value.fromUnsignedBigIntArray(secondsAgos)
+      ethereum.Value.fromUnsignedBigIntArray(secondsAgos),
     ]);
 
     return result[0].toBigIntArray();
@@ -1826,7 +1848,7 @@ export class Pool extends ethereum.SmartContract {
 
   try_observe(secondsAgos: Array<BigInt>): ethereum.CallResult<Array<BigInt>> {
     let result = super.tryCall("observe", "observe(uint32[]):(int56[])", [
-      ethereum.Value.fromUnsignedBigIntArray(secondsAgos)
+      ethereum.Value.fromUnsignedBigIntArray(secondsAgos),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1839,7 +1861,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "orderOrEndpoint",
       "orderOrEndpoint(int24):(int24)",
-      [ethereum.Value.fromI32(param0)]
+      [ethereum.Value.fromI32(param0)],
     );
 
     return result[0].toI32();
@@ -1849,7 +1871,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.tryCall(
       "orderOrEndpoint",
       "orderOrEndpoint(int24):(int24)",
-      [ethereum.Value.fromI32(param0)]
+      [ethereum.Value.fromI32(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1860,7 +1882,7 @@ export class Pool extends ethereum.SmartContract {
 
   pointBitmap(param0: i32): BigInt {
     let result = super.call("pointBitmap", "pointBitmap(int16):(uint256)", [
-      ethereum.Value.fromI32(param0)
+      ethereum.Value.fromI32(param0),
     ]);
 
     return result[0].toBigInt();
@@ -1868,7 +1890,7 @@ export class Pool extends ethereum.SmartContract {
 
   try_pointBitmap(param0: i32): ethereum.CallResult<BigInt> {
     let result = super.tryCall("pointBitmap", "pointBitmap(int16):(uint256)", [
-      ethereum.Value.fromI32(param0)
+      ethereum.Value.fromI32(param0),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1896,7 +1918,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "points",
       "points(int24):(uint128,int128,uint256,uint256,bool)",
-      [ethereum.Value.fromI32(param0)]
+      [ethereum.Value.fromI32(param0)],
     );
 
     return new Pool__pointsResult(
@@ -1904,7 +1926,7 @@ export class Pool extends ethereum.SmartContract {
       result[1].toBigInt(),
       result[2].toBigInt(),
       result[3].toBigInt(),
-      result[4].toBoolean()
+      result[4].toBoolean(),
     );
   }
 
@@ -1912,7 +1934,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.tryCall(
       "points",
       "points(int24):(uint128,int128,uint256,uint256,bool)",
-      [ethereum.Value.fromI32(param0)]
+      [ethereum.Value.fromI32(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1924,8 +1946,8 @@ export class Pool extends ethereum.SmartContract {
         value[1].toBigInt(),
         value[2].toBigInt(),
         value[3].toBigInt(),
-        value[4].toBoolean()
-      )
+        value[4].toBoolean(),
+      ),
     );
   }
 
@@ -1963,7 +1985,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "state",
       "state():(uint160,int24,uint16,uint16,uint16,bool,uint128,uint128)",
-      []
+      [],
     );
 
     return new Pool__stateResult(
@@ -1974,7 +1996,7 @@ export class Pool extends ethereum.SmartContract {
       result[4].toI32(),
       result[5].toBoolean(),
       result[6].toBigInt(),
-      result[7].toBigInt()
+      result[7].toBigInt(),
     );
   }
 
@@ -1982,7 +2004,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.tryCall(
       "state",
       "state():(uint160,int24,uint16,uint16,uint16,bool,uint128,uint128)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1997,8 +2019,8 @@ export class Pool extends ethereum.SmartContract {
         value[4].toI32(),
         value[5].toBoolean(),
         value[6].toBigInt(),
-        value[7].toBigInt()
-      )
+        value[7].toBigInt(),
+      ),
     );
   }
 
@@ -2006,7 +2028,7 @@ export class Pool extends ethereum.SmartContract {
     recipient: Address,
     amount: BigInt,
     lowPt: i32,
-    data: Bytes
+    data: Bytes,
   ): Pool__swapX2YResult {
     let result = super.call(
       "swapX2Y",
@@ -2015,8 +2037,8 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromAddress(recipient),
         ethereum.Value.fromUnsignedBigInt(amount),
         ethereum.Value.fromI32(lowPt),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
 
     return new Pool__swapX2YResult(result[0].toBigInt(), result[1].toBigInt());
@@ -2026,7 +2048,7 @@ export class Pool extends ethereum.SmartContract {
     recipient: Address,
     amount: BigInt,
     lowPt: i32,
-    data: Bytes
+    data: Bytes,
   ): ethereum.CallResult<Pool__swapX2YResult> {
     let result = super.tryCall(
       "swapX2Y",
@@ -2035,15 +2057,15 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromAddress(recipient),
         ethereum.Value.fromUnsignedBigInt(amount),
         ethereum.Value.fromI32(lowPt),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Pool__swapX2YResult(value[0].toBigInt(), value[1].toBigInt())
+      new Pool__swapX2YResult(value[0].toBigInt(), value[1].toBigInt()),
     );
   }
 
@@ -2051,7 +2073,7 @@ export class Pool extends ethereum.SmartContract {
     recipient: Address,
     desireY: BigInt,
     lowPt: i32,
-    data: Bytes
+    data: Bytes,
   ): Pool__swapX2YDesireYResult {
     let result = super.call(
       "swapX2YDesireY",
@@ -2060,13 +2082,13 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromAddress(recipient),
         ethereum.Value.fromUnsignedBigInt(desireY),
         ethereum.Value.fromI32(lowPt),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
 
     return new Pool__swapX2YDesireYResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
@@ -2074,7 +2096,7 @@ export class Pool extends ethereum.SmartContract {
     recipient: Address,
     desireY: BigInt,
     lowPt: i32,
-    data: Bytes
+    data: Bytes,
   ): ethereum.CallResult<Pool__swapX2YDesireYResult> {
     let result = super.tryCall(
       "swapX2YDesireY",
@@ -2083,15 +2105,15 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromAddress(recipient),
         ethereum.Value.fromUnsignedBigInt(desireY),
         ethereum.Value.fromI32(lowPt),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Pool__swapX2YDesireYResult(value[0].toBigInt(), value[1].toBigInt())
+      new Pool__swapX2YDesireYResult(value[0].toBigInt(), value[1].toBigInt()),
     );
   }
 
@@ -2099,7 +2121,7 @@ export class Pool extends ethereum.SmartContract {
     recipient: Address,
     amount: BigInt,
     highPt: i32,
-    data: Bytes
+    data: Bytes,
   ): Pool__swapY2XResult {
     let result = super.call(
       "swapY2X",
@@ -2108,8 +2130,8 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromAddress(recipient),
         ethereum.Value.fromUnsignedBigInt(amount),
         ethereum.Value.fromI32(highPt),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
 
     return new Pool__swapY2XResult(result[0].toBigInt(), result[1].toBigInt());
@@ -2119,7 +2141,7 @@ export class Pool extends ethereum.SmartContract {
     recipient: Address,
     amount: BigInt,
     highPt: i32,
-    data: Bytes
+    data: Bytes,
   ): ethereum.CallResult<Pool__swapY2XResult> {
     let result = super.tryCall(
       "swapY2X",
@@ -2128,15 +2150,15 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromAddress(recipient),
         ethereum.Value.fromUnsignedBigInt(amount),
         ethereum.Value.fromI32(highPt),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Pool__swapY2XResult(value[0].toBigInt(), value[1].toBigInt())
+      new Pool__swapY2XResult(value[0].toBigInt(), value[1].toBigInt()),
     );
   }
 
@@ -2144,7 +2166,7 @@ export class Pool extends ethereum.SmartContract {
     recipient: Address,
     desireX: BigInt,
     highPt: i32,
-    data: Bytes
+    data: Bytes,
   ): Pool__swapY2XDesireXResult {
     let result = super.call(
       "swapY2XDesireX",
@@ -2153,13 +2175,13 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromAddress(recipient),
         ethereum.Value.fromUnsignedBigInt(desireX),
         ethereum.Value.fromI32(highPt),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
 
     return new Pool__swapY2XDesireXResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
@@ -2167,7 +2189,7 @@ export class Pool extends ethereum.SmartContract {
     recipient: Address,
     desireX: BigInt,
     highPt: i32,
-    data: Bytes
+    data: Bytes,
   ): ethereum.CallResult<Pool__swapY2XDesireXResult> {
     let result = super.tryCall(
       "swapY2XDesireX",
@@ -2176,15 +2198,15 @@ export class Pool extends ethereum.SmartContract {
         ethereum.Value.fromAddress(recipient),
         ethereum.Value.fromUnsignedBigInt(desireX),
         ethereum.Value.fromI32(highPt),
-        ethereum.Value.fromBytes(data)
-      ]
+        ethereum.Value.fromBytes(data),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new Pool__swapY2XDesireXResult(value[0].toBigInt(), value[1].toBigInt())
+      new Pool__swapY2XDesireXResult(value[0].toBigInt(), value[1].toBigInt()),
     );
   }
 
@@ -2222,7 +2244,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "totalFeeXCharged",
       "totalFeeXCharged():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -2232,7 +2254,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.tryCall(
       "totalFeeXCharged",
       "totalFeeXCharged():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -2245,7 +2267,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "totalFeeYCharged",
       "totalFeeYCharged():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -2255,7 +2277,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.tryCall(
       "totalFeeYCharged",
       "totalFeeYCharged():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -2268,7 +2290,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "userEarnX",
       "userEarnX(bytes32):(uint256,uint128,uint128,uint128,uint128,uint128)",
-      [ethereum.Value.fromFixedBytes(param0)]
+      [ethereum.Value.fromFixedBytes(param0)],
     );
 
     return new Pool__userEarnXResult(
@@ -2277,7 +2299,7 @@ export class Pool extends ethereum.SmartContract {
       result[2].toBigInt(),
       result[3].toBigInt(),
       result[4].toBigInt(),
-      result[5].toBigInt()
+      result[5].toBigInt(),
     );
   }
 
@@ -2285,7 +2307,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.tryCall(
       "userEarnX",
       "userEarnX(bytes32):(uint256,uint128,uint128,uint128,uint128,uint128)",
-      [ethereum.Value.fromFixedBytes(param0)]
+      [ethereum.Value.fromFixedBytes(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -2298,8 +2320,8 @@ export class Pool extends ethereum.SmartContract {
         value[2].toBigInt(),
         value[3].toBigInt(),
         value[4].toBigInt(),
-        value[5].toBigInt()
-      )
+        value[5].toBigInt(),
+      ),
     );
   }
 
@@ -2307,7 +2329,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.call(
       "userEarnY",
       "userEarnY(bytes32):(uint256,uint128,uint128,uint128,uint128,uint128)",
-      [ethereum.Value.fromFixedBytes(param0)]
+      [ethereum.Value.fromFixedBytes(param0)],
     );
 
     return new Pool__userEarnYResult(
@@ -2316,7 +2338,7 @@ export class Pool extends ethereum.SmartContract {
       result[2].toBigInt(),
       result[3].toBigInt(),
       result[4].toBigInt(),
-      result[5].toBigInt()
+      result[5].toBigInt(),
     );
   }
 
@@ -2324,7 +2346,7 @@ export class Pool extends ethereum.SmartContract {
     let result = super.tryCall(
       "userEarnY",
       "userEarnY(bytes32):(uint256,uint128,uint128,uint128,uint128,uint128)",
-      [ethereum.Value.fromFixedBytes(param0)]
+      [ethereum.Value.fromFixedBytes(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -2337,8 +2359,8 @@ export class Pool extends ethereum.SmartContract {
         value[2].toBigInt(),
         value[3].toBigInt(),
         value[4].toBigInt(),
-        value[5].toBigInt()
-      )
+        value[5].toBigInt(),
+      ),
     );
   }
 }

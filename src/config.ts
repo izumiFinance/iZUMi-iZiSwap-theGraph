@@ -10,10 +10,10 @@ export class StableCoinConfig {
     static config(): Set<string> {
         if (this.stableCoins == null) {
             this.stableCoins = new Set();
-            this.stableCoins.add('0x201eba5cc46d216ce6dc03f6a759e8e766e956ae'); // USDT
+            this.stableCoins.add('0xa219439258ca9da29e9cc4ce5596924745e12b93'); // USDT
             this.stableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
-            this.stableCoins.add('0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9'); // USDC
-
+            this.stableCoins.add('0x176211869ca2b568f2a7d4ee941e073a821ee1ff'); // USDC
+            this.stableCoins.add('0x7d43AABC515C356145049227CeE54B608342c0ad'); // BUSD
         }
 
         return this.stableCoins;
@@ -27,12 +27,13 @@ export class TrustableTokenConfig {
     static config(): Set<string> {
         if (this.trustableTokens == null) {
             this.trustableTokens = new Set();
-            this.trustableTokens.add('0x201eba5cc46d216ce6dc03f6a759e8e766e956ae'); // USDT
+            this.trustableTokens.add('0xa219439258ca9da29e9cc4ce5596924745e12b93'); // USDT
             this.trustableTokens.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
             this.trustableTokens.add('0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'); // iZi
-            this.trustableTokens.add('0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9'); // USDC
-            this.trustableTokens.add('0xdeaddeaddeaddeaddeaddeaddeaddeaddead1111'); // WETH
-            this.trustableTokens.add('0x78c1b0c915c4faa5fffa6cabf0219da63d7f4cb8'); // WMNT
+            this.trustableTokens.add('0x176211869ca2b568f2a7d4ee941e073a821ee1ff'); // USDC
+            this.trustableTokens.add('0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f'); // WETH
+            this.trustableTokens.add('0xb5bedd42000b71fdde22d3ee8a79bd49a568fc8f'); // wstETH
+            this.trustableTokens.add('0x7d43AABC515C356145049227CeE54B608342c0ad'); // BUSD
         }
 
         return this.trustableTokens;

@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class NewPool extends ethereum.Event {
@@ -81,7 +81,7 @@ export class Factory extends ethereum.SmartContract {
     let result = super.tryCall(
       "chargeReceiver",
       "chargeReceiver():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -94,7 +94,7 @@ export class Factory extends ethereum.SmartContract {
     let result = super.call(
       "fee2pointDelta",
       "fee2pointDelta(uint24):(int24)",
-      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(param0))]
+      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(param0))],
     );
 
     return result[0].toI32();
@@ -104,7 +104,7 @@ export class Factory extends ethereum.SmartContract {
     let result = super.tryCall(
       "fee2pointDelta",
       "fee2pointDelta(uint24):(int24)",
-      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(param0))]
+      [ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(param0))],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -132,7 +132,7 @@ export class Factory extends ethereum.SmartContract {
     let result = super.call(
       "limitOrderModule",
       "limitOrderModule():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -142,7 +142,7 @@ export class Factory extends ethereum.SmartContract {
     let result = super.tryCall(
       "limitOrderModule",
       "limitOrderModule():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -155,7 +155,7 @@ export class Factory extends ethereum.SmartContract {
     let result = super.call(
       "liquidityModule",
       "liquidityModule():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -165,7 +165,7 @@ export class Factory extends ethereum.SmartContract {
     let result = super.tryCall(
       "liquidityModule",
       "liquidityModule():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -178,7 +178,7 @@ export class Factory extends ethereum.SmartContract {
     tokenX: Address,
     tokenY: Address,
     fee: i32,
-    currentPoint: i32
+    currentPoint: i32,
   ): Address {
     let result = super.call(
       "newPool",
@@ -187,8 +187,8 @@ export class Factory extends ethereum.SmartContract {
         ethereum.Value.fromAddress(tokenX),
         ethereum.Value.fromAddress(tokenY),
         ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(fee)),
-        ethereum.Value.fromI32(currentPoint)
-      ]
+        ethereum.Value.fromI32(currentPoint),
+      ],
     );
 
     return result[0].toAddress();
@@ -198,7 +198,7 @@ export class Factory extends ethereum.SmartContract {
     tokenX: Address,
     tokenY: Address,
     fee: i32,
-    currentPoint: i32
+    currentPoint: i32,
   ): ethereum.CallResult<Address> {
     let result = super.tryCall(
       "newPool",
@@ -207,8 +207,8 @@ export class Factory extends ethereum.SmartContract {
         ethereum.Value.fromAddress(tokenX),
         ethereum.Value.fromAddress(tokenY),
         ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(fee)),
-        ethereum.Value.fromI32(currentPoint)
-      ]
+        ethereum.Value.fromI32(currentPoint),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -251,7 +251,7 @@ export class Factory extends ethereum.SmartContract {
     let result = super.call("pool", "pool(address,address,uint24):(address)", [
       ethereum.Value.fromAddress(param0),
       ethereum.Value.fromAddress(param1),
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(param2))
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(param2)),
     ]);
 
     return result[0].toAddress();
@@ -260,7 +260,7 @@ export class Factory extends ethereum.SmartContract {
   try_pool(
     param0: Address,
     param1: Address,
-    param2: i32
+    param2: i32,
   ): ethereum.CallResult<Address> {
     let result = super.tryCall(
       "pool",
@@ -268,8 +268,8 @@ export class Factory extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(param0),
         ethereum.Value.fromAddress(param1),
-        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(param2))
-      ]
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(param2)),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -288,7 +288,7 @@ export class Factory extends ethereum.SmartContract {
     let result = super.tryCall(
       "swapX2YModule",
       "swapX2YModule():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -307,7 +307,7 @@ export class Factory extends ethereum.SmartContract {
     let result = super.tryCall(
       "swapY2XModule",
       "swapY2XModule():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();

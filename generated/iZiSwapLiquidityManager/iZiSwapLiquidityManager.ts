@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class Approval extends ethereum.Event {
@@ -131,7 +131,7 @@ export class iZiSwapLiquidityManager__liquiditiesResult {
     value4: BigInt,
     value5: BigInt,
     value6: BigInt,
-    value7: BigInt
+    value7: BigInt,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -206,7 +206,7 @@ export class iZiSwapLiquidityManager__poolMetasResult {
     map.set("value1", ethereum.Value.fromAddress(this.value1));
     map.set(
       "value2",
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value2))
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value2)),
     );
     return map;
   }
@@ -246,7 +246,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   balanceOf(owner: Address): BigInt {
     let result = super.call("balanceOf", "balanceOf(address):(uint256)", [
-      ethereum.Value.fromAddress(owner)
+      ethereum.Value.fromAddress(owner),
     ]);
 
     return result[0].toBigInt();
@@ -254,7 +254,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   try_balanceOf(owner: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("balanceOf", "balanceOf(address):(uint256)", [
-      ethereum.Value.fromAddress(owner)
+      ethereum.Value.fromAddress(owner),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -265,7 +265,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   burn(lid: BigInt): boolean {
     let result = super.call("burn", "burn(uint256):(bool)", [
-      ethereum.Value.fromUnsignedBigInt(lid)
+      ethereum.Value.fromUnsignedBigInt(lid),
     ]);
 
     return result[0].toBoolean();
@@ -273,7 +273,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   try_burn(lid: BigInt): ethereum.CallResult<boolean> {
     let result = super.tryCall("burn", "burn(uint256):(bool)", [
-      ethereum.Value.fromUnsignedBigInt(lid)
+      ethereum.Value.fromUnsignedBigInt(lid),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -286,7 +286,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     tokenX: Address,
     tokenY: Address,
     fee: i32,
-    initialPoint: i32
+    initialPoint: i32,
   ): Address {
     let result = super.call(
       "createPool",
@@ -295,8 +295,8 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
         ethereum.Value.fromAddress(tokenX),
         ethereum.Value.fromAddress(tokenY),
         ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(fee)),
-        ethereum.Value.fromI32(initialPoint)
-      ]
+        ethereum.Value.fromI32(initialPoint),
+      ],
     );
 
     return result[0].toAddress();
@@ -306,7 +306,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     tokenX: Address,
     tokenY: Address,
     fee: i32,
-    initialPoint: i32
+    initialPoint: i32,
   ): ethereum.CallResult<Address> {
     let result = super.tryCall(
       "createPool",
@@ -315,8 +315,8 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
         ethereum.Value.fromAddress(tokenX),
         ethereum.Value.fromAddress(tokenY),
         ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(fee)),
-        ethereum.Value.fromI32(initialPoint)
-      ]
+        ethereum.Value.fromI32(initialPoint),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -330,7 +330,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     liquidDelta: BigInt,
     amountXMin: BigInt,
     amountYMin: BigInt,
-    deadline: BigInt
+    deadline: BigInt,
   ): iZiSwapLiquidityManager__decLiquidityResult {
     let result = super.call(
       "decLiquidity",
@@ -340,13 +340,13 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
         ethereum.Value.fromUnsignedBigInt(liquidDelta),
         ethereum.Value.fromUnsignedBigInt(amountXMin),
         ethereum.Value.fromUnsignedBigInt(amountYMin),
-        ethereum.Value.fromUnsignedBigInt(deadline)
-      ]
+        ethereum.Value.fromUnsignedBigInt(deadline),
+      ],
     );
 
     return new iZiSwapLiquidityManager__decLiquidityResult(
       result[0].toBigInt(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
@@ -355,7 +355,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     liquidDelta: BigInt,
     amountXMin: BigInt,
     amountYMin: BigInt,
-    deadline: BigInt
+    deadline: BigInt,
   ): ethereum.CallResult<iZiSwapLiquidityManager__decLiquidityResult> {
     let result = super.tryCall(
       "decLiquidity",
@@ -365,8 +365,8 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
         ethereum.Value.fromUnsignedBigInt(liquidDelta),
         ethereum.Value.fromUnsignedBigInt(amountXMin),
         ethereum.Value.fromUnsignedBigInt(amountYMin),
-        ethereum.Value.fromUnsignedBigInt(deadline)
-      ]
+        ethereum.Value.fromUnsignedBigInt(deadline),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -375,8 +375,8 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(
       new iZiSwapLiquidityManager__decLiquidityResult(
         value[0].toBigInt(),
-        value[1].toBigInt()
-      )
+        value[1].toBigInt(),
+      ),
     );
   }
 
@@ -397,7 +397,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   getApproved(tokenId: BigInt): Address {
     let result = super.call("getApproved", "getApproved(uint256):(address)", [
-      ethereum.Value.fromUnsignedBigInt(tokenId)
+      ethereum.Value.fromUnsignedBigInt(tokenId),
     ]);
 
     return result[0].toAddress();
@@ -407,7 +407,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     let result = super.tryCall(
       "getApproved",
       "getApproved(uint256):(address)",
-      [ethereum.Value.fromUnsignedBigInt(tokenId)]
+      [ethereum.Value.fromUnsignedBigInt(tokenId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -420,7 +420,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     let result = super.call(
       "isApprovedForAll",
       "isApprovedForAll(address,address):(bool)",
-      [ethereum.Value.fromAddress(owner), ethereum.Value.fromAddress(operator)]
+      [ethereum.Value.fromAddress(owner), ethereum.Value.fromAddress(operator)],
     );
 
     return result[0].toBoolean();
@@ -428,12 +428,12 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   try_isApprovedForAll(
     owner: Address,
-    operator: Address
+    operator: Address,
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "isApprovedForAll",
       "isApprovedForAll(address,address):(bool)",
-      [ethereum.Value.fromAddress(owner), ethereum.Value.fromAddress(operator)]
+      [ethereum.Value.fromAddress(owner), ethereum.Value.fromAddress(operator)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -446,7 +446,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     let result = super.call(
       "liquidities",
       "liquidities(uint256):(int24,int24,uint128,uint256,uint256,uint256,uint256,uint128)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return new iZiSwapLiquidityManager__liquiditiesResult(
@@ -457,17 +457,17 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
       result[4].toBigInt(),
       result[5].toBigInt(),
       result[6].toBigInt(),
-      result[7].toBigInt()
+      result[7].toBigInt(),
     );
   }
 
   try_liquidities(
-    param0: BigInt
+    param0: BigInt,
   ): ethereum.CallResult<iZiSwapLiquidityManager__liquiditiesResult> {
     let result = super.tryCall(
       "liquidities",
       "liquidities(uint256):(int24,int24,uint128,uint256,uint256,uint256,uint256,uint128)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -482,8 +482,8 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
         value[4].toBigInt(),
         value[5].toBigInt(),
         value[6].toBigInt(),
-        value[7].toBigInt()
-      )
+        value[7].toBigInt(),
+      ),
     );
   }
 
@@ -519,7 +519,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   ownerOf(tokenId: BigInt): Address {
     let result = super.call("ownerOf", "ownerOf(uint256):(address)", [
-      ethereum.Value.fromUnsignedBigInt(tokenId)
+      ethereum.Value.fromUnsignedBigInt(tokenId),
     ]);
 
     return result[0].toAddress();
@@ -527,7 +527,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   try_ownerOf(tokenId: BigInt): ethereum.CallResult<Address> {
     let result = super.tryCall("ownerOf", "ownerOf(uint256):(address)", [
-      ethereum.Value.fromUnsignedBigInt(tokenId)
+      ethereum.Value.fromUnsignedBigInt(tokenId),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -540,7 +540,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     let result = super.call("pool", "pool(address,address,uint24):(address)", [
       ethereum.Value.fromAddress(tokenX),
       ethereum.Value.fromAddress(tokenY),
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(fee))
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(fee)),
     ]);
 
     return result[0].toAddress();
@@ -549,7 +549,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
   try_pool(
     tokenX: Address,
     tokenY: Address,
-    fee: i32
+    fee: i32,
   ): ethereum.CallResult<Address> {
     let result = super.tryCall(
       "pool",
@@ -557,8 +557,8 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(tokenX),
         ethereum.Value.fromAddress(tokenY),
-        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(fee))
-      ]
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(fee)),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -569,7 +569,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   poolIds(param0: Address): BigInt {
     let result = super.call("poolIds", "poolIds(address):(uint128)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
 
     return result[0].toBigInt();
@@ -577,7 +577,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   try_poolIds(param0: Address): ethereum.CallResult<BigInt> {
     let result = super.tryCall("poolIds", "poolIds(address):(uint128)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -590,23 +590,23 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     let result = super.call(
       "poolMetas",
       "poolMetas(uint128):(address,address,uint24)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return new iZiSwapLiquidityManager__poolMetasResult(
       result[0].toAddress(),
       result[1].toAddress(),
-      result[2].toI32()
+      result[2].toI32(),
     );
   }
 
   try_poolMetas(
-    param0: BigInt
+    param0: BigInt,
   ): ethereum.CallResult<iZiSwapLiquidityManager__poolMetasResult> {
     let result = super.tryCall(
       "poolMetas",
       "poolMetas(uint128):(address,address,uint24)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -616,8 +616,8 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
       new iZiSwapLiquidityManager__poolMetasResult(
         value[0].toAddress(),
         value[1].toAddress(),
-        value[2].toI32()
-      )
+        value[2].toI32(),
+      ),
     );
   }
 
@@ -625,7 +625,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     let result = super.call(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(interfaceId)],
     );
 
     return result[0].toBoolean();
@@ -635,7 +635,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     let result = super.tryCall(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(interfaceId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -661,7 +661,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   tokenByIndex(index: BigInt): BigInt {
     let result = super.call("tokenByIndex", "tokenByIndex(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(index)
+      ethereum.Value.fromUnsignedBigInt(index),
     ]);
 
     return result[0].toBigInt();
@@ -671,7 +671,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     let result = super.tryCall(
       "tokenByIndex",
       "tokenByIndex(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(index)]
+      [ethereum.Value.fromUnsignedBigInt(index)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -686,8 +686,8 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
       "tokenOfOwnerByIndex(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(owner),
-        ethereum.Value.fromUnsignedBigInt(index)
-      ]
+        ethereum.Value.fromUnsignedBigInt(index),
+      ],
     );
 
     return result[0].toBigInt();
@@ -695,15 +695,15 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   try_tokenOfOwnerByIndex(
     owner: Address,
-    index: BigInt
+    index: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "tokenOfOwnerByIndex",
       "tokenOfOwnerByIndex(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(owner),
-        ethereum.Value.fromUnsignedBigInt(index)
-      ]
+        ethereum.Value.fromUnsignedBigInt(index),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -714,7 +714,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   tokenURI(tokenId: BigInt): string {
     let result = super.call("tokenURI", "tokenURI(uint256):(string)", [
-      ethereum.Value.fromUnsignedBigInt(tokenId)
+      ethereum.Value.fromUnsignedBigInt(tokenId),
     ]);
 
     return result[0].toString();
@@ -722,7 +722,7 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
 
   try_tokenURI(tokenId: BigInt): ethereum.CallResult<string> {
     let result = super.tryCall("tokenURI", "tokenURI(uint256):(string)", [
-      ethereum.Value.fromUnsignedBigInt(tokenId)
+      ethereum.Value.fromUnsignedBigInt(tokenId),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -800,7 +800,7 @@ export class AddLiquidityCall__Inputs {
 
   get addLiquidityParam(): AddLiquidityCallAddLiquidityParamStruct {
     return changetype<AddLiquidityCallAddLiquidityParamStruct>(
-      this._call.inputValues[0].value.toTuple()
+      this._call.inputValues[0].value.toTuple(),
     );
   }
 }
@@ -1088,7 +1088,7 @@ export class MintCall__Inputs {
 
   get mintParam(): MintCallMintParamStruct {
     return changetype<MintCallMintParamStruct>(
-      this._call.inputValues[0].value.toTuple()
+      this._call.inputValues[0].value.toTuple(),
     );
   }
 }

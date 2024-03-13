@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: iZiSwapFactory
-    network: mantle
+    network: linea
     source:
       address: "0x45e5F26451CDB01B0fA1f8582E0aAD9A6F27C218"
       abi: iZiSwapFactory
-      startBlock: 6800
+      startBlock: 1800
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -30,11 +30,11 @@ dataSources:
 
   - kind: ethereum
     name: iZiSwapLiquidityManager
-    network: mantle
+    network: linea
     source:
-      address: "0x611575eE1fbd4F7915D0eABCC518eD396fF78F0c"
+      address: "0x1CB60033F61e4fc171c963f0d2d3F63Ece24319c"
       abi: iZiSwapLiquidityManager
-      startBlock: 6800
+      startBlock: 1800
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -58,7 +58,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: Pool
-    network: mantle
+    network: linea
     source:
       abi: Pool
     mapping:
