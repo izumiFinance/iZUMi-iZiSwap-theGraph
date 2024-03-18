@@ -59,5 +59,15 @@
       "address": "0x110dE362cc436D7f54210f96b8C7652C2617887D",
       "startBlock": 50140
     }
+  },
+  "mode": {
+    "iZiSwapFactory": {
+      "address": "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08",
+      "startBlock": 5123740
+    },
+    "iZiSwapLiquidityManager": {
+      "address": "0x19b683A2F45012318d9B2aE1280d68d3eC54D663",
+      "startBlock": 5123740
+    }
   }
 }

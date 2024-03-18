@@ -29,7 +29,11 @@
 
     "create-local-kroma": "graph create --node http://localhost:8020/ izi-swap-kroma",
     "remove-local-kroma": "graph remove --node http://localhost:8020/ izi-swap-kroma",
-    "deploy-local-kroma": "graph deploy --node http://localhost:8020/ --network kroma --ipfs http://localhost:5001 izi-swap-kroma"
+    "deploy-local-kroma": "graph deploy --node http://localhost:8020/ --network kroma --ipfs http://localhost:5001 izi-swap-kroma",
+
+    "create-local-mode": "graph create --node http://localhost:8020/ izi-swap-mode",
+    "remove-local-mode": "graph remove --node http://localhost:8020/ izi-swap-mode",
+    "deploy-local-mode": "graph deploy --node http://localhost:8020/ --network mode --ipfs http://localhost:5001 izi-swap-mode"
 
   },
   "dependencies": {

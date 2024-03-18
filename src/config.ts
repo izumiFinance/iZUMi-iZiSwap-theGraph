@@ -19,6 +19,7 @@ export class FactoryConfig {
             this.factoryAddress.set("linea", "0x45e5f26451cdb01b0fa1f8582e0aad9a6f27c218");
             this.factoryAddress.set("scroll", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
             this.factoryAddress.set("kroma", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
+            this.factoryAddress.set("mode", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08")
         }
         const address = this.factoryAddress.get(dataSource.network());
         if (address !== null) {
@@ -80,6 +81,11 @@ export class StableCoinConfig {
             kromaStableCoins.add('0x0cf7c2a584988871b654bd79f96899e4cd6c41c0'); // USDT
             kromaStableCoins.add('0x0257e4d92c00c9efcca1d641b224d7d09cfa4522'); // USDC
             this.networkToStableCoins.set("kroma", kromaStableCoins);
+
+            //mode
+            let modeStableCoins = new Set<string>();
+            modeStableCoins.add('0xf0f161fda2712db8b566946122a5af183995e2ed'); // USDT
+            this.networkToStableCoins.set("mode", modeStableCoins);
         }
 
         const stableCoins = this.networkToStableCoins.get(dataSource.network());
@@ -157,6 +163,12 @@ export class TrustableTokenConfig {
             kromaTrustableCoins.add('0x4200000000000000000000000000000000000001'); // WETH
             kromaTrustableCoins.add('0x57b5284ba55a1170b4d3e5c0d4fa22bac893b291'); // iZi
             this.networkToTrustableCoins.set("kroma", kromaTrustableCoins);
+
+            //mode
+            let modeTrustableCoins = new Set<string>();
+            modeTrustableCoins.add('0xf0f161fda2712db8b566946122a5af183995e2ed'); // USDT
+            modeTrustableCoins.add('0x4200000000000000000000000000000000000006'); // WETH
+            this.networkToTrustableCoins.set("mode", modeTrustableCoins);
         }
 
         const trustableTokens = this.networkToTrustableCoins.get(dataSource.network());
