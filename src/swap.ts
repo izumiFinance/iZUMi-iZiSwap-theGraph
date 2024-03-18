@@ -21,7 +21,7 @@ import {
 import { FACTORY_ADDRESS, StableCoinConfig } from './config';
 import { ONE_BD, ONE_BI, ZERO_BD } from './constants';
 import { updatePoolDayData, updatePoolHourData, updateTokenDayData, updateTokenHourData } from './intervalUpdater';
-import { bigEndianBytesToBigInt, convertFeeNumber, convertTokenToDecimal, tick2PriceDecimal, topicToAddress } from './utils/funcs';
+import { bigEndianBytesToBigInt, calculatetTick2PriceDecimal, convertFeeNumber, convertTokenToDecimal, tick2PriceDecimal, topicToAddress } from './utils/funcs';
 import { findUsdPerToken } from './utils/pricing';
 import { ERC20TransferTopic, fetchTokenBalanceAmount } from './utils/tokenHelper';
 import { getOrCreateTransaction } from './utils/contractHelper'
@@ -41,7 +41,7 @@ function updateTVL(
         // const tvlX = fetchTokenBalanceAmount(pool.tokenX, pool.id, tokenX.decimals);
         pool.tvlTokenX = pool.tvlTokenX.plus(amountXDelta);
         tokenX.tvl = tokenX.tvl.plus(amountXDelta);
-        tokenX.tvlUSD = tokenX.tvlUSD.times(tokenX.priceUSD);
+        tokenX.tvlUSD = tokenX.tvl.times(tokenX.priceUSD);
         tokenX.save()
     }
 
@@ -49,7 +49,7 @@ function updateTVL(
         // const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenY.decimals);
         pool.tvlTokenY = pool.tvlTokenY.plus(amountYDelta);
         tokenY.tvl = tokenY.tvl.plus(amountYDelta);
-        tokenY.tvlUSD = tokenY.tvlUSD.times(tokenY.priceUSD);
+        tokenY.tvlUSD = tokenY.tvl.times(tokenY.priceUSD);
         tokenY.save()
     }
 
@@ -273,8 +273,8 @@ export function handleSwap(event: SwapEvent): void {
     tokenY.txCount = tokenY.txCount.plus(ONE_BI);
 
     // updated pool rates
-    pool.tokenXPrice = ONE_BD.div(tick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals));
-    pool.tokenYPrice = tick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals);
+    pool.tokenXPrice = ONE_BD.div(calculatetTick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals));
+    pool.tokenYPrice = calculatetTick2PriceDecimal(event.params.currentPoint, tokenX.decimals, tokenY.decimals);
     pool.tick = BigInt.fromI32(event.params.currentPoint);
 
     // volume and fee
@@ -490,7 +490,7 @@ export function handleAddLimitOrder(event: AddLimitOrderEvent): void {
     }
 
     const amountUSD = amount.times(token.priceUSD);
-    const orderPrice = tick2PriceDecimal(event.params.point, tokenX.decimals, tokenY.decimals);
+    const orderPrice = calculatetTick2PriceDecimal(event.params.point, tokenX.decimals, tokenY.decimals);
 
     updateTVL(pool, tokenX, amountX, tokenY, amountY, factory);
 
@@ -569,7 +569,7 @@ export function handleDecLimitOrder(event: DecLimitOrderEvent): void {
     }
 
     const amountUSD = amount.times(token.priceUSD);
-    const orderPrice = tick2PriceDecimal(event.params.point, tokenX.decimals, tokenY.decimals);
+    const orderPrice = calculatetTick2PriceDecimal(event.params.point, tokenX.decimals, tokenY.decimals);
 
     updateTVL(pool, tokenX, amountX, tokenY, amountY, factory);
 

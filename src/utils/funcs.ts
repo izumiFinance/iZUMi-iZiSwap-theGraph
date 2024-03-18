@@ -110,3 +110,20 @@ export function bigEndianBytesToBigInt(bytes: Bytes): BigInt {
 export function topicToAddress(bytes: Bytes): string {
     return '0x' + bytes.toHexString().substr(26);
 }
+
+export function calculatetTick2PriceDecimal(tick: i32, tokenXDecimals: BigInt, tokenYDecimals: BigInt): BigDecimal {
+    let xDecimals = bigIntToNumber(tokenXDecimals);
+    let yDecimals = bigIntToNumber(tokenYDecimals);
+
+    let base = 1.0001;
+    let powResult = Math.pow(base, tick); // 1.0001 ** tick
+    let mulDivResult = Math.pow(10, xDecimals) / Math.pow(10, yDecimals); // 10 ** tokenXDecimals / 10 ** tokenYDecimals
+
+    let result = BigDecimal.fromString((powResult * mulDivResult).toString());
+
+    return result;
+}
+
+export function bigIntToNumber(bigIntValue: BigInt): number {
+    return parseFloat(bigIntValue.toString());
+}

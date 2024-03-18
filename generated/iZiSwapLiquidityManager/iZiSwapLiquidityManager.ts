@@ -10,6 +10,40 @@ import {
   BigInt,
 } from "@graphprotocol/graph-ts";
 
+export class AddLiquidity extends ethereum.Event {
+  get params(): AddLiquidity__Params {
+    return new AddLiquidity__Params(this);
+  }
+}
+
+export class AddLiquidity__Params {
+  _event: AddLiquidity;
+
+  constructor(event: AddLiquidity) {
+    this._event = event;
+  }
+
+  get nftId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get pool(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get liquidityDelta(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get amountX(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get amountY(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+}
+
 export class Approval extends ethereum.Event {
   get params(): Approval__Params {
     return new Approval__Params(this);
@@ -59,6 +93,62 @@ export class ApprovalForAll__Params {
 
   get approved(): boolean {
     return this._event.parameters[2].value.toBoolean();
+  }
+}
+
+export class DecLiquidity extends ethereum.Event {
+  get params(): DecLiquidity__Params {
+    return new DecLiquidity__Params(this);
+  }
+}
+
+export class DecLiquidity__Params {
+  _event: DecLiquidity;
+
+  constructor(event: DecLiquidity) {
+    this._event = event;
+  }
+
+  get nftId(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get pool(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+
+  get liquidityDelta(): BigInt {
+    return this._event.parameters[2].value.toBigInt();
+  }
+
+  get amountX(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get amountY(): BigInt {
+    return this._event.parameters[4].value.toBigInt();
+  }
+}
+
+export class OwnershipTransferred extends ethereum.Event {
+  get params(): OwnershipTransferred__Params {
+    return new OwnershipTransferred__Params(this);
+  }
+}
+
+export class OwnershipTransferred__Params {
+  _event: OwnershipTransferred;
+
+  constructor(event: OwnershipTransferred) {
+    this._event = event;
+  }
+
+  get previousOwner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get newOwner(): Address {
+    return this._event.parameters[1].value.toAddress();
   }
 }
 
@@ -261,6 +351,21 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  baseURI(): string {
+    let result = super.call("baseURI", "baseURI():(string)", []);
+
+    return result[0].toString();
+  }
+
+  try_baseURI(): ethereum.CallResult<string> {
+    let result = super.tryCall("baseURI", "baseURI():(string)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toString());
   }
 
   burn(lid: BigInt): boolean {
@@ -515,6 +620,21 @@ export class iZiSwapLiquidityManager extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toString());
+  }
+
+  owner(): Address {
+    let result = super.call("owner", "owner():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_owner(): ethereum.CallResult<Address> {
+    let result = super.tryCall("owner", "owner():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
   ownerOf(tokenId: BigInt): Address {
@@ -1261,6 +1381,32 @@ export class RefundETHCall__Outputs {
   }
 }
 
+export class RenounceOwnershipCall extends ethereum.Call {
+  get inputs(): RenounceOwnershipCall__Inputs {
+    return new RenounceOwnershipCall__Inputs(this);
+  }
+
+  get outputs(): RenounceOwnershipCall__Outputs {
+    return new RenounceOwnershipCall__Outputs(this);
+  }
+}
+
+export class RenounceOwnershipCall__Inputs {
+  _call: RenounceOwnershipCall;
+
+  constructor(call: RenounceOwnershipCall) {
+    this._call = call;
+  }
+}
+
+export class RenounceOwnershipCall__Outputs {
+  _call: RenounceOwnershipCall;
+
+  constructor(call: RenounceOwnershipCall) {
+    this._call = call;
+  }
+}
+
 export class SafeTransferFromCall extends ethereum.Call {
   get inputs(): SafeTransferFromCall__Inputs {
     return new SafeTransferFromCall__Inputs(this);
@@ -1375,6 +1521,36 @@ export class SetApprovalForAllCall__Outputs {
   }
 }
 
+export class SetBaseURICall extends ethereum.Call {
+  get inputs(): SetBaseURICall__Inputs {
+    return new SetBaseURICall__Inputs(this);
+  }
+
+  get outputs(): SetBaseURICall__Outputs {
+    return new SetBaseURICall__Outputs(this);
+  }
+}
+
+export class SetBaseURICall__Inputs {
+  _call: SetBaseURICall;
+
+  constructor(call: SetBaseURICall) {
+    this._call = call;
+  }
+
+  get newBaseURI(): string {
+    return this._call.inputValues[0].value.toString();
+  }
+}
+
+export class SetBaseURICall__Outputs {
+  _call: SetBaseURICall;
+
+  constructor(call: SetBaseURICall) {
+    this._call = call;
+  }
+}
+
 export class SweepTokenCall extends ethereum.Call {
   get inputs(): SweepTokenCall__Inputs {
     return new SweepTokenCall__Inputs(this);
@@ -1447,6 +1623,36 @@ export class TransferFromCall__Outputs {
   _call: TransferFromCall;
 
   constructor(call: TransferFromCall) {
+    this._call = call;
+  }
+}
+
+export class TransferOwnershipCall extends ethereum.Call {
+  get inputs(): TransferOwnershipCall__Inputs {
+    return new TransferOwnershipCall__Inputs(this);
+  }
+
+  get outputs(): TransferOwnershipCall__Outputs {
+    return new TransferOwnershipCall__Outputs(this);
+  }
+}
+
+export class TransferOwnershipCall__Inputs {
+  _call: TransferOwnershipCall;
+
+  constructor(call: TransferOwnershipCall) {
+    this._call = call;
+  }
+
+  get newOwner(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class TransferOwnershipCall__Outputs {
+  _call: TransferOwnershipCall;
+
+  constructor(call: TransferOwnershipCall) {
     this._call = call;
   }
 }

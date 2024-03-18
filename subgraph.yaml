@@ -54,6 +54,10 @@ dataSources:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleNftTransfer
+        - event: AddLiquidity(indexed uint256,address,uint128,uint256,uint256)
+          handler: handleAddLiquidity
+        - event: DecLiquidity(indexed uint256,address,uint128,uint256,uint256)
+          handler: handleDecLiquidity
 
 templates:
   - kind: ethereum/contract
