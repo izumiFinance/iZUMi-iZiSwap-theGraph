@@ -19,7 +19,9 @@ export class FactoryConfig {
             this.factoryAddress.set("linea", "0x45e5f26451cdb01b0fa1f8582e0aad9a6f27c218");
             this.factoryAddress.set("scroll", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
             this.factoryAddress.set("kroma", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
-            this.factoryAddress.set("mode", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08")
+            this.factoryAddress.set("mode", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
+            this.factoryAddress.set("merlin", "0xe29a6620dac789b8a76e9b9ec8fe9b7cf2b663d5");
+            this.factoryAddress.set("map", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
         }
         const address = this.factoryAddress.get(dataSource.network());
         if (address !== null) {
@@ -86,6 +88,18 @@ export class StableCoinConfig {
             let modeStableCoins = new Set<string>();
             modeStableCoins.add('0xf0f161fda2712db8b566946122a5af183995e2ed'); // USDT
             this.networkToStableCoins.set("mode", modeStableCoins);
+
+            //merlin
+            let merlinStableCoins = new Set<string>();
+            merlinStableCoins.add('0x967aec3276b63c5e2262da9641db9dbebb07dc0d'); // M-USDT
+            merlinStableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            this.networkToStableCoins.set("merlin", merlinStableCoins);
+
+            //map
+            let mapStableCoins = new Set<string>();
+            mapStableCoins.add('0x33daba9618a75a7aff103e53afe530fbacf4a3dd'); // USDT
+            mapStableCoins.add('0x61899ce1396ff351e5fdb9c8ad36fee9411c73c2'); // iUSD
+            this.networkToStableCoins.set("map", mapStableCoins);
         }
 
         const stableCoins = this.networkToStableCoins.get(dataSource.network());
@@ -169,6 +183,32 @@ export class TrustableTokenConfig {
             modeTrustableCoins.add('0xf0f161fda2712db8b566946122a5af183995e2ed'); // USDT
             modeTrustableCoins.add('0x4200000000000000000000000000000000000006'); // WETH
             this.networkToTrustableCoins.set("mode", modeTrustableCoins);
+
+            //merlin
+            let merlinTrustableCoins = new Set<string>();
+            merlinTrustableCoins.add('0x967aec3276b63c5e2262da9641db9dbebb07dc0d'); // M-USDT
+            merlinTrustableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            merlinTrustableCoins.add('0xf6d226f9dc15d9bb51182815b320d3fbe324e1ba'); // WBTC
+            merlinTrustableCoins.add('0xb880fd278198bd590252621d4cd071b1842e9bcd'); // M-BTC
+            merlinTrustableCoins.add('0x41d9036454be47d3745a823c4aacd0e29cfb0f71'); // SolvBTC
+            merlinTrustableCoins.add('0xbd40c74cb5cf9f9252b3298230cb916d80430bba'); // MP
+            merlinTrustableCoins.add('0x480e158395cc5b41e5584347c495584ca2caf78d'); // VOYA
+            merlinTrustableCoins.add('0x7a677e59dc2c8a42d6af3a62748c5595034a008b'); // HUHU
+            this.networkToTrustableCoins.set("merlin", merlinTrustableCoins);
+
+            //map
+            let mapTrustableCoins = new Set<string>();
+            mapTrustableCoins.add('0x33daba9618a75a7aff103e53afe530fbacf4a3dd'); // USDT
+            mapTrustableCoins.add('0x61899ce1396ff351e5fdb9c8ad36fee9411c73c2'); // iUSD
+            mapTrustableCoins.add('0x13cb04d4a5dfb6398fc5ab005a6c84337256ee23'); // WMAPO
+            mapTrustableCoins.add('0x9bd1e0a3a727d0d4f4e9a6d59022e071ddc79924'); // stMAPO
+            mapTrustableCoins.add('0x05ab928d446d8ce6761e368c8e7be03c3168a9ec'); // WETH
+            mapTrustableCoins.add('0x1ddecb7126028ea347408edef9d218f74b226d22'); //FOX2
+            mapTrustableCoins.add('0x756af1d3810a01d3292fad62f295bbcc6c200aea'); //LSGS
+            mapTrustableCoins.add('0xb877e3562a660c7861117c2f1361a26abaf19beb'); //BTC
+            mapTrustableCoins.add('0x1d22c0ab633f393c84a98cf4f2fad10ba47bb7b3'); //M-BTC
+            mapTrustableCoins.add('0x7eb8b1fe3ee3287fd5864e50f32322ce3285b39d'); //SolvBTC
+            this.networkToTrustableCoins.set("map", mapTrustableCoins);
         }
 
         const trustableTokens = this.networkToTrustableCoins.get(dataSource.network());

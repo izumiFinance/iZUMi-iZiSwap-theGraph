@@ -69,5 +69,25 @@
       "address": "0x19b683A2F45012318d9B2aE1280d68d3eC54D663",
       "startBlock": 5123740
     }
+  },
+  "merlin": {
+    "iZiSwapFactory": {
+      "address": "0xE29a6620DAc789B8a76e9b9eC8fE9B7cf2B663D5",
+      "startBlock": 20
+    },
+    "iZiSwapLiquidityManager": {
+      "address": "0x261507940678Bf22d8ee96c31dF4a642294c0467",
+      "startBlock": 20
+    }
+  },
+  "map": {
+    "iZiSwapFactory": {
+      "address": "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08",
+      "startBlock": 10593800
+    },
+    "iZiSwapLiquidityManager": {
+      "address": "0x19b683A2F45012318d9B2aE1280d68d3eC54D663",
+      "startBlock": 10593800
+    }
   }
 }

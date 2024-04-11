@@ -33,8 +33,15 @@
 
     "create-local-mode": "graph create --node http://localhost:8020/ izi-swap-mode",
     "remove-local-mode": "graph remove --node http://localhost:8020/ izi-swap-mode",
-    "deploy-local-mode": "graph deploy --node http://localhost:8020/ --network mode --ipfs http://localhost:5001 izi-swap-mode"
+    "deploy-local-mode": "graph deploy --node http://localhost:8020/ --network mode --ipfs http://localhost:5001 izi-swap-mode",
 
+    "create-local-merlin": "graph create --node http://localhost:8020/ izi-swap-merlin",
+    "remove-local-merlin": "graph remove --node http://localhost:8020/ izi-swap-merlin",
+    "deploy-local-merlin": "graph deploy --node http://localhost:8020/ --network merlin --ipfs http://localhost:5001 izi-swap-merlin",
+
+    "create-local-map": "graph create --node http://localhost:8020/ izi-swap-map",
+    "remove-local-map": "graph remove --node http://localhost:8020/ izi-swap-map",
+    "deploy-local-map": "graph deploy --node http://localhost:8020/ --network map --ipfs http://localhost:5001 izi-swap-map"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.32.0",
