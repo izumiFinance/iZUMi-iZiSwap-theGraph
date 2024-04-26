@@ -41,7 +41,11 @@
 
     "create-local-map": "graph create --node http://localhost:8020/ izi-swap-map",
     "remove-local-map": "graph remove --node http://localhost:8020/ izi-swap-map",
-    "deploy-local-map": "graph deploy --node http://localhost:8020/ --network map --ipfs http://localhost:5001 izi-swap-map"
+    "deploy-local-map": "graph deploy --node http://localhost:8020/ --network map --ipfs http://localhost:5001 izi-swap-map",
+
+    "create-local-ainn": "graph create --node http://localhost:8020/ izi-swap-ainn",
+    "remove-local-ainn": "graph remove --node http://localhost:8020/ izi-swap-ainn",
+    "deploy-local-ainn": "graph deploy --node http://localhost:8020/ --network ainn --ipfs http://localhost:5001 izi-swap-ainn"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.32.0",

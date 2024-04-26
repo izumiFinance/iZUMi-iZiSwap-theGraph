@@ -22,6 +22,7 @@ export class FactoryConfig {
             this.factoryAddress.set("mode", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
             this.factoryAddress.set("merlin", "0xe29a6620dac789b8a76e9b9ec8fe9b7cf2b663d5");
             this.factoryAddress.set("map", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
+            this.factoryAddress.set("ainn", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
         }
         const address = this.factoryAddress.get(dataSource.network());
         if (address !== null) {
@@ -100,6 +101,11 @@ export class StableCoinConfig {
             mapStableCoins.add('0x33daba9618a75a7aff103e53afe530fbacf4a3dd'); // USDT
             mapStableCoins.add('0x61899ce1396ff351e5fdb9c8ad36fee9411c73c2'); // iUSD
             this.networkToStableCoins.set("map", mapStableCoins);
+
+            //Ainn
+            let ainnStableCoins = new Set<string>();
+            ainnStableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            this.networkToStableCoins.set("ainn", ainnStableCoins);
         }
 
         const stableCoins = this.networkToStableCoins.get(dataSource.network());
@@ -209,6 +215,13 @@ export class TrustableTokenConfig {
             mapTrustableCoins.add('0x1d22c0ab633f393c84a98cf4f2fad10ba47bb7b3'); //M-BTC
             mapTrustableCoins.add('0x7eb8b1fe3ee3287fd5864e50f32322ce3285b39d'); //SolvBTC
             this.networkToTrustableCoins.set("map", mapTrustableCoins);
+
+            //Ainn
+            let ainnTrustableCoins = new Set<string>();
+            ainnTrustableCoins.add('0x1470a4831f76954686bfb4de8180f7469ea8de6f'); // ABTC
+            ainnTrustableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            ainnTrustableCoins.add('0xc5ed6c946cdc82f4599f0f2f012e1822502e70e3'); // AINN
+            this.networkToTrustableCoins.set("ainn", ainnTrustableCoins);
         }
 
         const trustableTokens = this.networkToTrustableCoins.get(dataSource.network());
