@@ -4,6 +4,7 @@ import { Factory, Pool, Token } from '../generated/schema';
 import { ADDRESS_ZERO, ONE_BD, ONE_BI, ZERO_BD, ZERO_BI } from './constants';
 import { fetchTokenDecimals, fetchTokenName, fetchTokenSymbol, fetchTokenTotalSupply } from './utils/tokenHelper';
 import { Pool as PoolTemplate } from '../generated/templates';
+import { Pool as PoolFacade } from '../generated/templates/Pool/Pool'
 import { FACTORY_ADDRESS, TrustableTokenConfig } from './config';
 import { findUsdPerToken } from './utils/pricing';
 
@@ -31,6 +32,18 @@ export function handleNewPool(event: NewPool): void {
         tokenX.trustablePools = newPools;
     }
 
+    const poolFacade = PoolFacade.bind(event.params.pool)
+    const stateCall = poolFacade.try_state()
+
+    if (!stateCall.reverted) {
+        const state = stateCall.value;
+        pool.tick = new BigInt(state.getCurrentPoint());
+        pool.sqrtPrice = state.getSqrtPrice_96();
+    } else {
+        pool.tick = ZERO_BI;
+        pool.sqrtPrice = ZERO_BI;
+    }
+
     pool.createdAtTimestamp = event.block.timestamp;
     pool.createdAtBlockNumber = event.block.number;
     pool.tokenX = tokenX.id;
@@ -38,10 +51,7 @@ export function handleNewPool(event: NewPool): void {
     pool.feeTier = BigInt.fromI32(event.params.fee);
 
     pool.txCount = ZERO_BI;
-
     pool.liquidity = ZERO_BI;
-    pool.tick = ZERO_BI;
-    pool.sqrtPrice = ZERO_BI;
 
     pool.tokenXPrice = ZERO_BD;
     pool.tokenYPrice = ZERO_BD;
