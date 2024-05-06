@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: iZiSwapFactory
-    network: mantle
+    network: mode
     source:
       abi: iZiSwapFactory
-      address: "0x45e5F26451CDB01B0fA1f8582E0aAD9A6F27C218"
-      startBlock: 2700
+      address: "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08"
+      startBlock: 5123740
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -29,14 +29,13 @@ dataSources:
       eventHandlers:
         - event: NewPool(indexed address,indexed address,indexed uint24,uint24,address)
           handler: handleNewPool
-
   - kind: ethereum
     name: iZiSwapLiquidityManager
-    network: mantle
+    network: mode
     source:
       abi: iZiSwapLiquidityManager
-      address: "0x611575eE1fbd4F7915D0eABCC518eD396fF78F0c"
-      startBlock: 2700
+      address: "0x19b683A2F45012318d9B2aE1280d68d3eC54D663"
+      startBlock: 5123740
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -60,11 +59,10 @@ dataSources:
           handler: handleAddLiquidity
         - event: DecLiquidity(indexed uint256,address,uint128,uint256,uint256)
           handler: handleDecLiquidity
-
 templates:
   - kind: ethereum/contract
     name: Pool
-    network: mantle
+    network: mode
     source:
       abi: Pool
     mapping:

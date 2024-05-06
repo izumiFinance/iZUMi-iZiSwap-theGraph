@@ -37,11 +37,9 @@ export function handleNewPool(event: NewPool): void {
 
     if (!stateCall.reverted) {
         const state = stateCall.value;
-        pool.tick = new BigInt(state.getCurrentPoint());
-        pool.sqrtPrice = state.getSqrtPrice_96();
+        pool.tick = BigInt.fromI32(state.getCurrentPoint());
     } else {
         pool.tick = ZERO_BI;
-        pool.sqrtPrice = ZERO_BI;
     }
 
     pool.createdAtTimestamp = event.block.timestamp;
@@ -52,7 +50,7 @@ export function handleNewPool(event: NewPool): void {
 
     pool.txCount = ZERO_BI;
     pool.liquidity = ZERO_BI;
-
+    pool.sqrtPrice = ZERO_BI
     pool.tokenXPrice = ZERO_BD;
     pool.tokenYPrice = ZERO_BD;
 
