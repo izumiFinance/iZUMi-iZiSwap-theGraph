@@ -88,6 +88,7 @@ export class StableCoinConfig {
             //mode
             let modeStableCoins = new Set<string>();
             modeStableCoins.add('0xf0f161fda2712db8b566946122a5af183995e2ed'); // USDT
+            modeStableCoins.add('0xd988097fb8612cc24eec14542bc03424c656005f'); // USDC
             this.networkToStableCoins.set("mode", modeStableCoins);
 
             //merlin
@@ -188,6 +189,7 @@ export class TrustableTokenConfig {
             let modeTrustableCoins = new Set<string>();
             modeTrustableCoins.add('0xf0f161fda2712db8b566946122a5af183995e2ed'); // USDT
             modeTrustableCoins.add('0x4200000000000000000000000000000000000006'); // WETH
+            modeTrustableCoins.add('0xd988097fb8612cc24eec14542bc03424c656005f'); // USDC
             this.networkToTrustableCoins.set("mode", modeTrustableCoins);
 
             //merlin
