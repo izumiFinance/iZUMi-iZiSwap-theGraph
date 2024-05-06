@@ -24,9 +24,12 @@ dataSources:
           file: ./abis/ERC20.json
         - name: ERC20BytesMethod
           file: ./abis/ERC20BytesMethod.json
+        - name: Pool
+          file: ./abis/iZiSwapPool.json
       eventHandlers:
         - event: NewPool(indexed address,indexed address,indexed uint24,uint24,address)
           handler: handleNewPool
+
   - kind: ethereum
     name: iZiSwapLiquidityManager
     network: mantle

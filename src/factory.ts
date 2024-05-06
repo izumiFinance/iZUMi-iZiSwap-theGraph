@@ -4,7 +4,7 @@ import { Factory, Pool, Token } from '../generated/schema';
 import { ADDRESS_ZERO, ONE_BD, ONE_BI, ZERO_BD, ZERO_BI } from './constants';
 import { fetchTokenDecimals, fetchTokenName, fetchTokenSymbol, fetchTokenTotalSupply } from './utils/tokenHelper';
 import { Pool as PoolTemplate } from '../generated/templates';
-import { Pool as PoolFacade } from '../generated/templates/Pool/Pool'
+import { Pool as PoolFacade } from '../generated/iZiSwapFactory/Pool'
 import { FACTORY_ADDRESS, TrustableTokenConfig } from './config';
 import { findUsdPerToken } from './utils/pricing';
 
