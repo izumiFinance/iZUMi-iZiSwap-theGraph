@@ -99,5 +99,15 @@
       "address": "0x19b683A2F45012318d9B2aE1280d68d3eC54D663",
       "startBlock": 198950
     }
+  },
+  "klaytn": {
+    "iZiSwapFactory": {
+      "address": "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08",
+      "startBlock": 152482390
+    },
+    "iZiSwapLiquidityManager": {
+      "address": "0x19b683A2F45012318d9B2aE1280d68d3eC54D663",
+      "startBlock": 152482390
+    }
   }
 }

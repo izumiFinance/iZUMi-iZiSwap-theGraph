@@ -23,6 +23,7 @@ export class FactoryConfig {
             this.factoryAddress.set("merlin", "0xe29a6620dac789b8a76e9b9ec8fe9b7cf2b663d5");
             this.factoryAddress.set("map", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
             this.factoryAddress.set("ainn", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
+            this.factoryAddress.set("klaytn", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
         }
         const address = this.factoryAddress.get(dataSource.network());
         if (address !== null) {
@@ -107,6 +108,14 @@ export class StableCoinConfig {
             let ainnStableCoins = new Set<string>();
             ainnStableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
             this.networkToStableCoins.set("ainn", ainnStableCoins);
+
+            //Klaytn
+            let klaytnStableCoins = new Set<string>();
+            klaytnStableCoins.add('0xe2053bcf56d2030d2470fb454574237cf9ee3d4b'); // USDC.e
+            klaytnStableCoins.add('0x608792deb376cce1c9fa4d0e6b7b44f507cffa6a'); // USDC
+            klaytnStableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            klaytnStableCoins.add('0x5c13e303a62fc5dedf5b52d66873f2e59fedadc2'); // USDT
+            this.networkToStableCoins.set("klaytn", klaytnStableCoins);
         }
 
         const stableCoins = this.networkToStableCoins.get(dataSource.network());
@@ -224,6 +233,15 @@ export class TrustableTokenConfig {
             ainnTrustableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
             ainnTrustableCoins.add('0xc5ed6c946cdc82f4599f0f2f012e1822502e70e3'); // AINN
             this.networkToTrustableCoins.set("ainn", ainnTrustableCoins);
+
+            //Klaytn
+            let klaytnTrustableCoins = new Set<string>();
+            klaytnTrustableCoins.add('0xe2053bcf56d2030d2470fb454574237cf9ee3d4b'); // USDC.e
+            klaytnTrustableCoins.add('0x608792deb376cce1c9fa4d0e6b7b44f507cffa6a'); // USDC
+            klaytnTrustableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
+            klaytnTrustableCoins.add('0x5c13e303a62fc5dedf5b52d66873f2e59fedadc2'); // USDT
+            klaytnTrustableCoins.add('0x19aac5f612f524b754ca7e7c41cbfa2e981a4432'); // WKLAY
+            this.networkToTrustableCoins.set("klaytn", klaytnTrustableCoins);
         }
 
         const trustableTokens = this.networkToTrustableCoins.get(dataSource.network());
