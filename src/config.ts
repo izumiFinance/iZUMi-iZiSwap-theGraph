@@ -24,6 +24,7 @@ export class FactoryConfig {
             this.factoryAddress.set("map", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
             this.factoryAddress.set("ainn", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
             this.factoryAddress.set("klaytn", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
+            this.factoryAddress.set("rootstock", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
         }
         const address = this.factoryAddress.get(dataSource.network());
         if (address !== null) {
@@ -116,6 +117,11 @@ export class StableCoinConfig {
             klaytnStableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
             klaytnStableCoins.add('0x5c13e303a62fc5dedf5b52d66873f2e59fedadc2'); // USDT
             this.networkToStableCoins.set("klaytn", klaytnStableCoins);
+
+            //rootstock
+            let rootstockStableCoins = new Set<string>();
+            rootstockStableCoins.add('0xef213441a85df4d7acbdae0cf78004e1e486bb96'); // rUSDT
+            this.networkToStableCoins.set("rootstock", rootstockStableCoins);
         }
 
         const stableCoins = this.networkToStableCoins.get(dataSource.network());
@@ -242,6 +248,12 @@ export class TrustableTokenConfig {
             klaytnTrustableCoins.add('0x5c13e303a62fc5dedf5b52d66873f2e59fedadc2'); // USDT
             klaytnTrustableCoins.add('0x19aac5f612f524b754ca7e7c41cbfa2e981a4432'); // WKLAY
             this.networkToTrustableCoins.set("klaytn", klaytnTrustableCoins);
+
+            //rootstock
+            let rootstockTrustableCoins = new Set<string>();
+            rootstockTrustableCoins.add('0xef213441a85df4d7acbdae0cf78004e1e486bb96'); // rUSDT
+            rootstockTrustableCoins.add('0x542fda317318ebf1d3deaf76e0b632741a7e677d'); // WRBTC
+            this.networkToTrustableCoins.set("rootstock", rootstockTrustableCoins);
         }
 
         const trustableTokens = this.networkToTrustableCoins.get(dataSource.network());
