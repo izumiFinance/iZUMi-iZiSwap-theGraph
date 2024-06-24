@@ -112,11 +112,11 @@
   },
   "rootstock": {
     "iZiSwapFactory": {
-      "address": "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08",
+      "address": "0x8c7D3063579bdB0B90997e18A770eAE32e1EBB08",
       "startBlock": 6436040
     },
     "iZiSwapLiquidityManager": {
-      "address": "0x19b683A2F45012318d9B2aE1280d68d3eC54D663",
+      "address": "0x19B683A2f45012318d9b2Ae1280D68d3eC54d663",
       "startBlock": 6436040
     }
   }
