@@ -53,7 +53,11 @@
 
     "create-local-rootstock": "graph create --node http://localhost:8020/ izi-swap-rootstock",
     "remove-local-rootstock": "graph remove --node http://localhost:8020/ izi-swap-rootstock",
-    "deploy-local-rootstock": "graph deploy --node http://localhost:8020/ --network rootstock --ipfs http://localhost:5001 izi-swap-rootstock"
+    "deploy-local-rootstock": "graph deploy --node http://localhost:8020/ --network rootstock --ipfs http://localhost:5001 izi-swap-rootstock",
+
+    "create-local-taiko": "graph create --node http://localhost:8020/ izi-swap-taiko",
+    "remove-local-taiko": "graph remove --node http://localhost:8020/ izi-swap-taiko",
+    "deploy-local-taiko": "graph deploy --node http://localhost:8020/ --network taiko --ipfs http://localhost:5001 izi-swap-taiko"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.32.0",

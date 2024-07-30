@@ -25,6 +25,7 @@ export class FactoryConfig {
             this.factoryAddress.set("ainn", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
             this.factoryAddress.set("klaytn", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
             this.factoryAddress.set("rootstock", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
+            this.factoryAddress.set("taiko", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
         }
         const address = this.factoryAddress.get(dataSource.network());
         if (address !== null) {
@@ -122,6 +123,13 @@ export class StableCoinConfig {
             let rootstockStableCoins = new Set<string>();
             rootstockStableCoins.add('0xef213441a85df4d7acbdae0cf78004e1e486bb96'); // rUSDT
             this.networkToStableCoins.set("rootstock", rootstockStableCoins);
+
+            //taiko
+            let taikoStableCoins = new Set<string>();
+            taikoStableCoins.add('0x2def195713cf4a606b49d07e520e22c17899a736'); // USDT
+            taikoStableCoins.add('0x07d83526730c7438048d55a4fc0b850e2aab6f0b'); // USDC
+            taikoStableCoins.add('0x19e26b0638bf63aa9fa4d14c6baf8d52ebe86c5c'); // USDC.e
+            this.networkToStableCoins.set("taiko", taikoStableCoins);
         }
 
         const stableCoins = this.networkToStableCoins.get(dataSource.network());
@@ -254,6 +262,15 @@ export class TrustableTokenConfig {
             rootstockTrustableCoins.add('0xef213441a85df4d7acbdae0cf78004e1e486bb96'); // rUSDT
             rootstockTrustableCoins.add('0x542fda317318ebf1d3deaf76e0b632741a7e677d'); // WRBTC
             this.networkToTrustableCoins.set("rootstock", rootstockTrustableCoins);
+
+            //taiko
+            let taikoTrustableCoins = new Set<string>();
+            taikoTrustableCoins.add('0x2def195713cf4a606b49d07e520e22c17899a736'); // USDT
+            taikoTrustableCoins.add('0x07d83526730c7438048d55a4fc0b850e2aab6f0b'); // USDC
+            taikoTrustableCoins.add('0x19e26b0638bf63aa9fa4d14c6baf8d52ebe86c5c'); // USDC.e
+            taikoTrustableCoins.add('0xa51894664a773981c6c112c43ce576f315d5b1b6'); // WETH
+            taikoTrustableCoins.add('0xa9d23408b9ba935c230493c40c73824df71a0975'); // taiko
+            this.networkToTrustableCoins.set("taiko", taikoTrustableCoins);
         }
 
         const trustableTokens = this.networkToTrustableCoins.get(dataSource.network());

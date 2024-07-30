@@ -119,5 +119,15 @@
       "address": "0x19B683A2f45012318d9b2Ae1280D68d3eC54d663",
       "startBlock": 6436040
     }
+  },
+  "taiko": {
+    "iZiSwapFactory": {
+      "address": "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08",
+      "startBlock": 589
+    },
+    "iZiSwapLiquidityManager": {
+      "address": "0x33531bDBFE34fa6Fd5963D0423f7699775AacaaF",
+      "startBlock": 589
+    }
   }
 }
