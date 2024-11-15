@@ -1,8 +1,12 @@
 {
   "bsc": {
     "iZiSwapFactory": {
-      "address": "0x93BB94a0d5269cb437A1F71FF3a77AB753844422",
-      "startBlock": 17681022
+      "address": "0x41432298D3f35Be721BD05680aAD4fc8e91e1ef0",
+      "startBlock": 43558956
+    },
+    "iZiSwapLiquidityManager": {
+      "address": "0x65b4f633215f541875A505d25Ba94ff996F69397",
+      "startBlock": 43558956
     }
   },
   "bsc-test": {
@@ -128,6 +132,16 @@
     "iZiSwapLiquidityManager": {
       "address": "0x33531bDBFE34fa6Fd5963D0423f7699775AacaaF",
       "startBlock": 589
+    }
+  },
+  "cyber": {
+    "iZiSwapFactory": {
+      "address": "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08",
+      "startBlock": 175399
+    },
+    "iZiSwapLiquidityManager": {
+      "address": "0x19b683A2F45012318d9B2aE1280d68d3eC54D663",
+      "startBlock": 175399
     }
   }
 }

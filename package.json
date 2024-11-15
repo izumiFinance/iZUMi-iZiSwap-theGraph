@@ -57,7 +57,11 @@
 
     "create-local-taiko": "graph create --node http://localhost:8020/ izi-swap-taiko",
     "remove-local-taiko": "graph remove --node http://localhost:8020/ izi-swap-taiko",
-    "deploy-local-taiko": "graph deploy --node http://localhost:8020/ --network taiko --ipfs http://localhost:5001 izi-swap-taiko"
+    "deploy-local-taiko": "graph deploy --node http://localhost:8020/ --network taiko --ipfs http://localhost:5001 izi-swap-taiko",
+
+    "create-local-cyber": "graph create --node http://localhost:8020/ izi-swap-cyber",
+    "remove-local-cyber": "graph remove --node http://localhost:8020/ izi-swap-cyber",
+    "deploy-local-cyber": "graph deploy --node http://localhost:8020/ --network cyber --ipfs http://localhost:5001 izi-swap-cyber"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.32.0",

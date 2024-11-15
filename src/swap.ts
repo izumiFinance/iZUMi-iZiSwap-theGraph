@@ -38,18 +38,20 @@ function updateTVL(
 
     if (amountXDelta.notEqual(ZERO_BD)) {
         // read from contract too low
-        // const tvlX = fetchTokenBalanceAmount(pool.tokenX, pool.id, tokenX.decimals);
-        pool.tvlTokenX = pool.tvlTokenX.plus(amountXDelta);
-        tokenX.tvl = tokenX.tvl.plus(amountXDelta);
+        const tvlX = fetchTokenBalanceAmount(pool.tokenX, pool.id, tokenX.decimals);
+        tokenX.tvl = tokenX.tvl.minus(pool.tvlTokenX).plus(tvlX);
         tokenX.tvlUSD = tokenX.tvl.times(tokenX.priceUSD);
+        pool.tvlTokenX = tvlX;
+        
         // tokenX.save()
     }
 
     if (amountYDelta.notEqual(ZERO_BD)) {
-        // const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenY.decimals);
-        pool.tvlTokenY = pool.tvlTokenY.plus(amountYDelta);
-        tokenY.tvl = tokenY.tvl.plus(amountYDelta);
+        const tvlY = fetchTokenBalanceAmount(pool.tokenY, pool.id, tokenY.decimals);
+        tokenY.tvl = tokenY.tvl.minus(pool.tvlTokenY).plus(tvlY);
         tokenY.tvlUSD = tokenY.tvl.times(tokenY.priceUSD);
+        pool.tvlTokenY = tvlY;
+        
         // tokenY.save()
     }
 
@@ -108,6 +110,14 @@ export function handleMint(event: MintEvent): void {
     mint.rightPoint = BigInt.fromI32(event.params.rightPoint);
     mint.logIndex = event.logIndex;
 
+    // save
+    factory.save();
+    pool.save();
+    tokenX.save();
+    tokenY.save();
+    mint.save();
+
+    // interval process
     const poolDayData = updatePoolDayData(event);
     updatePoolHourData(event);
     const tokenXDayData = updateTokenDayData(tokenX, event);
@@ -115,12 +125,6 @@ export function handleMint(event: MintEvent): void {
     updateTokenHourData(tokenX, event);
     updateTokenHourData(tokenY, event);
 
-    // save
-    factory.save();
-    pool.save();
-    tokenX.save();
-    tokenY.save();
-    mint.save();
     poolDayData.save();
     tokenXDayData.save();
     tokenYDayData.save();
@@ -236,6 +240,14 @@ export function handleBurn(event: BurnEvent): void {
     burn.collectedFeesTokenY = collectedFeesTokenY;
     burn.logIndex = event.logIndex;
 
+    // save
+    factory.save();
+    pool.save();
+    tokenX.save();
+    tokenY.save();
+    burn.save();
+
+    // interval process
     const poolDayData = updatePoolDayData(event);
     updatePoolHourData(event);
     const tokenXDayData = updateTokenDayData(tokenX, event);
@@ -243,12 +255,6 @@ export function handleBurn(event: BurnEvent): void {
     updateTokenHourData(tokenX, event);
     updateTokenHourData(tokenY, event);
 
-    // save
-    factory.save();
-    pool.save();
-    tokenX.save();
-    tokenY.save();
-    burn.save();
     poolDayData.save();
     tokenXDayData.save();
     tokenYDayData.save();
@@ -351,6 +357,16 @@ export function handleSwap(event: SwapEvent): void {
     swap.amountUSD = amountUSD;
     swap.logIndex = event.logIndex;
 
+    factory.save();
+    pool.save();
+
+    tokenX.priceUSD = findUsdPerToken(tokenX);
+    tokenY.priceUSD = findUsdPerToken(tokenY);
+    tokenX.save();
+    tokenY.save();
+
+    swap.save();
+
     // interval process
     const poolDayData = updatePoolDayData(event);
     const poolHourData = updatePoolHourData(event);
@@ -394,16 +410,6 @@ export function handleSwap(event: SwapEvent): void {
     tokenYHourData.volumeUSD = tokenYHourData.volumeUSD.plus(sellXEarnY ? ZERO_BD : amountUSD);
 
     // save
-    factory.save();
-    pool.save();
-
-    tokenX.priceUSD = findUsdPerToken(tokenX);
-    tokenY.priceUSD = findUsdPerToken(tokenY);
-    tokenX.save();
-    tokenY.save();
-
-    swap.save();
-
     poolDayData.save();
     poolHourData.save();
     tokenXDayData.save();

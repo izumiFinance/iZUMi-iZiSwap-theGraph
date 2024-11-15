@@ -13,7 +13,7 @@ export class FactoryConfig {
         if (this.factoryAddress == null) {
             this.factoryAddress = new TypedMap<string, string>();
             this.emptyAddress = ADDRESS_ZERO
-            this.factoryAddress.set("bsc", "0x93bb94a0d5269cb437a1f71ff3a77ab753844422");
+            this.factoryAddress.set("bsc", "0x41432298d3f35be721bd05680aad4fc8e91e1ef0");
             this.factoryAddress.set("manta", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
             this.factoryAddress.set("mantle", "0x45e5f26451cdb01b0fa1f8582e0aad9a6f27c218");
             this.factoryAddress.set("linea", "0x45e5f26451cdb01b0fa1f8582e0aad9a6f27c218");
@@ -26,6 +26,7 @@ export class FactoryConfig {
             this.factoryAddress.set("klaytn", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
             this.factoryAddress.set("rootstock", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
             this.factoryAddress.set("taiko", "0x8c7d3063579bdb0b90997e18a770eae32e1ebb08");
+            this.factoryAddress.set("cyber", "0x8c7d3063579BdB0b90997e18A770eaE32E1eBb08");
         }
         const address = this.factoryAddress.get(dataSource.network());
         if (address !== null) {
@@ -130,6 +131,12 @@ export class StableCoinConfig {
             taikoStableCoins.add('0x07d83526730c7438048d55a4fc0b850e2aab6f0b'); // USDC
             taikoStableCoins.add('0x19e26b0638bf63aa9fa4d14c6baf8d52ebe86c5c'); // USDC.e
             this.networkToStableCoins.set("taiko", taikoStableCoins);
+
+            //cyber
+            let cyberStableCoins = new Set<string>();
+            cyberStableCoins.add('0x6f6238c8eaea56f54df418823585d61fdd7de5da'); // USDT
+            cyberStableCoins.add('0x81759adbf5520ad94da10991dfa29ff147d3337b'); // USDC
+            this.networkToStableCoins.set("cyber", cyberStableCoins);
         }
 
         const stableCoins = this.networkToStableCoins.get(dataSource.network());
@@ -157,7 +164,6 @@ export class TrustableTokenConfig {
             bscTrustableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
             bscTrustableCoins.add('0x2170ed0880ac9a755fd29b2688956bd959f933f8'); // WETH
             bscTrustableCoins.add('0xe9e7cea3dedca5984780bafc599bd69add087d56'); // BUSD
-            bscTrustableCoins.add('0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'); // iZi
             bscTrustableCoins.add('0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d'); // USDC
             this.networkToTrustableCoins.set("bsc", bscTrustableCoins);
 
@@ -183,10 +189,8 @@ export class TrustableTokenConfig {
             let lineaTrustableCoins = new Set<string>();
             lineaTrustableCoins.add('0xa219439258ca9da29e9cc4ce5596924745e12b93'); // USDT
             lineaTrustableCoins.add('0x0a3bb08b3a15a19b4de82f8acfc862606fb69a2d'); // iUSD
-            lineaTrustableCoins.add('0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747'); // iZi
             lineaTrustableCoins.add('0x176211869ca2b568f2a7d4ee941e073a821ee1ff'); // USDC
             lineaTrustableCoins.add('0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f'); // WETH
-            lineaTrustableCoins.add('0xb5bedd42000b71fdde22d3ee8a79bd49a568fc8f'); // wstETH
             lineaTrustableCoins.add('0x7d43aabc515c356145049227cee54b608342c0ad'); // BUSD
             this.networkToTrustableCoins.set("linea", lineaTrustableCoins);
 
@@ -271,6 +275,14 @@ export class TrustableTokenConfig {
             taikoTrustableCoins.add('0xa51894664a773981c6c112c43ce576f315d5b1b6'); // WETH
             taikoTrustableCoins.add('0xa9d23408b9ba935c230493c40c73824df71a0975'); // taiko
             this.networkToTrustableCoins.set("taiko", taikoTrustableCoins);
+
+            //cyber
+            let cyberTrustableCoins = new Set<string>();
+            cyberTrustableCoins.add('0x6f6238c8eaea56f54df418823585d61fdd7de5da'); // USDT
+            cyberTrustableCoins.add('0x81759adbf5520ad94da10991dfa29ff147d3337b'); // USDC
+            cyberTrustableCoins.add('0x4200000000000000000000000000000000000006'); // WETH
+            cyberTrustableCoins.add('0x14778860e937f509e651192a90589de711fb88a9'); // CYBER
+            this.networkToTrustableCoins.set("cyber", cyberTrustableCoins);
         }
 
         const trustableTokens = this.networkToTrustableCoins.get(dataSource.network());
@@ -301,10 +313,10 @@ export class WrapGasTokenConfig {
             this.emptyWhitePool = ADDRESS_ZERO;
 
             // BSC
-            let bscWrapGasToken = '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c';
-            let bscWhitePool = '0x1ce3082de766ebfe1b4db39f616426631bbb29ac';
-            this.networkToWrapGasTokens.set("bsc", bscWrapGasToken);
-            this.networkToWhitePools.set("bsc", bscWhitePool);
+            // let bscWrapGasToken = '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c';
+            // let bscWhitePool = '0x1ce3082de766ebfe1b4db39f616426631bbb29ac';
+            // this.networkToWrapGasTokens.set("bsc", bscWrapGasToken);
+            // this.networkToWhitePools.set("bsc", bscWhitePool);
 
             // Manta
             let mantaWrapGasToken = '0x0dc808adce2099a9f62aa87d9670745aba741746';
