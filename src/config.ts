@@ -347,6 +347,12 @@ export class WrapGasTokenConfig {
             let kromaWhitePool = '0x6e34ca775fb0e1548c8959d8d1f80975e90ccb0e';
             this.networkToWrapGasTokens.set("kroma", kromaWrapGasToken);
             this.networkToWhitePools.set("kroma", kromaWhitePool);
+
+            //cyber
+            let cyberWrapGasToken = '0x4200000000000000000000000000000000000006';
+            let cyberWhitePool = '0xa921fdf2227ee11fdee10bc4e4cb97b56f8bd777';
+            this.networkToWrapGasTokens.set("cyber", cyberWrapGasToken);
+            this.networkToWhitePools.set("cyber", cyberWhitePool);
         }
 
         let wrapGasToken = this.networkToWrapGasTokens.get(dataSource.network());
